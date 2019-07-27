@@ -3,9 +3,9 @@ package com.mrathena.dao.mapper.y2019.customer;
 import com.mrathena.dao.entity.y2019.customer.CustomerDO;
 
 /**
- * t_customer
+ * customer
  *
- * @author mrathena on 2019/07/27 17:52
+ * @author mrathena on 2019/07/27 23:13
  */
 public interface CustomerMapper {
 

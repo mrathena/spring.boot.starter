@@ -8,28 +8,31 @@
 		<result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
 		<result column="updated_by" jdbcType="VARCHAR" property="updatedBy" />
 		<result column="username" jdbcType="VARCHAR" property="username" />
+		<result column="nickname" jdbcType="VARCHAR" property="nickname" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, created_at, created_by, updated_at, updated_by, username
+		id, created_at, created_by, updated_at, updated_by, username, nickname
 	</sql>
 	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
 		select 
 		<include refid="Base_Column_List" />
-		from t_customer
+		from customer
 		where id = #{id,jdbcType=BIGINT}
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-		delete from t_customer
+		delete from customer
 		where id = #{id,jdbcType=BIGINT}
 	</delete>
 	<insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.mrathena.dao.entity.y2019.customer.CustomerDO" useGeneratedKeys="true">
-		insert into t_customer (created_at, created_by, updated_at, 
-			updated_by, username)
+		insert into customer (created_at, created_by, updated_at, 
+			updated_by, username, nickname
+			)
 		values (#{createdAt,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, #{updatedAt,jdbcType=TIMESTAMP}, 
-			#{updatedBy,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR})
+			#{updatedBy,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}
+			)
 	</insert>
 	<insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.mrathena.dao.entity.y2019.customer.CustomerDO" useGeneratedKeys="true">
-		insert into t_customer
+		insert into customer
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="createdAt != null">
 				created_at,
@@ -45,6 +48,9 @@
 			</if>
 			<if test="username != null">
 				username,
+			</if>
+			<if test="nickname != null">
+				nickname,
 			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -63,10 +69,13 @@
 			<if test="username != null">
 				#{username,jdbcType=VARCHAR},
 			</if>
+			<if test="nickname != null">
+				#{nickname,jdbcType=VARCHAR},
+			</if>
 		</trim>
 	</insert>
 	<update id="updateByPrimaryKeySelective" parameterType="com.mrathena.dao.entity.y2019.customer.CustomerDO">
-		update t_customer
+		update customer
 		<set>
 			<if test="createdAt != null">
 				created_at = #{createdAt,jdbcType=TIMESTAMP},
@@ -83,16 +92,20 @@
 			<if test="username != null">
 				username = #{username,jdbcType=VARCHAR},
 			</if>
+			<if test="nickname != null">
+				nickname = #{nickname,jdbcType=VARCHAR},
+			</if>
 		</set>
 		where id = #{id,jdbcType=BIGINT}
 	</update>
 	<update id="updateByPrimaryKey" parameterType="com.mrathena.dao.entity.y2019.customer.CustomerDO">
-		update t_customer
+		update customer
 		set created_at = #{createdAt,jdbcType=TIMESTAMP},
 			created_by = #{createdBy,jdbcType=VARCHAR},
 			updated_at = #{updatedAt,jdbcType=TIMESTAMP},
 			updated_by = #{updatedBy,jdbcType=VARCHAR},
-			username = #{username,jdbcType=VARCHAR}
+			username = #{username,jdbcType=VARCHAR},
+			nickname = #{nickname,jdbcType=VARCHAR}
 		where id = #{id,jdbcType=BIGINT}
 	</update>
 </mapper>

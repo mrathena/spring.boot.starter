@@ -7,9 +7,9 @@ import lombok.ToString;
 import lombok.experimental.Accessors;
 
 /**
- * t_customer
+ * customer
  *
- * @author mrathena on 2019/07/27 17:52
+ * @author mrathena on 2019/07/27 23:13
  */
 @Getter
 @Setter
@@ -18,7 +18,12 @@ import lombok.experimental.Accessors;
 public class CustomerDO extends BaseDO {
 
 	/**
-	 * 	username
+	 * 	username 用户名
 	 */
 	private String username;
+
+	/**
+	 * 	nickname 昵称
+	 */
+	private String nickname;
 }
