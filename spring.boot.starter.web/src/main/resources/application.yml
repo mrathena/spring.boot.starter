@@ -6,9 +6,9 @@ mybatis:
 
 spring:
   datasource:
-    url: jdbc:mysql://172.17.46.2:3306/test
-    username: u_tpersonfin
-    password: u_tpersonfin78@78M
+    url: jdbc:mysql://192.168.0.106:3306/mrathena
+    username: root
+    password: Hhsrv587..
   devtools:
     restart:
       enabled: true
