@@ -5,14 +5,65 @@ mybatis:
   mapper-locations: classpath:/mapper/**/*.xml
 
 spring:
+
+  # datasource 数据源
   datasource:
-    url: jdbc:mysql://192.168.0.106:3306/mrathena
-    username: root
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://116.62.162.47:3306/spring.boot.starter
+      username: root
+      password: Hhsrv587..
+      hikari:
+        minimum-idle: 1
+        connection-test-query: select 1
+
+  # shardingsphere 分库分表
+  # spring.shardingsphere.datasource -> java.util.Map<String, java.util.Map<String, Object>>
+  shardingsphere:
+    datasource:
+      names: ds
+      # java.util.Map<String, java.util.Map<String, Object>>
+      ds:
+        # java.lang.Object
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://116.62.162.47:3306/spring.boot.starter
+        username: root
+        password: Hhsrv587..
+    # spring.shardingsphere.sharding.tables -> java.util.Map<String, org.apache.shardingsphere.core.yaml.config.sharding.YamlTableRuleConfiguration>
+    sharding:
+      tables:
+        t_order:
+          # org.apache.shardingsphere.core.yaml.config.sharding.YamlTableRuleConfiguration
+          logic-table: t_order
+          actual-data-nodes: ds.t_order$->{0..1}
+          table-strategy:
+            # org.apache.shardingsphere.core.yaml.config.sharding.strategy.YamlStandardShardingStrategyConfiguration
+            standard:
+              sharding-column: shard
+              precise-algorithm-class-name: com.mrathena.dao.algorithm.MonthlyShardingAlgorithm
+              range-algorithm-class-name: com.mrathena.dao.algorithm.MonthlyShardingAlgorithm
+    # spring.shardingsphere.props -> java.util.Map<String, String>
+    props:
+      sql:
+        show: true
+
+  # redis 配置
+  redis:
+    host: 116.62.162.47
+    port: 6379
     password: Hhsrv587..
+    database: 0
+    lettuce:
+      pool:
+        min-idle: 1
+        # redis连接池耗尽后再次请求连接到报错提示的最大等待时间
+        max-wait: 1s
+
+  # devtools
   devtools:
     restart:
       enabled: true
-      #设置重启的目录，添加那个目录的文件需要restart
+      # 设置重启的目录，添加那个目录的文件需要restart
       additional-paths: src/main/java
       # 默认配置下,热部署后总是报404
       poll-interval: 3000ms
