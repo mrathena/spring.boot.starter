@@ -6,17 +6,27 @@ mybatis:
 
 spring:
 
-  # datasource 数据源
-  datasource:
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://116.62.162.47:3306/spring.boot.starter
-      username: root
-      password: Hhsrv587..
-      hikari:
-        minimum-idle: 1
-        connection-test-query: select 1
+  # devtools
+  devtools:
+    restart:
+      enabled: true
+      # 设置重启的目录，添加那个目录的文件需要restart
+      additional-paths: src/main/java
+      # 默认配置下,热部署后总是报404
+      poll-interval: 3000ms
+      quiet-period: 2999ms
 
-  # shardingsphere 分库分表
+  # datasource
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://116.62.162.47:3306/spring.boot.starter
+    username: root
+    password: Hhsrv587..
+    hikari:
+      minimum-idle: 1
+      connection-test-query: select 1
+
+  # shardingsphere
   # spring.shardingsphere.datasource -> java.util.Map<String, java.util.Map<String, Object>>
   shardingsphere:
     datasource:
@@ -47,25 +57,36 @@ spring:
       sql:
         show: true
 
-  # redis 配置
+  # redis
   redis:
-    host: 116.62.162.47
-    port: 6379
     password: Hhsrv587..
     database: 0
     lettuce:
       pool:
         min-idle: 1
-        # redis连接池耗尽后再次请求连接到报错提示的最大等待时间
+        # spring.redis.lettuce.pool.max-wait -> java.time.Duration, redis连接池耗尽后再次请求连接到报错提示的最大等待时间
         max-wait: 1s
+    # cluster mode
+    # todo 这里有个问题,阿里云redis集群配置都是使用的公网,虽然能成功获取连接执行命令,但是会报[Unable to connect to 172.16.138.202:26385]这种错误,这个ip是我的内网ip...
+    cluster:
+      max-redirects: 3
+      nodes:
+        - 116.62.162.47:26381
+        - 116.62.162.47:26382
+        - 116.62.162.47:26383
+        - 116.62.162.47:26384
+        - 116.62.162.47:26385
+        - 116.62.162.47:26386
+    # sentinel mode
+#    sentinel:
+#      master: mymaster
+#      nodes:
+#        - 116.62.162.47:16579
+#        - 116.62.162.47:16580
+#        - 116.62.162.47:16581
+    # standalone mode
+#    host: 116.62.162.47
+#    port: 6379
 
-  # devtools
-  devtools:
-    restart:
-      enabled: true
-      # 设置重启的目录，添加那个目录的文件需要restart
-      additional-paths: src/main/java
-      # 默认配置下,热部署后总是报404
-      poll-interval: 3000ms
-      quiet-period: 2999ms
+
 
