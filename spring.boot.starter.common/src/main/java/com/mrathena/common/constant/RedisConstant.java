@@ -53,10 +53,9 @@ public class RedisConstant {
 	 */
 	public static final long YEAR_IN_SECONDS = MONTH_IN_SECONDS * 12;
 
-
 	/**
 	 * redis分布式锁默认超时时间(用毫秒来表示的一分钟)
 	 */
-	public static final long REDIS_LOCK_TIMEOUT = MINUTE_IN_MILLISECONDS;
+	public static final long DISTRIBUTED_LOCK_TIMEOUT = MINUTE_IN_MILLISECONDS;
 
 }
