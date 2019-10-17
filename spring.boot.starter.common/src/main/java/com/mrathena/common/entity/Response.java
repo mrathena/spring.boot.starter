@@ -17,7 +17,9 @@ import java.io.Serializable;
 public class Response<T> implements Serializable {
 
 	private boolean success;
+
 	private T result;
+
 	private String code;
 	private String message;
 
@@ -39,7 +41,7 @@ public class Response<T> implements Serializable {
 	}
 
 	public Response(String code, String message,
-	                String originalCode, String originalMessage, String originalServerIp) {
+					String originalCode, String originalMessage, String originalServerIp) {
 		this.success = false;
 		this.code = code;
 		this.message = message;

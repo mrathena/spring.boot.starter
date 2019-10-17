@@ -3,6 +3,7 @@ package com.mrathena.common.exception;
 import com.mrathena.common.constant.Constant;
 import com.mrathena.common.entity.Response;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.dubbo.rpc.RpcException;
 
 /**
@@ -13,7 +14,7 @@ public final class ExceptionHandler {
 
 	public static void main(String[] args) {
 		try {
-			throw new ServiceException(ExceptionCode.ERROR);
+			throw new ServiceException(ExceptionCodeEnum.EXCEPTION);
 		} catch (Exception e) {
 			System.out.println(ExceptionHandler.getClassAndMessageWithoutCustomizedException(e));
 			System.out.println(ExceptionHandler.getDescriptionWithoutCustomizedException(e, "你猜"));
@@ -37,9 +38,23 @@ public final class ExceptionHandler {
 			{ServiceException.class, RemoteServiceException.class};
 
 	/**
+	 * 获取异常的堆栈信息
+	 */
+	public static String getStackTrace(Throwable throwable) {
+		return ExceptionUtils.getStackTrace(throwable);
+	}
+
+	/**
+	 * 获取根源异常的堆栈信息
+	 */
+	public static String getRootCauseStackTrace(Throwable throwable) {
+		return ExceptionUtils.getStackTrace(ExceptionUtils.getRootCause(throwable));
+	}
+
+	/**
 	 * 获取Exception的类名和信息
 	 * java.lang.NullPointerException: null
-	 * com.mrathena.common.exception.ExceptionCode: 客户不存在
+	 * com.mrathena.common.exception.ExceptionCodeEnum: 客户不存在
 	 */
 	public static String getClassAndMessage(Exception exception) {
 		return exception.getClass().getName() + Constant.COLON + Constant.BLANK + exception.getMessage();
@@ -69,7 +84,7 @@ public final class ExceptionHandler {
 	/**
 	 * 获取异常描述信息
 	 * 获取客户信息异常[java.lang.NullPointerException: null]
-	 * 获取客户信息异常[com.mrathena.common.exception.ExceptionCode: 客户不存在]
+	 * 获取客户信息异常[com.mrathena.common.exception.ExceptionCodeEnum: 客户不存在]
 	 */
 	public static String getDescription(Exception exception, String content) {
 		return content + Constant.L_BRACKET + getClassAndMessage(exception) + Constant.R_BRACKET;
@@ -87,9 +102,9 @@ public final class ExceptionHandler {
 	/**
 	 * 判断异常是否为Dubbo的 timeout 异常
 	 */
-	public static boolean isRpcTimeoutException(Exception exception) {
-		if (exception instanceof RpcException) {
-			RpcException rpcException = (RpcException) exception;
+	public static boolean isDubboTimeoutException(Throwable throwable) {
+		if (throwable instanceof RpcException) {
+			RpcException rpcException = (RpcException) throwable;
 			return rpcException.isTimeout();
 		}
 		return false;
@@ -98,9 +113,9 @@ public final class ExceptionHandler {
 	/**
 	 * 判断异常是否为Dubbo的 no provider available 异常
 	 */
-	public static boolean isRpcUnavailableException(Exception exception) {
-		if (exception instanceof RpcException) {
-			RpcException rpcException = (RpcException) exception;
+	public static boolean isDubboUnavailableException(Throwable throwable) {
+		if (throwable instanceof RpcException) {
+			RpcException rpcException = (RpcException) throwable;
 			return rpcException.isNoInvokerAvailableAfterFilter();
 		}
 		return false;
@@ -113,7 +128,7 @@ public final class ExceptionHandler {
 	public static <T> Response<T> handleBizException(Exception exception) {
 		Response<T> response = new Response<>();
 		if (exception instanceof IllegalArgumentException) {
-			response.setCode(ExceptionCode.ILLEGAL_ARGUMENT.name());
+			response.setCode(ExceptionCodeEnum.ILLEGAL_ARGUMENT.name());
 			response.setMessage(exception.getMessage());
 		} else if (exception instanceof ServiceException) {
 			ServiceException serviceException = (ServiceException) exception;
@@ -124,29 +139,10 @@ public final class ExceptionHandler {
 			response.setCode(remoteServiceException.getCode());
 			response.setMessage(remoteServiceException.getMessage());
 		} else {
-			response.setCode(ExceptionCode.ERROR.name());
-			response.setMessage(ExceptionCode.ERROR.getDesc());
+			response.setCode(ExceptionCodeEnum.EXCEPTION.name());
+			response.setMessage(ExceptionCodeEnum.EXCEPTION.getMessage());
 		}
 		return response;
-	}
-
-	/**
-	 * RPC服务调用异常的默认处理方式
-	 * throw ExceptionHandler.handleRpcException(e);
-	 */
-	public static RuntimeException handleRpcException(Exception exception) {
-		String message = ExceptionHandler.getClassAndMessageWithoutCustomizedException(exception);
-		log.info(message);
-		log.error(message, exception);
-		if (ExceptionHandler.isRpcUnavailableException(exception)) {
-			return RemoteServiceException.unavailable("接口服务不可用");
-		} else if (ExceptionHandler.isRpcTimeoutException(exception)) {
-			return RemoteServiceException.timeout("接口调用超时");
-		} else if (exception instanceof RemoteServiceException) {
-			return (RemoteServiceException) exception;
-		} else {
-			return new ServiceException(ExceptionCode.INTEGRATION_ERROR.name(), exception.getMessage());
-		}
 	}
 
 }
