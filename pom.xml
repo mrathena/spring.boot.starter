@@ -84,10 +84,10 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-			<!-- Apache Dubbo Dependencies -->
+			<!-- Apache Dubbo Zookeeper Dependencies, 无需 dubbo-dependencies-bom 了 -->
 			<dependency>
 				<groupId>org.apache.dubbo</groupId>
-				<artifactId>dubbo-dependencies-bom</artifactId>
+				<artifactId>dubbo-dependencies-zookeeper</artifactId>
 				<version>2.7.1</version>
 				<type>pom</type>
 				<scope>import</scope>

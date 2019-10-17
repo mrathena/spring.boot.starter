@@ -12,7 +12,13 @@
 	<artifactId>spring.boot.starter.api</artifactId>
 
 	<dependencies>
-		<!--Api模块为了干净,不引入任何依赖-->
+		<!--Module-->
+		<dependency>
+			<groupId>com.mrathena</groupId>
+			<artifactId>spring.boot.starter.common</artifactId>
+		</dependency>
+		<!--Other-->
+		<!--Api模块为了干净,不再引入任何依赖-->
 	</dependencies>
 
 </project>
