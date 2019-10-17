@@ -15,7 +15,7 @@
 		<module>spring.boot.starter.common</module>
 		<module>spring.boot.starter.dao</module>
 		<module>spring.boot.starter.manager</module>
-		<module>spring.boot.starter.rpc</module>
+		<module>spring.boot.starter.remote</module>
 		<module>spring.boot.starter.api</module>
 		<module>spring.boot.starter.biz</module>
 		<module>spring.boot.starter.message</module>
@@ -43,7 +43,7 @@
 			</dependency>
 			<dependency>
 				<groupId>${project.groupId}</groupId>
-				<artifactId>spring.boot.starter.rpc</artifactId>
+				<artifactId>spring.boot.starter.remote</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>

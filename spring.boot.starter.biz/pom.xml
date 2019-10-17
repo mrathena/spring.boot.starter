@@ -19,7 +19,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.mrathena</groupId>
-			<artifactId>spring.boot.starter.rpc</artifactId>
+			<artifactId>spring.boot.starter.remote</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.mrathena</groupId>
