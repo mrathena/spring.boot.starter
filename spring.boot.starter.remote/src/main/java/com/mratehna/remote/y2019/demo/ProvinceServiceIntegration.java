@@ -22,7 +22,7 @@ import java.util.List;
 public class ProvinceServiceIntegration {
 
 	@Reference(interfaceClass = ProvinceService.class,
-			version = "1.0.0",
+			check = false,
 			timeout = 1000,
 			methods = {
 					@Method(name = "queryAllProvince", timeout = 3000, retries = 0),
