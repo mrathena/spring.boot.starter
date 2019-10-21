@@ -29,4 +29,9 @@ public class Constant {
 	public static final String AND = "&";
 	public static final String QUESTION = "?";
 
+	/**
+	 * 透传日志号
+	 */
+	public static final String TRACE = "TRACE_NO";
+
 }

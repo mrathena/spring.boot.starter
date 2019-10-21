@@ -1,4 +1,4 @@
-package com.mrathena.common.configuration;
+package com.mrathena.configuration;
 
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
