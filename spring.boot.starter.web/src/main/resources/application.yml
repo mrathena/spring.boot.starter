@@ -93,4 +93,20 @@ spring:
 #    port: 6379
 
 
+dubbo:
+  application:
+    name: spring.boot.starter
+  registry:
+    protocol: zookeeper
+    address: 172.17.45.14:2181
+  protocol:
+    name: dubbo
+    port: 20880
+  consumer:
+    timeout: 1000
+    retries: 0
+    loadbalance: leastactive
+    check: false
+  monitor:
+    protocol: registry
 

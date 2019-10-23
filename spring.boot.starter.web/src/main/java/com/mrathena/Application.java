@@ -1,7 +1,6 @@
 package com.mrathena;
 
 import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
-import org.apache.dubbo.config.spring.context.annotation.EnableDubboConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
@@ -10,10 +9,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 /**
  * @author mrathena on 2019/7/27 16:00
  */
+@EnableDubbo
 @EnableCaching
 @EnableScheduling
-@EnableDubboConfig
-@EnableDubbo
 @SpringBootApplication
 public class Application {
 

@@ -1,7 +1,0 @@
-dubbo:
-  application:
-    name: spring.boot.starter.dubbo.consumer
-  registry:
-    address: zookeeper://172.17.45.14:2181
-  consumer:
-    timeout: 1000
