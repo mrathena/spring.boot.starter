@@ -1,4 +1,4 @@
-package com.mratehna.remote.y2019.demo;
+package com.mrathena.remote.y2019.demo;
 
 import com.bestpay.basic.service.ProvinceService;
 import com.bestpay.basic.service.request.BasicRequest;
@@ -8,7 +8,6 @@ import com.bestpay.basic.service.response.QueryCityResponse;
 import com.bestpay.basic.service.response.QueryProvinceResponse;
 import com.mrathena.common.exception.ExceptionHandler;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.dubbo.config.annotation.Method;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.stereotype.Component;
 
@@ -19,18 +18,12 @@ import java.util.List;
  */
 @Slf4j
 @Component
-public class ProvinceServiceIntegration {
+public class ProvinceCityServiceIntegration {
 
-	@Reference(interfaceClass = ProvinceService.class,
-			check = false,
-			timeout = 1000,
-			methods = {
-					@Method(name = "queryAllProvince", timeout = 3000, retries = 0),
-					@Method(name = "queryCityByPrivinceCode", timeout = 3000, retries = 0)
-			})
+	@Reference(interfaceClass = ProvinceService.class)
 	private ProvinceService service;
 
-	public BasicResponse<List<QueryProvinceResponse>> queryAllProvince(BasicRequest request) {
+	public BasicResponse<List<QueryProvinceResponse>> queryProvinceList(BasicRequest request) {
 		long begin = System.currentTimeMillis();
 		try {
 			log.info("[REMOTE:REQUEST:{}]", request);
@@ -47,7 +40,7 @@ public class ProvinceServiceIntegration {
 		}
 	}
 
-	public BasicResponse<List<QueryCityResponse>> queryCityByProvinceCode(QueryCityRequest request) {
+	public BasicResponse<List<QueryCityResponse>> queryCityListByProvinceCode(QueryCityRequest request) {
 		long begin = System.currentTimeMillis();
 		try {
 			log.info("[REMOTE:REQUEST:{}]", request);

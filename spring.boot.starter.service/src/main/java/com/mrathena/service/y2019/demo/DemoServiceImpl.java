@@ -9,6 +9,7 @@ import com.mrathena.spring.boot.starter.api.y2019.demo.DemoReqDto;
 import com.mrathena.spring.boot.starter.api.y2019.demo.DemoResDto;
 import com.mrathena.spring.boot.starter.api.y2019.demo.DemoService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.dubbo.config.annotation.Service;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author mrathena on 2019/10/17 21:58
  */
 @Slf4j
-//@Service(version = "1.0.0")
+@Service
 public class DemoServiceImpl implements DemoService {
 
 	@Autowired

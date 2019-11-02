@@ -20,7 +20,7 @@ public final class RemoteServiceException extends RuntimeException {
 	/**
 	 * 用于主动捕获
 	 */
-	private RemoteServiceException(Throwable throwable) {
+	public RemoteServiceException(Throwable throwable) {
 		super(throwable.getMessage(), throwable);
 		if (throwable instanceof RemoteServiceException) {
 			RemoteServiceException exception = (RemoteServiceException) throwable;
@@ -43,7 +43,7 @@ public final class RemoteServiceException extends RuntimeException {
 	 * 用于主动抛出
 	 * Unavailable和Timeout两种异常都是通过传入Throwable判断出来的,主动抛出的都是Failure
 	 */
-	private RemoteServiceException(String message, String description) {
+	public RemoteServiceException(String message, String description) {
 		super(message);
 		this.code = ExceptionCodeEnum.REMOTE_SERVICE_INVOKE_FAILURE.name();
 		this.description = description;

@@ -95,6 +95,7 @@ spring:
 
 dubbo:
   application:
+    id: spring.boot.starter
     name: spring.boot.starter
   registry:
     protocol: zookeeper
@@ -107,6 +108,4 @@ dubbo:
     retries: 0
     loadbalance: leastactive
     check: false
-  monitor:
-    protocol: registry
 
