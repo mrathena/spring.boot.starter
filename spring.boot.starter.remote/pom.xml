@@ -2,47 +2,63 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<artifactId>spring.boot.starter</artifactId>
 		<groupId>com.mrathena</groupId>
 		<version>1.0.0</version>
 	</parent>
-	<modelVersion>4.0.0</modelVersion>
-
 	<artifactId>spring.boot.starter.remote</artifactId>
-
 	<dependencies>
-		<!--Module-->
+		<!--module-->
 		<dependency>
 			<groupId>com.mrathena</groupId>
 			<artifactId>spring.boot.starter.common</artifactId>
 		</dependency>
-		<!--Other-->
-		<!--Zookeeper-->
+		<!--zookeeper,curator,dubbo-->
 		<dependency>
 			<groupId>org.apache.zookeeper</groupId>
 			<artifactId>zookeeper</artifactId>
+			<version>3.4.8</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.slf4j</groupId>
 					<artifactId>slf4j-api</artifactId>
 				</exclusion>
 				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>
+				<exclusion>
 					<groupId>org.slf4j</groupId>
 					<artifactId>slf4j-log4j12</artifactId>
 				</exclusion>
 				<exclusion>
-					<groupId>log4j</groupId>
-					<artifactId>log4j</artifactId>
+					<groupId>junit</groupId>
+					<artifactId>junit</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<!--Curator是操作高于2.6.x版本zk的工具-->
 		<dependency>
 			<groupId>org.apache.curator</groupId>
 			<artifactId>curator-recipes</artifactId>
+			<version>2.12.0</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.google.guava</groupId>
+					<artifactId>guava</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
-		<!--dubbo consumer-->
+		<dependency>
+			<groupId>org.apache.dubbo</groupId>
+			<artifactId>dubbo-spring-boot-starter</artifactId>
+			<version>2.7.4.1</version>
+		</dependency>
 		<!--com.bestpay.base:bas-service-api-->
 		<dependency>
 			<groupId>com.bestpay.base</groupId>
@@ -64,6 +80,69 @@
 				<exclusion>
 					<artifactId>validation-api</artifactId>
 					<groupId>javax.validation</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.bestpay.marketing</groupId>
+			<artifactId>marketing-api</artifactId>
+			<version>1.50.1-SNAPSHOT</version>
+			<exclusions>
+				<exclusion>
+					<groupId>cn.com.bestpay</groupId>
+					<artifactId>commons</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-validator</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.alibaba</groupId>
+					<artifactId>fastjson</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.bestpay.mbp</groupId>
+					<artifactId>mbp-output-gateway-api</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.curator</groupId>
+					<artifactId>curator-recipes</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.github.sgroschupf</groupId>
+					<artifactId>zkclient</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.bestpay.mbp</groupId>
+					<artifactId>mbp-mapi-api</artifactId>
+				</exclusion>
+				<exclusion>
+					<artifactId>logback-classic</artifactId>
+					<groupId>ch.qos.logback</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>log4j-over-slf4j</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>slf4j-api</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>zookeeper</artifactId>
+					<groupId>org.apache.zookeeper</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>lombok</artifactId>
+					<groupId>org.projectlombok</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>lombok</artifactId>
+					<groupId>org.projectlombok</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>com.github.sgroschupf</artifactId>
+					<groupId>zkclient</groupId>
 				</exclusion>
 			</exclusions>
 		</dependency>

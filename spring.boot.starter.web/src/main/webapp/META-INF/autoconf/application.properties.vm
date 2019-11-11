@@ -1,0 +1,71 @@
+
+spring.application.name=spring.boot.starter
+
+# datasource
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.url=${spring.datasource.url}
+spring.datasource.username=${spring.datasource.username}
+spring.datasource.password=${spring.datasource.password}
+spring.datasource.hikari.maximum-pool-size=10
+spring.datasource.hikari.minimum-idle=10
+
+# sharding datasource
+spring.shardingsphere.datasource.names=ds
+spring.shardingsphere.datasource.ds.type=com.zaxxer.hikari.HikariDataSource
+spring.shardingsphere.datasource.ds.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.shardingsphere.datasource.ds.jdbc-url=${spring.datasource.url}
+spring.shardingsphere.datasource.ds.username=${spring.datasource.username}
+spring.shardingsphere.datasource.ds.password=${spring.datasource.password}
+# demo_yearly
+spring.shardingsphere.sharding.tables.demo_yearly.logic-table=demo_yearly
+spring.shardingsphere.sharding.tables.demo_yearly.actual-data-nodes=ds.demo_yearly_$->{2019..2020}
+spring.shardingsphere.sharding.tables.demo_yearly.table-strategy.standard.sharding-column=shard
+spring.shardingsphere.sharding.tables.demo_yearly.table-strategy.standard.precise-algorithm-class-name=com.bestpay.dao.algorithm.YearlyShardingAlgorithm
+spring.shardingsphere.sharding.tables.demo_yearly.table-strategy.standard.range-algorithm-class-name=com.bestpay.dao.algorithm.YearlyShardingAlgorithm
+# demo_monthly
+spring.shardingsphere.sharding.tables.demo_monthly.logic-table=demo_monthly
+spring.shardingsphere.sharding.tables.demo_monthly.actual-data-nodes=ds.demo_monthly_$->{201911..201912}
+spring.shardingsphere.sharding.tables.demo_monthly.table-strategy.standard.sharding-column=shard
+spring.shardingsphere.sharding.tables.demo_monthly.table-strategy.standard.precise-algorithm-class-name=com.bestpay.dao.algorithm.MonthlyShardingAlgorithm
+spring.shardingsphere.sharding.tables.demo_monthly.table-strategy.standard.range-algorithm-class-name=com.bestpay.dao.algorithm.MonthlyShardingAlgorithm
+spring.shardingsphere.props.sql.show=${spring.shardingsphere.props.sql.show}
+
+# mybatis
+mybatis.mapper-locations=classpath:/mapper/**/*.xml
+
+# redis
+# 开发: 3主3从, 主:46.11:36379,46.11:36381,45.12:36381, 从:45.12:36379->45.12:36381,45.13:36379->46.11:36381,45.13:36381->46.11:36379
+spring.redis.cluster.max-redirects=3
+spring.redis.cluster.nodes=${spring.redis.cluster.nodes}
+spring.redis.lettuce.pool.max-active=50
+spring.redis.lettuce.pool.max-idle=50
+spring.redis.lettuce.pool.min-idle=50
+
+# dubbo
+dubbo.application.name=spring.boot.starter
+dubbo.application.dump-directory=/data/dataLogs/dump
+dubbo.registry.protocol=zookeeper
+dubbo.registry.address=${dubbo.registry.address}
+dubbo.protocol.name=dubbo
+dubbo.protocol.port=20880
+dubbo.protocol.threads=1000
+dubbo.protocol.dispatcher=message
+dubbo.monitor.protocol=registry
+dubbo.consumer.timeout=1000
+dubbo.consumer.retries=0
+dubbo.consumer.check=false
+
+# kafka
+spring.kafka.bootstrap.servers.hx=${spring.kafka.bootstrap.servers.hx}
+spring.kafka.bootstrap.servers.tech=${spring.kafka.bootstrap.servers.tech}
+spring.kafka.bootstrap.servers.v3=${spring.kafka.bootstrap.servers.v3}
+
+
+
+
+
+
+
+
+
+

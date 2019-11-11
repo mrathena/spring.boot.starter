@@ -1,5 +1,6 @@
 package com.mrathena.common.exception;
 
+import com.bestpay.dubbo.result.Result;
 import com.mrathena.common.constant.Constant;
 import com.mrathena.common.entity.Response;
 import lombok.extern.slf4j.Slf4j;
@@ -143,6 +144,48 @@ public final class ExceptionHandler {
 			response.setMessage(ExceptionCodeEnum.EXCEPTION.getMessage());
 		}
 		return response;
+	}
+
+	/**
+	 * 统一处理异常
+	 * return ExceptionHandler.handleBizException(e);
+	 */
+	public static <T> Result<T> handleBusinessException(Exception exception) {
+		Result<T> response = new Result<>();
+		if (exception instanceof IllegalArgumentException) {
+			response.setErrorCode(ExceptionCodeEnum.ILLEGAL_ARGUMENT.name());
+			response.setErrorMsg(exception.getMessage());
+		} else if (exception instanceof ServiceException) {
+			ServiceException serviceException = (ServiceException) exception;
+			response.setErrorCode(serviceException.getCode());
+			response.setErrorMsg(serviceException.getMessage());
+		} else if (exception instanceof RemoteServiceException) {
+			RemoteServiceException remoteServiceException = (RemoteServiceException) exception;
+			response.setErrorCode(remoteServiceException.getCode());
+			response.setErrorMsg(remoteServiceException.getMessage());
+		} else {
+			response.setErrorCode(ExceptionCodeEnum.EXCEPTION.name());
+			response.setErrorMsg(ExceptionCodeEnum.EXCEPTION.getMessage());
+		}
+		return response;
+	}
+
+	/**
+	 * 常规阻断校验异常类集合(这些报错不能算是接口请求失败)
+	 */
+	private static final Class[] NORMAL_BLOCKING_EXCEPTION_CLASS_ARRAY =
+			{ServiceException.class, IllegalArgumentException.class};
+
+	/**
+	 * 判断是否为常规阻断校验异常
+	 */
+	public static boolean isNormalBlockingException(Throwable throwable) {
+		for (Class customizedExceptionClass : NORMAL_BLOCKING_EXCEPTION_CLASS_ARRAY) {
+			if (customizedExceptionClass.isInstance(throwable)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

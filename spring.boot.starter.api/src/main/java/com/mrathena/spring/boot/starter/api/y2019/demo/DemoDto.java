@@ -5,18 +5,21 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
- * @author mrathena on 2019/10/17 21:46
+ * @author mrathena on 2019/11/7 17:20
  */
 @Getter
 @Setter
-@ToString(callSuper = true)
+@ToString
 public class DemoDto implements Serializable {
 
 	private Long id;
-	private String username;
-	private Integer age;
-	private Boolean male;
+	private Date createdAt;
+	private String createdBy;
+	private Date updatedAt;
+	private String updatedBy;
+	private String demo;
 
 }

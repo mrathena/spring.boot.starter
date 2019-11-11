@@ -29,9 +29,11 @@ public class Constant {
 	public static final String AND = "&";
 	public static final String QUESTION = "?";
 
-	/**
-	 * 透传日志号
-	 */
-	public static final String TRACE = "TRACE_NO";
+	public static final String SYSTEM = "SYSTEM";
+
+	public static final String SUCCESS = "SUCCESS";
+	public static final String FAILURE = "FAILURE";
+	public static final String PENDING = "PENDING";
+	public static final String EXCEPTION = "EXCEPTION";
 
 }

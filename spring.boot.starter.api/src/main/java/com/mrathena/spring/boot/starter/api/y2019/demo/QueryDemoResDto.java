@@ -1,0 +1,19 @@
+package com.mrathena.spring.boot.starter.api.y2019.demo;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+import java.io.Serializable;
+
+/**
+ * @author mrathena on 2019/10/17 21:46
+ */
+@Getter
+@Setter
+@ToString(callSuper = true)
+public class QueryDemoResDto implements Serializable {
+
+	private String demo;
+
+}

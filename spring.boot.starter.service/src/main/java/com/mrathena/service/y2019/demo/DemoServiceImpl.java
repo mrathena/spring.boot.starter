@@ -1,71 +1,97 @@
 package com.mrathena.service.y2019.demo;
 
+import com.bestpay.dubbo.result.Result;
 import com.mrathena.biz.y2019.demo.DemoBiz;
 import com.mrathena.common.constant.Constant;
-import com.mrathena.common.entity.Response;
 import com.mrathena.common.exception.ExceptionHandler;
-import com.mrathena.common.toolkit.IdKit;
-import com.mrathena.spring.boot.starter.api.y2019.demo.DemoReqDto;
-import com.mrathena.spring.boot.starter.api.y2019.demo.DemoResDto;
-import com.mrathena.spring.boot.starter.api.y2019.demo.DemoService;
+import com.mrathena.common.toolkit.LogKit;
+import com.mrathena.spring.boot.starter.api.BasePageResDto;
+import com.mrathena.spring.boot.starter.api.y2019.demo.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.Service;
 import org.slf4j.MDC;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
 
 /**
- * @author mrathena on 2019/10/17 21:58
+ * @author mrathena on 2019/11/7 18:00
  */
 @Slf4j
 @Service
+@Component
 public class DemoServiceImpl implements DemoService {
 
-	@Autowired
+	@Resource
 	private DemoBiz demoBiz;
 
-	/**
-	 * demoMethod
-	 */
 	@Override
-	public Response<DemoResDto> demoMethod(DemoReqDto request) {
-		MDC.put(Constant.TRACE, request.getTraceNo());
+	public Result<Boolean> createDemo(CreateDemoReqDto request) {
+		LogKit.setTraceNo(request.getTraceNo());
 		long begin = System.currentTimeMillis();
 		try {
-			log.info("[REQUEST:{}]", request);
-			Response<DemoResDto> response = new Response<>(demoBiz.demoMethod(request));
+			log.info("REQUEST:{}", request);
+			Result<Boolean> response = new Result<>(demoBiz.createDemo(request));
 			long interval = System.currentTimeMillis() - begin;
-			log.info("[SUCCESS:{}ms], [REQUEST:{}], [RESPONSE:{}]", interval, request, response);
+			log.info("[{}ms][SUCCESS][SUCCESS] REQUEST:{} RESPONSE:{}", interval, request, response);
 			return response;
 		} catch (Exception e) {
+			Result<Boolean> response = ExceptionHandler.handleBusinessException(e);
 			long interval = System.currentTimeMillis() - begin;
-			String message = ExceptionHandler.getClassAndMessageWithoutCustomizedException(e);
-			log.info("[EXCEPTION:{}ms], [REQUEST:{}], [MESSAGE:{}]", interval, request, message);
-			log.error("[EXCEPTION:{}ms], [REQUEST:{}], [MESSAGE:{}]", interval, request, message, e);
-			return ExceptionHandler.handleBizException(e);
+			String status = ExceptionHandler.isNormalBlockingException(e) ? Constant.SUCCESS : Constant.EXCEPTION;
+			String codeMsg = response.getErrorCode() + Constant.COLON + response.getErrorMsg();
+			String message = ExceptionHandler.getStackTrace(e);
+			log.info("[{}ms][{}][{}] REQUEST:{} EXCEPTION:{}", interval, status, codeMsg, request, message);
+			log.error("[{}ms][{}][{}] REQUEST:{} EXCEPTION:", interval, status, codeMsg, request, e);
+			return response;
 		} finally {
 			MDC.clear();
 		}
 	}
 
-	/**
-	 * demoMethod2
-	 */
 	@Override
-	public Response<String> demoMethod2(String request) {
-		MDC.put(Constant.TRACE, IdKit.getSerialNo());
+	public Result<QueryDemoResDto> queryDemo(QueryDemoReqDto request) {
+		LogKit.setTraceNo(request.getTraceNo());
 		long begin = System.currentTimeMillis();
 		try {
-			log.info("[REQUEST:{}]", request);
-			Response<String> response = new Response<>(request);
+			log.info("REQUEST:{}", request);
+			Result<QueryDemoResDto> response = new Result<>(demoBiz.queryDemo(request));
 			long interval = System.currentTimeMillis() - begin;
-			log.info("[SUCCESS:{}ms], [REQUEST:{}], [RESPONSE:{}]", interval, request, response);
-			return new Response<>(request);
+			log.info("[{}ms][SUCCESS][SUCCESS] REQUEST:{} RESPONSE:{}", interval, request, response);
+			return response;
 		} catch (Exception e) {
+			Result<QueryDemoResDto> response = ExceptionHandler.handleBusinessException(e);
 			long interval = System.currentTimeMillis() - begin;
-			String message = ExceptionHandler.getClassAndMessageWithoutCustomizedException(e);
-			log.info("[EXCEPTION:{}ms], [REQUEST:{}], [MESSAGE:{}]", interval, request, message);
-			log.error("[EXCEPTION:{}ms], [REQUEST:{}], [MESSAGE:{}]", interval, request, message, e);
-			return ExceptionHandler.handleBizException(e);
+			String status = ExceptionHandler.isNormalBlockingException(e) ? Constant.SUCCESS : Constant.EXCEPTION;
+			String codeMsg = response.getErrorCode() + Constant.COLON + response.getErrorMsg();
+			String message = ExceptionHandler.getStackTrace(e);
+			log.info("[{}ms][{}][{}] REQUEST:{} EXCEPTION:{}", interval, status, codeMsg, request, message);
+			log.error("[{}ms][{}][{}] REQUEST:{} EXCEPTION:", interval, status, codeMsg, request, e);
+			return response;
+		} finally {
+			MDC.clear();
+		}
+	}
+
+	@Override
+	public Result<BasePageResDto<DemoDto>> queryDemoWithPage(QueryDemoReqDto request) {
+		LogKit.setTraceNo(request.getTraceNo());
+		long begin = System.currentTimeMillis();
+		try {
+			log.info("REQUEST:{}", request);
+			Result<BasePageResDto<DemoDto>> response = new Result<>(demoBiz.queryDemoWithPage(request));
+			long interval = System.currentTimeMillis() - begin;
+			log.info("[{}ms][SUCCESS][SUCCESS] REQUEST:{} RESPONSE:{}", interval, request, response);
+			return response;
+		} catch (Exception e) {
+			Result<BasePageResDto<DemoDto>> response = ExceptionHandler.handleBusinessException(e);
+			long interval = System.currentTimeMillis() - begin;
+			String status = ExceptionHandler.isNormalBlockingException(e) ? Constant.SUCCESS : Constant.EXCEPTION;
+			String codeMsg = response.getErrorCode() + Constant.COLON + response.getErrorMsg();
+			String message = ExceptionHandler.getStackTrace(e);
+			log.info("[{}ms][{}][{}] REQUEST:{} EXCEPTION:{}", interval, status, codeMsg, request, message);
+			log.error("[{}ms][{}][{}] REQUEST:{} EXCEPTION:", interval, status, codeMsg, request, e);
+			return response;
 		} finally {
 			MDC.clear();
 		}

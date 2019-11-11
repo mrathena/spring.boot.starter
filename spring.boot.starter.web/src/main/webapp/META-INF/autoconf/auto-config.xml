@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<group name="logback">
+		<property name="logback.appender.encoder.pattern" defaultValue="[%date{yyyyMMdd.HHmmss.SSS}][%-4level][%class{1}.%method:%line][%X{TRACE}] %message%n"/>
+		<property name="logback.appender.filter.onMismatch" defaultValue="NEUTRAL" description="日志过滤器不匹配时处理规则"/>
+	</group>
+	<group name="datasource">
+		<property name="spring.datasource.url" defaultValue="jdbc:mysql://172.17.46.2:3306/redbag"/>
+		<property name="spring.datasource.username" defaultValue="redbag"/>
+		<property name="spring.datasource.password" defaultValue="redbag78@78M"/>
+	</group>
+	<group name="shardingsphere">
+		<property name="spring.shardingsphere.props.sql.show" defaultValue="true"/>
+	</group>
+	<group name="redis">
+		<property name="spring.redis.cluster.nodes" defaultValue="172.17.46.11:36379,172.17.46.11:36381,172.17.45.12:36379,172.17.45.12:36381,172.17.45.13:36379,172.17.45.13:36381"/>
+	</group>
+	<group name="dubbo">
+		<property name="dubbo.registry.address" defaultValue="172.17.45.14:2181"/>
+	</group>
+	<group name="kafka">
+		<property name="spring.kafka.bootstrap.servers.hx" defaultValue="172.17.46.14:9092"/>
+		<property name="spring.kafka.bootstrap.servers.tech" defaultValue="172.17.46.14:9092"/>
+		<property name="spring.kafka.bootstrap.servers.v3" defaultValue="172.17.46.14:9092"/>
+	</group>
+	<script>
+		<generate template="application.properties.vm" destfile="WEB-INF/classes/application.properties" charset="UTF-8"/>
+		<generate template="logback.xml.vm" destfile="WEB-INF/classes/logback.xml" charset="UTF-8"/>
+	</script>
+</config>

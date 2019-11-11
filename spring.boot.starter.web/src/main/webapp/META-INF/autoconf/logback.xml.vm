@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+
+	<appender name="normal" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>/data/appLogs/spring.boot.starter.log</File>
+		<encoder>
+			<Pattern>${logback.appender.encoder.pattern}</Pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>/data/appLogs/spring.boot.starter.%d{yyyyMMdd}.%i.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+			<TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>512MB</maxFileSize>
+			</TimeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<!--ACCEPT:日志被立即处理,DENY:日志被立即抛弃,NEUTRAL:日志被交给下一个过滤器处理-->
+		<!--配置INFO和DEBUG两个过滤器,通过配置INFO过滤器的onMismatch标签为DENY/NEUTRAL,实现生产只输出INFO,其他则输出INFO和DEBUG的效果-->
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>INFO</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>${logback.appender.filter.onMismatch}</onMismatch>
+		</filter>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>DEBUG</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+	</appender>
+
+	<appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>/data/appLogs/spring.boot.starter-error.log</File>
+		<encoder>
+			<Pattern>${logback.appender.encoder.pattern}</Pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>/data/appLogs/spring.boot.starter.error.%d{yyyyMMdd}.%i.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+			<TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>512MB</maxFileSize>
+			</TimeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+	</appender>
+
+	<logger name="com.apache.dubbo" level="info"/>
+
+	<!--没有引用的appender将不会生效,最终高于或等于level配置的等级的日志才会被输出-->
+	<root level="debug">
+		<appender-ref ref="normal"/>
+		<appender-ref ref="error"/>
+	</root>
+
+</configuration>
