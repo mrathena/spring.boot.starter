@@ -23,5 +23,17 @@
 			<groupId>com.mrathena</groupId>
 			<artifactId>spring.boot.starter.api</artifactId>
 		</dependency>
+		<!--mapstruct-->
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+			<version>1.3.1.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct-processor</artifactId>
+			<version>1.3.1.Final</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 </project>

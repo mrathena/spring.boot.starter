@@ -15,8 +15,6 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * @author mrathena on 2019/11/7 15:49
@@ -27,6 +25,8 @@ public class DemoBiz {
 
 	@Resource
 	private DemoManager demoManager;
+	@Resource
+	private DemoConverter demoConverter;
 
 	public boolean createDemo(CreateDemoReqDto request) {
 		DemoDO demoDO = new DemoDO();
@@ -46,21 +46,7 @@ public class DemoBiz {
 
 	public BasePageResDto<DemoDto> queryDemoWithPage(QueryDemoReqDto request) throws Exception {
 		PageInfo<DemoDO> page = demoManager.queryDemoListByMapWithPage(ParameterKit.beanToMap(request), request.getPageSize(), request.getPageNo());
-		BasePageResDto<DemoDto> result = new BasePageResDto<>();
-		result.setTotal(page.getTotal());
-		List<DemoDto> demoDtoList = new LinkedList<>();
-		for (DemoDO demoDO : page.getList()) {
-			DemoDto demoDto = new DemoDto();
-			demoDto.setId(demoDO.getId());
-			demoDto.setCreatedAt(demoDO.getCreatedAt());
-			demoDto.setCreatedBy(demoDO.getCreatedBy());
-			demoDto.setUpdatedAt(demoDO.getUpdatedAt());
-			demoDto.setUpdatedBy(demoDO.getUpdatedBy());
-			demoDto.setDemo(demoDO.getDemo());
-			demoDtoList.add(demoDto);
-		}
-		result.setList(demoDtoList);
-		return result;
+		return new BasePageResDto<>(page.getTotal(), demoConverter.to(page.getList()));
 	}
 
 }

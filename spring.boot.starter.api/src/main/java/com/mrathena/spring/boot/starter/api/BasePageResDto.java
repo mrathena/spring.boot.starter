@@ -1,8 +1,6 @@
 package com.mrathena.spring.boot.starter.api;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
@@ -16,6 +14,8 @@ import java.util.List;
 @Setter
 @ToString
 @Accessors(chain = true)
+@NoArgsConstructor
+@AllArgsConstructor
 public class BasePageResDto<T> implements Serializable {
 
 	/**
