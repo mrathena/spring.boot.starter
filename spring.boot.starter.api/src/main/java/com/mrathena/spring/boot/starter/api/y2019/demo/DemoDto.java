@@ -22,4 +22,6 @@ public class DemoDto implements Serializable {
 	private String updatedBy;
 	private String demo;
 
+	private String anotherDemo;
+
 }
