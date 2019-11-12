@@ -1,38 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mrathena.dao.mapper.y2019.customer.CustomerMapper">
-	<resultMap id="BaseResultMap" type="com.mrathena.dao.entity.y2019.customer.CustomerDO">
+<mapper namespace="com.mrathena.dao.mapper.y2019.demo.DemoMapper">
+	<resultMap id="BaseResultMap" type="com.mrathena.dao.entity.y2019.demo.DemoDO">
 		<id column="id" jdbcType="BIGINT" property="id" />
 		<result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
 		<result column="created_by" jdbcType="VARCHAR" property="createdBy" />
 		<result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
 		<result column="updated_by" jdbcType="VARCHAR" property="updatedBy" />
-		<result column="username" jdbcType="VARCHAR" property="username" />
-		<result column="nickname" jdbcType="VARCHAR" property="nickname" />
+		<result column="demo" jdbcType="VARCHAR" property="demo" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, created_at, created_by, updated_at, updated_by, username, nickname
+		id, created_at, created_by, updated_at, updated_by, demo
 	</sql>
 	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
 		select 
 		<include refid="Base_Column_List" />
-		from customer
+		from demo
 		where id = #{id,jdbcType=BIGINT}
 	</select>
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-		delete from customer
+		delete from demo
 		where id = #{id,jdbcType=BIGINT}
 	</delete>
-	<insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.mrathena.dao.entity.y2019.customer.CustomerDO" useGeneratedKeys="true">
-		insert into customer (created_at, created_by, updated_at, 
-			updated_by, username, nickname
-			)
+	<insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.mrathena.dao.entity.y2019.demo.DemoDO" useGeneratedKeys="true">
+		insert into demo (created_at, created_by, updated_at, 
+			updated_by, demo)
 		values (#{createdAt,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=VARCHAR}, #{updatedAt,jdbcType=TIMESTAMP}, 
-			#{updatedBy,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}
-			)
+			#{updatedBy,jdbcType=VARCHAR}, #{demo,jdbcType=VARCHAR})
 	</insert>
-	<insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.mrathena.dao.entity.y2019.customer.CustomerDO" useGeneratedKeys="true">
-		insert into customer
+	<insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.mrathena.dao.entity.y2019.demo.DemoDO" useGeneratedKeys="true">
+		insert into demo
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="createdAt != null">
 				created_at,
@@ -46,11 +43,8 @@
 			<if test="updatedBy != null">
 				updated_by,
 			</if>
-			<if test="username != null">
-				username,
-			</if>
-			<if test="nickname != null">
-				nickname,
+			<if test="demo != null">
+				demo,
 			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -66,16 +60,13 @@
 			<if test="updatedBy != null">
 				#{updatedBy,jdbcType=VARCHAR},
 			</if>
-			<if test="username != null">
-				#{username,jdbcType=VARCHAR},
-			</if>
-			<if test="nickname != null">
-				#{nickname,jdbcType=VARCHAR},
+			<if test="demo != null">
+				#{demo,jdbcType=VARCHAR},
 			</if>
 		</trim>
 	</insert>
-	<update id="updateByPrimaryKeySelective" parameterType="com.mrathena.dao.entity.y2019.customer.CustomerDO">
-		update customer
+	<update id="updateByPrimaryKeySelective" parameterType="com.mrathena.dao.entity.y2019.demo.DemoDO">
+		update demo
 		<set>
 			<if test="createdAt != null">
 				created_at = #{createdAt,jdbcType=TIMESTAMP},
@@ -89,23 +80,35 @@
 			<if test="updatedBy != null">
 				updated_by = #{updatedBy,jdbcType=VARCHAR},
 			</if>
-			<if test="username != null">
-				username = #{username,jdbcType=VARCHAR},
-			</if>
-			<if test="nickname != null">
-				nickname = #{nickname,jdbcType=VARCHAR},
+			<if test="demo != null">
+				demo = #{demo,jdbcType=VARCHAR},
 			</if>
 		</set>
 		where id = #{id,jdbcType=BIGINT}
 	</update>
-	<update id="updateByPrimaryKey" parameterType="com.mrathena.dao.entity.y2019.customer.CustomerDO">
-		update customer
+	<update id="updateByPrimaryKey" parameterType="com.mrathena.dao.entity.y2019.demo.DemoDO">
+		update demo
 		set created_at = #{createdAt,jdbcType=TIMESTAMP},
 			created_by = #{createdBy,jdbcType=VARCHAR},
 			updated_at = #{updatedAt,jdbcType=TIMESTAMP},
 			updated_by = #{updatedBy,jdbcType=VARCHAR},
-			username = #{username,jdbcType=VARCHAR},
-			nickname = #{nickname,jdbcType=VARCHAR}
+			demo = #{demo,jdbcType=VARCHAR}
 		where id = #{id,jdbcType=BIGINT}
 	</update>
+	<select id="selectByDemo" resultType="com.mrathena.dao.entity.y2019.demo.DemoDO">
+		select <include refid="Base_Column_List" /> from demo
+		where demo = #{demo}
+	</select>
+	<select id="selectByDemoAndCreatedBy" resultType="com.mrathena.dao.entity.y2019.demo.DemoDO">
+		select <include refid="Base_Column_List" /> from demo
+		where demo = #{demo} and created_by = #{createdBy}
+	</select>
+	<select id="selectByMap" resultType="com.mrathena.dao.entity.y2019.demo.DemoDO">
+		select <include refid="Base_Column_List" /> from demo
+		<where>
+			<if test="demo != null">
+				and demo = #{demo}
+			</if>
+		</where>
+	</select>
 </mapper>

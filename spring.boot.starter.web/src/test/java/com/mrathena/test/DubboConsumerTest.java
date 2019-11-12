@@ -5,7 +5,7 @@ import com.bestpay.basic.service.request.QueryCityRequest;
 import com.bestpay.basic.service.response.BasicResponse;
 import com.bestpay.basic.service.response.QueryCityResponse;
 import com.bestpay.basic.service.response.QueryProvinceResponse;
-import com.mrathena.remote.y2019.demo.ProvinceCityServiceIntegration;
+import com.mrathena.remote.base.ProvinceCityServiceIntegration;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

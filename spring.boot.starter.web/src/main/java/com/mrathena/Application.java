@@ -14,7 +14,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableCaching
 @EnableScheduling
 @SpringBootApplication
-@MapperScan("com.bestpay.dao.mapper")
+@MapperScan("com.mrathena.dao.mapper")
 public class Application extends SpringBootServletInitializer {
 
 	/**

@@ -20,14 +20,14 @@ spring.shardingsphere.datasource.ds.password=${spring.datasource.password}
 spring.shardingsphere.sharding.tables.demo_yearly.logic-table=demo_yearly
 spring.shardingsphere.sharding.tables.demo_yearly.actual-data-nodes=ds.demo_yearly_$->{2019..2020}
 spring.shardingsphere.sharding.tables.demo_yearly.table-strategy.standard.sharding-column=shard
-spring.shardingsphere.sharding.tables.demo_yearly.table-strategy.standard.precise-algorithm-class-name=com.bestpay.dao.algorithm.YearlyShardingAlgorithm
-spring.shardingsphere.sharding.tables.demo_yearly.table-strategy.standard.range-algorithm-class-name=com.bestpay.dao.algorithm.YearlyShardingAlgorithm
+spring.shardingsphere.sharding.tables.demo_yearly.table-strategy.standard.precise-algorithm-class-name=com.mrathena.dao.algorithm.YearlyShardingAlgorithm
+spring.shardingsphere.sharding.tables.demo_yearly.table-strategy.standard.range-algorithm-class-name=com.mrathena.dao.algorithm.YearlyShardingAlgorithm
 # demo_monthly
 spring.shardingsphere.sharding.tables.demo_monthly.logic-table=demo_monthly
 spring.shardingsphere.sharding.tables.demo_monthly.actual-data-nodes=ds.demo_monthly_$->{201911..201912}
 spring.shardingsphere.sharding.tables.demo_monthly.table-strategy.standard.sharding-column=shard
-spring.shardingsphere.sharding.tables.demo_monthly.table-strategy.standard.precise-algorithm-class-name=com.bestpay.dao.algorithm.MonthlyShardingAlgorithm
-spring.shardingsphere.sharding.tables.demo_monthly.table-strategy.standard.range-algorithm-class-name=com.bestpay.dao.algorithm.MonthlyShardingAlgorithm
+spring.shardingsphere.sharding.tables.demo_monthly.table-strategy.standard.precise-algorithm-class-name=com.mrathena.dao.algorithm.MonthlyShardingAlgorithm
+spring.shardingsphere.sharding.tables.demo_monthly.table-strategy.standard.range-algorithm-class-name=com.mrathena.dao.algorithm.MonthlyShardingAlgorithm
 spring.shardingsphere.props.sql.show=${spring.shardingsphere.props.sql.show}
 
 # mybatis
@@ -37,9 +37,9 @@ mybatis.mapper-locations=classpath:/mapper/**/*.xml
 # 开发: 3主3从, 主:46.11:36379,46.11:36381,45.12:36381, 从:45.12:36379->45.12:36381,45.13:36379->46.11:36381,45.13:36381->46.11:36379
 spring.redis.cluster.max-redirects=3
 spring.redis.cluster.nodes=${spring.redis.cluster.nodes}
-spring.redis.lettuce.pool.max-active=50
-spring.redis.lettuce.pool.max-idle=50
-spring.redis.lettuce.pool.min-idle=50
+spring.redis.lettuce.pool.max-active=10
+spring.redis.lettuce.pool.max-idle=10
+spring.redis.lettuce.pool.min-idle=10
 
 # dubbo
 dubbo.application.name=spring.boot.starter
