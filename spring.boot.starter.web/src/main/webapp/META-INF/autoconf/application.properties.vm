@@ -56,7 +56,7 @@ dubbo.consumer.retries=0
 dubbo.consumer.check=false
 
 # kafka
-spring.kafka.bootstrap.servers.hx=${spring.kafka.bootstrap.servers.hx}
+spring.kafka.bootstrap.servers.group=${spring.kafka.bootstrap.servers.group}
 spring.kafka.bootstrap.servers.tech=${spring.kafka.bootstrap.servers.tech}
 spring.kafka.bootstrap.servers.v3=${spring.kafka.bootstrap.servers.v3}
 

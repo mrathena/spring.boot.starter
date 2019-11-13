@@ -21,18 +21,18 @@ public class KafkaConsumerConfig {
 
 	private static final String GROUP_ID = "spring.boot.starter";
 
-	@Value("${spring.kafka.bootstrap.servers.hx}")
-	private String hxKafkaBootstrapServers;
+	@Value("${spring.kafka.bootstrap.servers.group}")
+	private String groupKafkaBootstrapServers;
 	@Value("${spring.kafka.bootstrap.servers.tech}")
 	private String techKafkaBootstrapServers;
 	@Value("${spring.kafka.bootstrap.servers.v3}")
 	private String v3KafkaBootstrapServers;
 
-	@Bean(name = "hxKafkaListenerContainerFactory")
-	KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<Integer, String>> hxKafkaListenerContainerFactory() {
+	@Bean(name = "groupKafkaListenerContainerFactory")
+	KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<Integer, String>> groupKafkaListenerContainerFactory() {
 		// ConsumerConfig
 		Map<String, Object> config = new HashMap<>(8);
-		config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, hxKafkaBootstrapServers);
+		config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, groupKafkaBootstrapServers);
 		// 消费者组
 		config.put(ConsumerConfig.GROUP_ID_CONFIG, GROUP_ID);
 		// 消费端请配置自动提交，并做好业务上的幂等

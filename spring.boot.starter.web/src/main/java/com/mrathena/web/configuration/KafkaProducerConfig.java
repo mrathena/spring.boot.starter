@@ -18,18 +18,18 @@ import java.util.Map;
 @Configuration
 public class KafkaProducerConfig {
 
-	@Value("${spring.kafka.bootstrap.servers.hx}")
-	private String hxKafkaBootstrapServers;
+	@Value("${spring.kafka.bootstrap.servers.group}")
+	private String groupKafkaBootstrapServers;
 	@Value("${spring.kafka.bootstrap.servers.tech}")
 	private String techKafkaBootstrapServers;
 	@Value("${spring.kafka.bootstrap.servers.v3}")
 	private String v3KafkaBootstrapServers;
 
 	@Bean(name = "hxKafkaTemplate")
-	public KafkaTemplate<String, String> hxKafkaTemplate(ProducerListener<String, String> kafkaProducerListener) {
+	public KafkaTemplate<String, String> groupKafkaTemplate(ProducerListener<String, String> kafkaProducerListener) {
 		// ProducerConfig
 		Map<String, Object> config = new HashMap<>(8);
-		config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, hxKafkaBootstrapServers);
+		config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, groupKafkaBootstrapServers);
 		// acks表示所有需同步返回确认的节点数，all或者‑1表示分区全部备份节点均需响应，可靠性最高，但吞吐量会相对降低；
 		// 1表示只需分区leader节点响应；0表示无需等待服务端响应；大部分业务建议配置1，风控或安全建议配置0
 		config.put(ProducerConfig.ACKS_CONFIG, "1");

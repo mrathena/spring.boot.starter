@@ -19,7 +19,7 @@
 		<property name="dubbo.registry.address" defaultValue="172.17.45.14:2181"/>
 	</group>
 	<group name="kafka">
-		<property name="spring.kafka.bootstrap.servers.hx" defaultValue="172.17.46.14:9092"/>
+		<property name="spring.kafka.bootstrap.servers.group" defaultValue="172.17.46.14:9092"/>
 		<property name="spring.kafka.bootstrap.servers.tech" defaultValue="172.17.46.14:9092"/>
 		<property name="spring.kafka.bootstrap.servers.v3" defaultValue="172.17.46.14:9092"/>
 	</group>
