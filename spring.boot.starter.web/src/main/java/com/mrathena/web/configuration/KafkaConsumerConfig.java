@@ -45,6 +45,9 @@ public class KafkaConsumerConfig {
 		// ConcurrentKafkaListenerContainerFactory
 		ConcurrentKafkaListenerContainerFactory<Integer, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
 		factory.setConsumerFactory(new DefaultKafkaConsumerFactory<>(config));
+		// 这个并发量根据分区数决定
+		// 一个消费线程可以对应若干个分区,但一个分区只能被具体某一个消费线程消费
+		// 陈苏强: 应用节点数*concurrency>=队列分区数, 保证每个分区都有一个消费线程消费, 不要让一个线程消费多个分区
 		factory.setConcurrency(3);
 		factory.getContainerProperties().setPollTimeout(3000);
 		return factory;
