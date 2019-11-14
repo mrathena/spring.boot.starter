@@ -1,7 +1,7 @@
 package com.mrathena.spring.boot.starter.api.y2019.demo;
 
 import com.bestpay.dubbo.result.Result;
-import com.mrathena.spring.boot.starter.api.BasePageResDto;
+import com.mrathena.spring.boot.starter.api.BasePageResDTO;
 
 /**
  * @author mrathena on 2019/10/17 21:39
@@ -14,7 +14,7 @@ public interface DemoService {
 	 * @param request .
 	 * @return .
 	 */
-	Result<Boolean> createDemo(CreateDemoReqDto request);
+	Result<Boolean> createDemo(CreateDemoReqDTO request);
 
 	/**
 	 * queryDemo
@@ -22,7 +22,7 @@ public interface DemoService {
 	 * @param request .
 	 * @return .
 	 */
-	Result<QueryDemoResDto> queryDemo(QueryDemoReqDto request);
+	Result<QueryDemoResDTO> queryDemo(QueryDemoReqDTO request);
 
 	/**
 	 * queryDemoWithPage
@@ -30,6 +30,6 @@ public interface DemoService {
 	 * @param request .
 	 * @return .
 	 */
-	Result<BasePageResDto<DemoDto>> queryDemoWithPage(QueryDemoReqDto request);
+	Result<BasePageResDTO<DemoDTO>> queryDemoWithPage(QueryDemoReqDTO request);
 
 }

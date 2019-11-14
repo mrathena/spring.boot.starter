@@ -1,5 +1,6 @@
 package com.mrathena.spring.boot.starter.api;
 
+import com.mrathena.spring.boot.starter.toolkit.verify.Verifiable;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,7 +15,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class BaseReqDto implements Serializable {
+public abstract class BaseReqDTO implements Serializable, Verifiable {
 
 	/**
 	 * 透传追踪号
@@ -24,10 +25,10 @@ public class BaseReqDto implements Serializable {
 	/**
 	 * 通用分页参数
 	 */
-	private int pageSize;
-	private int pageNo;
-	private int offset;
-	private int limit;
+	private Integer pageSize;
+	private Integer pageNo;
+	private Integer offset;
+	private Integer limit;
 
 	public String getTraceNo() {
 		return StringUtils.isBlank(this.traceNo) ? UUID.randomUUID().toString().replace("-", "") : this.traceNo;

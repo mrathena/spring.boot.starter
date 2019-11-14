@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class QueryDemoResDto implements Serializable {
+public class QueryDemoResDTO implements Serializable {
 
 	private String demo;
 

@@ -13,7 +13,7 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-public class DemoDto implements Serializable {
+public class DemoDTO implements Serializable {
 
 	private Long id;
 	private Date createdAt;

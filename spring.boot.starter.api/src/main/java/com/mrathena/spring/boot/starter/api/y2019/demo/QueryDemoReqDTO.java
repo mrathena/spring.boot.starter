@@ -1,6 +1,6 @@
 package com.mrathena.spring.boot.starter.api.y2019.demo;
 
-import com.mrathena.spring.boot.starter.api.BaseReqDto;
+import com.mrathena.spring.boot.starter.api.BaseReqDTO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -11,8 +11,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class CreateDemoReqDto extends BaseReqDto {
+public class QueryDemoReqDTO extends BaseReqDTO {
 
-	private String demo;
+	private Long id;
 
 }

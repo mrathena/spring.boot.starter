@@ -16,7 +16,7 @@ import java.util.List;
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class BasePageResDto<T> implements Serializable {
+public class BasePageResDTO<T> implements Serializable {
 
 	/**
 	 * 总数
@@ -28,8 +28,8 @@ public class BasePageResDto<T> implements Serializable {
 	 */
 	private List<T> list;
 
-	public static <T> BasePageResDto<T> empty(Class<T> clazz) {
-		return new BasePageResDto<T>().setTotal(0L).setList(new LinkedList<>());
+	public static <T> BasePageResDTO<T> empty(Class<T> clazz) {
+		return new BasePageResDTO<T>().setTotal(0L).setList(new LinkedList<>());
 	}
 
 }
