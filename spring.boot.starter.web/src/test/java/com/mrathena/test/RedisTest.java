@@ -1,7 +1,7 @@
 package com.mrathena.test;
 
 import com.mrathena.common.constant.RedisConstant;
-import com.mrathena.common.middleware.Redis;
+import com.mrathena.biz.toolkit.Redis;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.redisson.api.RLock;

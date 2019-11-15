@@ -25,7 +25,7 @@ public class KafkaProducerConfig {
 	@Value("${spring.kafka.bootstrap.servers.v3}")
 	private String v3KafkaBootstrapServers;
 
-	@Bean(name = "hxKafkaTemplate")
+	@Bean(name = "groupKafkaTemplate")
 	public KafkaTemplate<String, String> groupKafkaTemplate(ProducerListener<String, String> kafkaProducerListener) {
 		// ProducerConfig
 		Map<String, Object> config = new HashMap<>(8);

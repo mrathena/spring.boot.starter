@@ -1,4 +1,4 @@
-package com.mrathena.message.kafka.consumer.v3.marketing;
+package com.mrathena.message.kafka.v3.marketing;
 
 import com.mrathena.common.toolkit.IdKit;
 import com.mrathena.common.toolkit.LogKit;

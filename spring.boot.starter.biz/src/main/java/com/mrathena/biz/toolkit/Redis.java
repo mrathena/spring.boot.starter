@@ -1,4 +1,4 @@
-package com.mrathena.common.middleware;
+package com.mrathena.biz.toolkit;
 
 import com.mrathena.common.exception.ExceptionCodeEnum;
 import com.mrathena.common.exception.ServiceException;
