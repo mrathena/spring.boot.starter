@@ -5,7 +5,7 @@ import com.mrathena.biz.y2019.demo.DemoBiz;
 import com.mrathena.common.constant.Constant;
 import com.mrathena.common.exception.ExceptionHandler;
 import com.mrathena.common.toolkit.LogKit;
-import com.mrathena.spring.boot.starter.api.BasePageResDto;
+import com.mrathena.spring.boot.starter.api.BasePageResDTO;
 import com.mrathena.spring.boot.starter.api.y2019.demo.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.Service;
@@ -26,7 +26,7 @@ public class DemoServiceImpl implements DemoService {
 	private DemoBiz demoBiz;
 
 	@Override
-	public Result<Boolean> createDemo(CreateDemoReqDto request) {
+	public Result<Boolean> createDemo(CreateDemoReqDTO request) {
 		LogKit.setTraceNo(request.getTraceNo());
 		long begin = System.currentTimeMillis();
 		try {
@@ -50,17 +50,17 @@ public class DemoServiceImpl implements DemoService {
 	}
 
 	@Override
-	public Result<QueryDemoResDto> queryDemo(QueryDemoReqDto request) {
+	public Result<QueryDemoResDTO> queryDemo(QueryDemoReqDTO request) {
 		LogKit.setTraceNo(request.getTraceNo());
 		long begin = System.currentTimeMillis();
 		try {
 			log.info("REQUEST:{}", request);
-			Result<QueryDemoResDto> response = new Result<>(demoBiz.queryDemo(request));
+			Result<QueryDemoResDTO> response = new Result<>(demoBiz.queryDemo(request));
 			long interval = System.currentTimeMillis() - begin;
 			log.info("[{}ms][SUCCESS][SUCCESS] REQUEST:{} RESPONSE:{}", interval, request, response);
 			return response;
 		} catch (Exception e) {
-			Result<QueryDemoResDto> response = ExceptionHandler.handleBusinessException(e);
+			Result<QueryDemoResDTO> response = ExceptionHandler.handleBusinessException(e);
 			long interval = System.currentTimeMillis() - begin;
 			String status = ExceptionHandler.isNormalBlockingException(e) ? Constant.SUCCESS : Constant.EXCEPTION;
 			String codeMsg = response.getErrorCode() + Constant.COLON + response.getErrorMsg();
@@ -74,17 +74,17 @@ public class DemoServiceImpl implements DemoService {
 	}
 
 	@Override
-	public Result<BasePageResDto<DemoDto>> queryDemoWithPage(QueryDemoReqDto request) {
+	public Result<BasePageResDTO<DemoDTO>> queryDemoWithPage(QueryDemoReqDTO request) {
 		LogKit.setTraceNo(request.getTraceNo());
 		long begin = System.currentTimeMillis();
 		try {
 			log.info("REQUEST:{}", request);
-			Result<BasePageResDto<DemoDto>> response = new Result<>(demoBiz.queryDemoWithPage(request));
+			Result<BasePageResDTO<DemoDTO>> response = new Result<>(demoBiz.queryDemoWithPage(request));
 			long interval = System.currentTimeMillis() - begin;
 			log.info("[{}ms][SUCCESS][SUCCESS] REQUEST:{} RESPONSE:{}", interval, request, response);
 			return response;
 		} catch (Exception e) {
-			Result<BasePageResDto<DemoDto>> response = ExceptionHandler.handleBusinessException(e);
+			Result<BasePageResDTO<DemoDTO>> response = ExceptionHandler.handleBusinessException(e);
 			long interval = System.currentTimeMillis() - begin;
 			String status = ExceptionHandler.isNormalBlockingException(e) ? Constant.SUCCESS : Constant.EXCEPTION;
 			String codeMsg = response.getErrorCode() + Constant.COLON + response.getErrorMsg();

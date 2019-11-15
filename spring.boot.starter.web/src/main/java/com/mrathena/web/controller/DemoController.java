@@ -2,9 +2,9 @@ package com.mrathena.web.controller;
 
 import com.mrathena.common.toolkit.IdKit;
 import com.mrathena.remote.base.ProvinceCityServiceRemote;
-import com.mrathena.spring.boot.starter.api.y2019.demo.CreateDemoReqDto;
+import com.mrathena.spring.boot.starter.api.y2019.demo.CreateDemoReqDTO;
 import com.mrathena.spring.boot.starter.api.y2019.demo.DemoService;
-import com.mrathena.spring.boot.starter.api.y2019.demo.QueryDemoReqDto;
+import com.mrathena.spring.boot.starter.api.y2019.demo.QueryDemoReqDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -77,7 +77,7 @@ public class DemoController {
 	 */
 	@RequestMapping("service/create")
 	public Object serviceCreate() {
-		CreateDemoReqDto request = new CreateDemoReqDto();
+		CreateDemoReqDTO request = new CreateDemoReqDTO();
 		request.setDemo(IdKit.getSerialNo());
 		return demoService.createDemo(request);
 	}
@@ -88,7 +88,7 @@ public class DemoController {
 	@RequestMapping("service/query")
 	public Object serviceQuery() {
 		Map<String, Object> map = new LinkedHashMap<>();
-		QueryDemoReqDto request = new QueryDemoReqDto();
+		QueryDemoReqDTO request = new QueryDemoReqDTO();
 		request.setId(1L);
 		map.put("queryDemo", demoService.queryDemo(request));
 		request.setPageSize(10);
