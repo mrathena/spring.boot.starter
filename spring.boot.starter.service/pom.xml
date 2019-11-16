@@ -16,5 +16,4 @@
 			<artifactId>spring.boot.starter.biz</artifactId>
 		</dependency>
 	</dependencies>
-
 </project>

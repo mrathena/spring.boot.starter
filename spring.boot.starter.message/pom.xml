@@ -21,5 +21,4 @@
 			<artifactId>spring-rabbit</artifactId>
 		</dependency>
 	</dependencies>
-
 </project>
