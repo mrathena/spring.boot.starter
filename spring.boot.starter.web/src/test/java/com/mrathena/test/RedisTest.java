@@ -56,6 +56,7 @@ public class RedisTest extends BaseTest {
 		System.out.println(redis.hasKey(key));
 		redis.del(key);
 		System.out.println(redis.hasKey(key));
+		System.out.println(redis.getString(key));
 	}
 
 	public void testSet(String key) {

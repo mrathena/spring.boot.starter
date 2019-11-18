@@ -17,18 +17,18 @@ spring.shardingsphere.datasource.ds.jdbc-url=${spring.datasource.url}
 spring.shardingsphere.datasource.ds.username=${spring.datasource.username}
 spring.shardingsphere.datasource.ds.password=${spring.datasource.password}
 # demo_yearly
-spring.shardingsphere.sharding.tables.demo_yearly.logic-table=demo_yearly
-spring.shardingsphere.sharding.tables.demo_yearly.actual-data-nodes=ds.demo_yearly_$->{2019..2020}
-spring.shardingsphere.sharding.tables.demo_yearly.table-strategy.standard.sharding-column=shard
-spring.shardingsphere.sharding.tables.demo_yearly.table-strategy.standard.precise-algorithm-class-name=com.mrathena.dao.algorithm.YearlyShardingAlgorithm
-spring.shardingsphere.sharding.tables.demo_yearly.table-strategy.standard.range-algorithm-class-name=com.mrathena.dao.algorithm.YearlyShardingAlgorithm
+# spring.shardingsphere.sharding.tables.demo_yearly.logic-table=demo_yearly
+# spring.shardingsphere.sharding.tables.demo_yearly.actual-data-nodes=ds.demo_yearly_$->{2019..2020}
+# spring.shardingsphere.sharding.tables.demo_yearly.table-strategy.standard.sharding-column=shard
+# spring.shardingsphere.sharding.tables.demo_yearly.table-strategy.standard.precise-algorithm-class-name=com.mrathena.dao.algorithm.YearlyShardingAlgorithm
+# spring.shardingsphere.sharding.tables.demo_yearly.table-strategy.standard.range-algorithm-class-name=com.mrathena.dao.algorithm.YearlyShardingAlgorithm
 # demo_monthly
-spring.shardingsphere.sharding.tables.demo_monthly.logic-table=demo_monthly
-spring.shardingsphere.sharding.tables.demo_monthly.actual-data-nodes=ds.demo_monthly_$->{201911..201912}
-spring.shardingsphere.sharding.tables.demo_monthly.table-strategy.standard.sharding-column=shard
-spring.shardingsphere.sharding.tables.demo_monthly.table-strategy.standard.precise-algorithm-class-name=com.mrathena.dao.algorithm.MonthlyShardingAlgorithm
-spring.shardingsphere.sharding.tables.demo_monthly.table-strategy.standard.range-algorithm-class-name=com.mrathena.dao.algorithm.MonthlyShardingAlgorithm
-spring.shardingsphere.props.sql.show=${spring.shardingsphere.props.sql.show}
+# spring.shardingsphere.sharding.tables.demo_monthly.logic-table=demo_monthly
+# spring.shardingsphere.sharding.tables.demo_monthly.actual-data-nodes=ds.demo_monthly_$->{201911..201912}
+# spring.shardingsphere.sharding.tables.demo_monthly.table-strategy.standard.sharding-column=shard
+# spring.shardingsphere.sharding.tables.demo_monthly.table-strategy.standard.precise-algorithm-class-name=com.mrathena.dao.algorithm.MonthlyShardingAlgorithm
+# spring.shardingsphere.sharding.tables.demo_monthly.table-strategy.standard.range-algorithm-class-name=com.mrathena.dao.algorithm.MonthlyShardingAlgorithm
+# spring.shardingsphere.props.sql.show=${spring.shardingsphere.props.sql.show}
 
 # mybatis
 mybatis.mapper-locations=classpath:/mapper/**/*.xml
