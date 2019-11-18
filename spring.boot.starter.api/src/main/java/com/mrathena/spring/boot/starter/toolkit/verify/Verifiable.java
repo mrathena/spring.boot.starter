@@ -9,7 +9,7 @@ public interface Verifiable {
 	 * 参数验证方法
 	 */
 	default void verify() {
-		VerifyKit.verify(this);
+		ValidatorKit.validate(this);
 	}
 
 }

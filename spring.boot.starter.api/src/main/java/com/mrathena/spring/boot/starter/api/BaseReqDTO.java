@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.UUID;
 
@@ -20,6 +21,7 @@ public abstract class BaseReqDTO implements Serializable, Verifiable {
 	/**
 	 * 透传追踪号
 	 */
+	@NotBlank
 	private String traceNo;
 
 	/**
