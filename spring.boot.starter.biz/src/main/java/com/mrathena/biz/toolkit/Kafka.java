@@ -57,25 +57,25 @@ public class Kafka {
 		v3KafkaTemplate.send(topic, gson.toJson(object));
 	}
 
-}
+	@Slf4j
+	@Component
+	static class KafkaProducerListener implements ProducerListener<String, String> {
 
-@Slf4j
-@Component
-class KafkaProducerListener implements ProducerListener<String, String> {
+		@Override
+		public void onSuccess(String topic, Integer partition, String key, String value, RecordMetadata recordMetadata) {
+			log.info("KAFKA:PRODUCER:SEND:SUCCESS topic:{} partition:{} key:{} value:{} recordMetadata:{}",
+					topic, partition, key, value, recordMetadata);
+		}
 
-	@Override
-	public void onSuccess(String topic, Integer partition, String key, String value, RecordMetadata recordMetadata) {
-		log.info("KAFKA:PRODUCER:SEND:SUCCESS topic:{} partition:{} key:{} value:{} recordMetadata:{}",
-				topic, partition, key, value, recordMetadata);
-	}
+		@Override
+		public void onError(String topic, Integer partition, String key, String value, Exception exception) {
+			String description = ExceptionHandler.getStackTrace(exception);
+			log.info("KAFKA:PRODUCER:SEND:ERROR topic:{} partition:{} key:{} value:{} exception:{}",
+					topic, partition, key, value, description);
+			log.error("KAFKA:PRODUCER:SEND:ERROR topic:{} partition:{} key:{} value:{} exception:",
+					topic, partition, key, value, exception);
+		}
 
-	@Override
-	public void onError(String topic, Integer partition, String key, String value, Exception exception) {
-		String description = ExceptionHandler.getStackTrace(exception);
-		log.info("KAFKA:PRODUCER:SEND:ERROR topic:{} partition:{} key:{} value:{} exception:{}",
-				topic, partition, key, value, description);
-		log.error("KAFKA:PRODUCER:SEND:ERROR topic:{} partition:{} key:{} value:{} exception:",
-				topic, partition, key, value, exception);
 	}
 
 }
