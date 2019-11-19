@@ -2,6 +2,7 @@ package com.mrathena.spring.boot.starter.toolkit.verify.annotation;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
+import javax.validation.constraints.Pattern;
 import java.lang.annotation.*;
 
 /**
@@ -10,23 +11,14 @@ import java.lang.annotation.*;
 @Documented
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = ProductNoValidator.class)
+@Constraint(validatedBy = {})
+@Pattern(regexp = "^1\\d{10}$", message = "手机号码格式不正确")
 public @interface ProductNo {
 
-	String message() default "手机号码格式不正确";
+	String message() default "";
 
-	// 分组
 	Class<?>[] groups() default {};
 
-	// 负载
 	Class<? extends Payload>[] payload() default {};
-
-	// 指定多个时使用 TODO ??
-	@Documented
-	@Target(ElementType.FIELD)
-	@Retention(RetentionPolicy.RUNTIME)
-	@interface List {
-		ProductNo[] value();
-	}
 
 }

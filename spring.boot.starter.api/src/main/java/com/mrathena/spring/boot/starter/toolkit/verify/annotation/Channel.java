@@ -11,22 +11,13 @@ import java.lang.annotation.*;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = {})
+@InStringArray(members = {"APP", "H5"}, message = "渠道类型不正确")
 public @interface Channel {
 
-	String message() default "Channel不能为空";
+	String message() default "";
 
-	// 分组
 	Class<?>[] groups() default {};
 
-	// 负载
 	Class<? extends Payload>[] payload() default {};
-
-	// 指定多个时使用 TODO ??
-	@Documented
-	@Target(ElementType.FIELD)
-	@Retention(RetentionPolicy.RUNTIME)
-	@interface List {
-		Channel[] value();
-	}
 
 }

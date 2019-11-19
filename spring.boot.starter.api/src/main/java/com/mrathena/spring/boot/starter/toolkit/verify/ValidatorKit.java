@@ -2,6 +2,7 @@ package com.mrathena.spring.boot.starter.toolkit.verify;
 
 import com.mrathena.common.toolkit.IdKit;
 import com.mrathena.spring.boot.starter.api.y2019.demo.CreateDemoReqDTO;
+import com.mrathena.spring.boot.starter.api.y2019.demo.DemoParentDTO;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -21,8 +22,11 @@ public class ValidatorKit {
 		CreateDemoReqDTO request = new CreateDemoReqDTO();
 		request.setTraceNo(IdKit.getSerialNo());
 		request.setDemo("this is a demo for javax validation");
-		request.setProductNo("182340898111");
+		request.setProductNo("18234089811");
 		request.setChannel("APP");
+		request.setToken("this is a token");
+		request.setParent(new DemoParentDTO("father", "mather"));
+		request.setChannel2("APP");
 		request.verify();
 	}
 
@@ -37,7 +41,7 @@ public class ValidatorKit {
 			// 整理验证结果
 			Map<String, Set<String>> map = new HashMap<>(8);
 			for (ConstraintViolation<T> cv : constraintViolationSet) {
-				String key = cv.getPropertyPath().toString();
+				String key = cv.getPropertyPath().toString() + ":" + cv.getInvalidValue();
 				Set<String> set = map.get(key);
 				if (null == set) {
 					Set<String> newSet = new HashSet<>(4);
@@ -51,7 +55,7 @@ public class ValidatorKit {
 				StringBuilder sb = new StringBuilder();
 				for (Map.Entry<String, Set<String>> entry : map.entrySet()) {
 					Set<String> set = entry.getValue();
-					sb.append(entry.getKey()).append(": ").append(String.join(" & ", set)).append("; ");
+					sb.append(entry.getKey()).append(":").append(String.join("&", set)).append("; ");
 				}
 				throw new IllegalArgumentException(sb.toString());
 			}

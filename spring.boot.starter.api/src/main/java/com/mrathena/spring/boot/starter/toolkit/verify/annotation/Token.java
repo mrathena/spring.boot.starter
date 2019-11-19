@@ -15,20 +15,10 @@ import java.lang.annotation.*;
 @NotBlank
 public @interface Token {
 
-	String message() default "Token不能为空";
+	String message() default "";
 
-	// 分组
 	Class<?>[] groups() default {};
 
-	// 负载
 	Class<? extends Payload>[] payload() default {};
-
-	// 指定多个时使用 TODO ??
-	@Documented
-	@Target(ElementType.FIELD)
-	@Retention(RetentionPolicy.RUNTIME)
-	@interface List {
-		Token[] value();
-	}
 
 }
