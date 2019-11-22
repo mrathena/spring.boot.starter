@@ -2,9 +2,9 @@ package com.mrathena.web.controller;
 
 import com.mrathena.common.toolkit.IdKit;
 import com.mrathena.remote.base.ProvinceCityServiceRemote;
-import com.mrathena.spring.boot.starter.api.y2019.demo.CreateDemoReqDTO;
-import com.mrathena.spring.boot.starter.api.y2019.demo.DemoService;
-import com.mrathena.spring.boot.starter.api.y2019.demo.QueryDemoReqDTO;
+import com.mrathena.spring.boot.starter.api.business.y2019.demo.CreateDemoReqDTO;
+import com.mrathena.spring.boot.starter.api.business.y2019.demo.DemoService;
+import com.mrathena.spring.boot.starter.api.business.y2019.demo.QueryDemoReqDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.jdbc.core.JdbcTemplate;

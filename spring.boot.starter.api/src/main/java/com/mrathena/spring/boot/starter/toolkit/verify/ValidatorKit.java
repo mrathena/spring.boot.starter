@@ -1,8 +1,8 @@
 package com.mrathena.spring.boot.starter.toolkit.verify;
 
 import com.mrathena.common.toolkit.IdKit;
-import com.mrathena.spring.boot.starter.api.y2019.demo.CreateDemoReqDTO;
-import com.mrathena.spring.boot.starter.api.y2019.demo.DemoParentDTO;
+import com.mrathena.spring.boot.starter.api.business.y2019.demo.CreateDemoReqDTO;
+import com.mrathena.spring.boot.starter.api.business.y2019.demo.DemoParentDTO;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;

@@ -1,4 +1,4 @@
-package com.mrathena.biz.y2019.demo;
+package com.mrathena.biz.business.y2019.demo;
 
 import com.github.pagehelper.PageInfo;
 import com.mrathena.common.exception.ServiceException;
@@ -6,10 +6,10 @@ import com.mrathena.common.toolkit.ParameterKit;
 import com.mrathena.dao.entity.y2019.demo.DemoDO;
 import com.mrathena.dao.manager.y2019.demo.DemoManager;
 import com.mrathena.spring.boot.starter.api.BasePageResDTO;
-import com.mrathena.spring.boot.starter.api.y2019.demo.CreateDemoReqDTO;
-import com.mrathena.spring.boot.starter.api.y2019.demo.DemoDTO;
-import com.mrathena.spring.boot.starter.api.y2019.demo.QueryDemoReqDTO;
-import com.mrathena.spring.boot.starter.api.y2019.demo.QueryDemoResDTO;
+import com.mrathena.spring.boot.starter.api.business.y2019.demo.CreateDemoReqDTO;
+import com.mrathena.spring.boot.starter.api.business.y2019.demo.DemoDTO;
+import com.mrathena.spring.boot.starter.api.business.y2019.demo.QueryDemoReqDTO;
+import com.mrathena.spring.boot.starter.api.business.y2019.demo.QueryDemoResDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Component;

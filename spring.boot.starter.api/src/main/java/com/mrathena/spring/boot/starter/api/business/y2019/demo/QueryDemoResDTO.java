@@ -1,4 +1,4 @@
-package com.mrathena.spring.boot.starter.api.y2019.demo;
+package com.mrathena.spring.boot.starter.api.business.y2019.demo;
 
 import lombok.Getter;
 import lombok.Setter;

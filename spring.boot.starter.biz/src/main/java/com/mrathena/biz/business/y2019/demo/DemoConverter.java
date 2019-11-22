@@ -1,8 +1,8 @@
-package com.mrathena.biz.y2019.demo;
+package com.mrathena.biz.business.y2019.demo;
 
 import com.mrathena.biz.toolkit.BaseConverter;
 import com.mrathena.dao.entity.y2019.demo.DemoDO;
-import com.mrathena.spring.boot.starter.api.y2019.demo.DemoDTO;
+import com.mrathena.spring.boot.starter.api.business.y2019.demo.DemoDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

@@ -1,12 +1,12 @@
-package com.mrathena.service.y2019.demo;
+package com.mrathena.service.business.y2019.demo;
 
 import com.bestpay.dubbo.result.Result;
-import com.mrathena.biz.y2019.demo.DemoBiz;
+import com.mrathena.biz.business.y2019.demo.DemoBiz;
 import com.mrathena.common.constant.Constant;
 import com.mrathena.common.exception.ExceptionHandler;
 import com.mrathena.common.toolkit.LogKit;
 import com.mrathena.spring.boot.starter.api.BasePageResDTO;
-import com.mrathena.spring.boot.starter.api.y2019.demo.*;
+import com.mrathena.spring.boot.starter.api.business.y2019.demo.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.Service;
 import org.slf4j.MDC;
