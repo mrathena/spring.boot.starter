@@ -31,7 +31,7 @@ public class ServiceException extends RuntimeException {
 			this.description = exception.getDescription();
 		} else {
 			this.code = ExceptionCodeEnum.EXCEPTION.name();
-			this.description = ExceptionHandler.getStackTrace(throwable);
+			this.description = ExceptionHandler.getStackTraceStr(throwable);
 		}
 	}
 

@@ -34,7 +34,7 @@ public final class RemoteServiceException extends RuntimeException {
 			} else {
 				this.code = ExceptionCodeEnum.REMOTE_SERVICE_INVOKE_FAILURE.name();
 			}
-			this.description = ExceptionHandler.getStackTrace(throwable);
+			this.description = ExceptionHandler.getStackTraceStr(throwable);
 		}
 
 	}

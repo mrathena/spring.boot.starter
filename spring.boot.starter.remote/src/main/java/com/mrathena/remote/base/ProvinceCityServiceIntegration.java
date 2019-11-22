@@ -35,7 +35,7 @@ public class ProvinceCityServiceIntegration {
 			return response;
 		} catch (Exception e) {
 			long interval = System.currentTimeMillis() - begin;
-			String message = ExceptionHandler.getStackTrace(e);
+			String message = ExceptionHandler.getStackTraceStr(e);
 			log.info("[{}ms][EXCEPTION][NONE] REMOTE:REQUEST:{} REMOTE:EXCEPTION:{}", interval, request, message);
 			log.error("[{}ms][EXCEPTION][NONE] REMOTE:REQUEST:{} REMOTE:EXCEPTION:", interval, request, e);
 			throw e;
@@ -53,7 +53,7 @@ public class ProvinceCityServiceIntegration {
 			return response;
 		} catch (Exception e) {
 			long interval = System.currentTimeMillis() - begin;
-			String message = ExceptionHandler.getStackTrace(e);
+			String message = ExceptionHandler.getStackTraceStr(e);
 			log.info("[{}ms][EXCEPTION][NONE] REMOTE:REQUEST:{} REMOTE:EXCEPTION:{}", interval, request, message);
 			log.error("[{}ms][EXCEPTION][NONE] REMOTE:REQUEST:{} REMOTE:EXCEPTION:", interval, request, e);
 			throw e;

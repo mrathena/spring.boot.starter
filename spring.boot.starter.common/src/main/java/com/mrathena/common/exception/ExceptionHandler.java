@@ -13,91 +13,59 @@ import org.apache.dubbo.rpc.RpcException;
 @Slf4j
 public final class ExceptionHandler {
 
-	public static void main(String[] args) {
-		try {
-			throw new ServiceException(ExceptionCodeEnum.EXCEPTION);
-		} catch (Exception e) {
-			System.out.println(ExceptionHandler.getClassAndMessageWithoutCustomizedException(e));
-			System.out.println(ExceptionHandler.getDescriptionWithoutCustomizedException(e, "你猜"));
-		}
-		System.out.println();
-		try {
-			int a = 0;
-			System.out.println(10 / a);
-		} catch (Exception e) {
-			System.out.println(ExceptionHandler.getClassAndMessageWithoutCustomizedException(e));
-			System.out.println(ExceptionHandler.getDescriptionWithoutCustomizedException(e, "你猜"));
-		}
-	}
-
 	private ExceptionHandler() {}
-
-	/**
-	 * 自定义的异常类集合
-	 */
-	private static final Class[] CUSTOMIZED_EXCEPTION_CLASS_ARRAY =
-			{ServiceException.class, RemoteServiceException.class};
 
 	/**
 	 * 获取异常的堆栈信息
 	 */
-	public static String getStackTrace(Throwable throwable) {
+	public static String getStackTraceStr(Throwable throwable) {
 		return ExceptionUtils.getStackTrace(throwable);
+	}
+
+	/**
+	 * 获取根源异常
+	 */
+	public static Throwable getRootCauseStackTrace(Throwable throwable) {
+		return ExceptionUtils.getRootCause(throwable);
 	}
 
 	/**
 	 * 获取根源异常的堆栈信息
 	 */
-	public static String getRootCauseStackTrace(Throwable throwable) {
+	public static String getRootCauseStackTraceStr(Throwable throwable) {
 		return ExceptionUtils.getStackTrace(ExceptionUtils.getRootCause(throwable));
 	}
 
 	/**
-	 * 获取Exception的类名和信息
+	 * 获取异常的类名和信息
 	 * java.lang.NullPointerException: null
-	 * com.mrathena.common.exception.ExceptionCodeEnum: 客户不存在
+	 * com.mrathena.common.exception.ServiceException: 客户不存在
 	 */
-	public static String getClassAndMessage(Exception exception) {
-		return exception.getClass().getName() + Constant.COLON + Constant.BLANK + exception.getMessage();
+	public static String getClassMessage(Throwable throwable) {
+		return throwable.getClass().getName() + Constant.COLON + Constant.BLANK + throwable.getMessage();
 	}
 
 	/**
-	 * 获取Exception的类名和信息(排除自定义的异常类的类名)
-	 * java.lang.NullPointerException: null
-	 * 客户不存在
+	 * 获取根源异常的类名和信息
 	 */
-	public static String getClassAndMessageWithoutCustomizedException(Exception exception) {
-		String result = Constant.EMPTY;
-		boolean isCustomizedException = false;
-		for (Class customizedExceptionClass : CUSTOMIZED_EXCEPTION_CLASS_ARRAY) {
-			if (customizedExceptionClass.isInstance(exception)) {
-				isCustomizedException = true;
-				break;
-			}
-		}
-		if (!isCustomizedException) {
-			result += exception.getClass().getName() + Constant.COLON + Constant.BLANK;
-		}
-		result += exception.getMessage();
-		return result;
+	public static String getRootCauseClassMessage(Throwable throwable) {
+		return getClassMessage(getRootCauseStackTrace(throwable));
 	}
 
 	/**
 	 * 获取异常描述信息
 	 * 获取客户信息异常[java.lang.NullPointerException: null]
-	 * 获取客户信息异常[com.mrathena.common.exception.ExceptionCodeEnum: 客户不存在]
+	 * 获取客户信息异常[com.mrathena.common.exception.ServiceException: 客户不存在]
 	 */
-	public static String getDescription(Exception exception, String content) {
-		return content + Constant.L_BRACKET + getClassAndMessage(exception) + Constant.R_BRACKET;
+	public static String getDescriptionClassMessage(Throwable throwable, String content) {
+		return content + Constant.L_BRACKET + getClassMessage(throwable) + Constant.R_BRACKET;
 	}
 
 	/**
-	 * 获取异常描述信息(排除自定义的异常类的类名)
-	 * 获取客户信息异常[java.lang.NullPointerException: null]
-	 * 获取客户信息异常[客户不存在]
+	 * 获取根源异常的类名和信息
 	 */
-	public static String getDescriptionWithoutCustomizedException(Exception exception, String content) {
-		return content + Constant.L_BRACKET + getClassAndMessageWithoutCustomizedException(exception) + Constant.R_BRACKET;
+	public static String getRootCauseDescriptionClassMessage(Throwable throwable, String content) {
+		return getDescriptionClassMessage(getRootCauseStackTrace(throwable), content);
 	}
 
 	/**

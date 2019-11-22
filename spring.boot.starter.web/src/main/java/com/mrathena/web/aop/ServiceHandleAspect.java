@@ -39,7 +39,7 @@ public class ServiceHandleAspect {
 			long interval = System.currentTimeMillis() - begin;
 			String status = ExceptionHandler.isNormalBlockingException(e) ? Constant.SUCCESS : Constant.EXCEPTION;
 			String codeMsg = response.getCode() + Constant.COLON + response.getMessage();
-			String message = ExceptionHandler.getStackTrace(e);
+			String message = ExceptionHandler.getRootCauseClassMessage(e);
 			log.info("[{}ms][{}][{}] REQUEST:{} EXCEPTION:{}", interval, status, codeMsg, getRequestStr(point), message);
 			log.error("[{}ms][{}][{}] REQUEST:{} EXCEPTION:", interval, status, codeMsg, getRequestStr(point), e);
 			return response;

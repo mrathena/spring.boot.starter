@@ -69,7 +69,7 @@ public class Kafka {
 
 		@Override
 		public void onError(String topic, Integer partition, String key, String value, Exception exception) {
-			String description = ExceptionHandler.getStackTrace(exception);
+			String description = ExceptionHandler.getStackTraceStr(exception);
 			log.info("KAFKA:PRODUCER:SEND:ERROR topic:{} partition:{} key:{} value:{} exception:{}",
 					topic, partition, key, value, description);
 			log.error("KAFKA:PRODUCER:SEND:ERROR topic:{} partition:{} key:{} value:{} exception:",

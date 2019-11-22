@@ -85,7 +85,7 @@ public class DemoController {
 	/**
 	 * 测试 service
 	 */
-	@RequestMapping("service/query")
+	@GetMapping("service/query")
 	public Object serviceQuery() {
 		Map<String, Object> map = new LinkedHashMap<>();
 		QueryDemoReqDTO request = new QueryDemoReqDTO();
@@ -100,7 +100,7 @@ public class DemoController {
 	/**
 	 * 测试 redis set
 	 */
-	@RequestMapping("redis/set/{key}/{value}")
+	@GetMapping("redis/set/{key}/{value}")
 	public Object redisSet(@PathVariable String key, @PathVariable String value) {
 		log.info("{}:{}", key, value);
 		redisTemplate.opsForValue().set(key, value, 1000 * 10, TimeUnit.MILLISECONDS);

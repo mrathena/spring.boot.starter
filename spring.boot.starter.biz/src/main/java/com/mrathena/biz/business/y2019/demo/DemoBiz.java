@@ -44,7 +44,7 @@ public class DemoBiz {
 		return result;
 	}
 
-	public BasePageResDTO<DemoDTO> queryDemoWithPage(QueryDemoReqDTO request) throws Exception {
+	public BasePageResDTO<DemoDTO> queryDemoWithPage(QueryDemoReqDTO request) throws IllegalAccessException {
 		PageInfo<DemoDO> page = demoManager.queryDemoListByMapWithPage(ParameterKit.beanToMap(request), request.getPageSize(), request.getPageNo());
 		return new BasePageResDTO<>(page.getTotal(), demoConverter.to(page.getList()));
 	}
