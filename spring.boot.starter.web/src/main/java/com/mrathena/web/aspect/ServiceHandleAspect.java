@@ -1,4 +1,4 @@
-package com.mrathena.web.aop;
+package com.mrathena.web.aspect;
 
 import com.mrathena.common.constant.Constant;
 import com.mrathena.common.entity.Response;
