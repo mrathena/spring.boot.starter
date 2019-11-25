@@ -7,6 +7,7 @@ import com.mrathena.common.exception.ExceptionHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
@@ -16,6 +17,7 @@ import java.util.StringJoiner;
  * @author mrathena on 2019/11/25 10:18
  */
 @Slf4j
+@Aspect
 @Component
 public class IntegrationHandleAspect {
 
