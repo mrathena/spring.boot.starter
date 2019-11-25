@@ -94,17 +94,17 @@ public final class ExceptionHandler {
 	 * 统一处理异常
 	 * return ExceptionHandler.handleBizException(e);
 	 */
-	public static <T> Response<T> handleBizException(Exception exception) {
+	public static <T> Response<T> handleBizException(Throwable throwable) {
 		Response<T> response = new Response<>();
-		if (exception instanceof IllegalArgumentException) {
+		if (throwable instanceof IllegalArgumentException) {
 			response.setCode(ExceptionCodeEnum.ILLEGAL_ARGUMENT.name());
-			response.setMessage(exception.getMessage());
-		} else if (exception instanceof ServiceException) {
-			ServiceException serviceException = (ServiceException) exception;
+			response.setMessage(throwable.getMessage());
+		} else if (throwable instanceof ServiceException) {
+			ServiceException serviceException = (ServiceException) throwable;
 			response.setCode(serviceException.getCode());
 			response.setMessage(serviceException.getMessage());
-		} else if (exception instanceof RemoteServiceException) {
-			RemoteServiceException remoteServiceException = (RemoteServiceException) exception;
+		} else if (throwable instanceof RemoteServiceException) {
+			RemoteServiceException remoteServiceException = (RemoteServiceException) throwable;
 			response.setCode(remoteServiceException.getCode());
 			response.setMessage(remoteServiceException.getMessage());
 		} else {
@@ -118,17 +118,17 @@ public final class ExceptionHandler {
 	 * 统一处理异常
 	 * return ExceptionHandler.handleBizException(e);
 	 */
-	public static <T> Result<T> handleBusinessException(Exception exception) {
+	public static <T> Result<T> handleBusinessException(Throwable throwable) {
 		Result<T> response = new Result<>();
-		if (exception instanceof IllegalArgumentException) {
+		if (throwable instanceof IllegalArgumentException) {
 			response.setErrorCode(ExceptionCodeEnum.ILLEGAL_ARGUMENT.name());
-			response.setErrorMsg(exception.getMessage());
-		} else if (exception instanceof ServiceException) {
-			ServiceException serviceException = (ServiceException) exception;
+			response.setErrorMsg(throwable.getMessage());
+		} else if (throwable instanceof ServiceException) {
+			ServiceException serviceException = (ServiceException) throwable;
 			response.setErrorCode(serviceException.getCode());
 			response.setErrorMsg(serviceException.getMessage());
-		} else if (exception instanceof RemoteServiceException) {
-			RemoteServiceException remoteServiceException = (RemoteServiceException) exception;
+		} else if (throwable instanceof RemoteServiceException) {
+			RemoteServiceException remoteServiceException = (RemoteServiceException) throwable;
 			response.setErrorCode(remoteServiceException.getCode());
 			response.setErrorMsg(remoteServiceException.getMessage());
 		} else {

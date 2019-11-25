@@ -2,7 +2,6 @@ package com.mrathena.service.business.y2019.demo;
 
 import com.mrathena.biz.business.y2019.demo.DemoBiz;
 import com.mrathena.common.entity.Response;
-import com.mrathena.common.exception.ServiceException;
 import com.mrathena.spring.boot.starter.api.BasePageResDTO;
 import com.mrathena.spring.boot.starter.api.business.y2019.demo.*;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +36,8 @@ public class DemoServiceImpl implements DemoService {
 		try {
 			return new Response<>(demoBiz.queryDemoWithPage(request));
 		} catch (IllegalAccessException e) {
-			throw new ServiceException(e);
+			// 这种不得不处理的异常, 用RuntimeException, 因为ServiceException默认是当作正常的阻断
+			throw new RuntimeException(e);
 		}
 	}
 }

@@ -7,6 +7,7 @@ import com.mrathena.common.toolkit.IdKit;
 import com.mrathena.common.toolkit.LogKit;
 import com.mrathena.spring.boot.starter.api.BaseReqDTO;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -25,23 +26,28 @@ import java.util.StringJoiner;
 public class ServiceHandleAspect {
 
 	@Around("execution (* com.mrathena.service..*Impl.*(..))")
-	public Object around(ProceedingJoinPoint point) throws Throwable {
+	public Object around(ProceedingJoinPoint point) {
 		LogKit.setTraceNo(getTraceNo(point));
 		long begin = System.currentTimeMillis();
+		String request = getRequestStr(point);
 		try {
-			log.info("REQUEST:{}", getRequestStr(point));
+			log.info("REQUEST:{}", request);
 			Object response = point.proceed();
 			long interval = System.currentTimeMillis() - begin;
-			log.info("[{}ms][SUCCESS][SUCCESS] REQUEST:{} RESPONSE:{}", interval, getRequestStr(point), response);
+			// 日志的两个状态分别是 接口调用状态 和 交易状态
+			// 1.[SUCCESS][SUCCESS]
+			// 2.[SUCCESS][code:message], 报常规阻断式异常(ServiceException/IllegalArgumentException), 当作是接口调用成功
+			// 3.[EXCEPTION][NONE], 报非常规阻断式异常(如SQLSyntaxErrorException等), 当作是接口调用失败
+			log.info("[{}ms][SUCCESS][SUCCESS] REQUEST:{} RESPONSE:{}", interval, request, response);
 			return response;
-		} catch (Exception e) {
-			Response response = ExceptionHandler.handleBizException(e);
+		} catch (Throwable throwable) {
+			Response response = ExceptionHandler.handleBizException(throwable);
 			long interval = System.currentTimeMillis() - begin;
-			String status = ExceptionHandler.isNormalBlockingException(e) ? Constant.SUCCESS : Constant.EXCEPTION;
-			String codeMsg = response.getCode() + Constant.COLON + response.getMessage();
-			String message = ExceptionHandler.getRootCauseClassMessage(e);
-			log.info("[{}ms][{}][{}] REQUEST:{} EXCEPTION:{}", interval, status, codeMsg, getRequestStr(point), message);
-			log.error("[{}ms][{}][{}] REQUEST:{} EXCEPTION:", interval, status, codeMsg, getRequestStr(point), e);
+			String invokeStatus = ExceptionHandler.isNormalBlockingException(throwable) ? Constant.SUCCESS : Constant.EXCEPTION;
+			String tradeStatus = getTradeStatus(response);
+			String message = ExceptionHandler.getRootCauseClassMessage(throwable);
+			log.info("[{}ms][{}][{}] REQUEST:{} EXCEPTION:{}", interval, invokeStatus, tradeStatus, request, message);
+			log.error("[{}ms][{}][{}] REQUEST:{} EXCEPTION:", interval, invokeStatus, tradeStatus, request, throwable);
 			return response;
 		} finally {
 			MDC.clear();
@@ -67,6 +73,15 @@ public class ServiceHandleAspect {
 			joiner.add(arg.toString());
 		}
 		return joiner.toString();
+	}
+
+	private String getTradeStatus(Response response) {
+		String code = response.getCode();
+		String message = response.getMessage();
+		code = StringUtils.isBlank(code) ? Constant.EMPTY : code;
+		message = StringUtils.isBlank(message) ? Constant.EMPTY : message;
+		String codeMessage = code + Constant.COLON + message;
+		return Constant.COLON.equals(codeMessage) ? Constant.NONE : codeMessage;
 	}
 
 }
