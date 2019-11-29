@@ -3,6 +3,7 @@ package com.mrathena.web.controller;
 import com.mrathena.common.toolkit.IdKit;
 import com.mrathena.remote.base.ProvinceCityServiceRemote;
 import com.mrathena.spring.boot.starter.api.business.y2019.demo.CreateDemoReqDTO;
+import com.mrathena.spring.boot.starter.api.business.y2019.demo.DemoParentDTO;
 import com.mrathena.spring.boot.starter.api.business.y2019.demo.DemoService;
 import com.mrathena.spring.boot.starter.api.business.y2019.demo.QueryDemoReqDTO;
 import lombok.extern.slf4j.Slf4j;
@@ -78,7 +79,13 @@ public class DemoController {
 	@RequestMapping("service/create")
 	public Object serviceCreate() {
 		CreateDemoReqDTO request = new CreateDemoReqDTO();
+		request.setTraceNo(IdKit.getUuid());
+		request.setChannel("APP");
+		request.setChannel2("APP");
 		request.setDemo(IdKit.getSerialNo());
+		request.setToken("token");
+		request.setParent(new DemoParentDTO("father", "mather"));
+		request.setProductNo("18234089811");
 		return demoService.createDemo(request);
 	}
 

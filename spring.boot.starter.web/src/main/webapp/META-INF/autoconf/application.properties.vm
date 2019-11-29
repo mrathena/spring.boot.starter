@@ -6,8 +6,8 @@ spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 spring.datasource.url=${spring.datasource.url}
 spring.datasource.username=${spring.datasource.username}
 spring.datasource.password=${spring.datasource.password}
-spring.datasource.hikari.maximum-pool-size=10
-spring.datasource.hikari.minimum-idle=10
+spring.datasource.hikari.maximum-pool-size=20
+spring.datasource.hikari.minimum-idle=20
 
 # sharding datasource
 spring.shardingsphere.datasource.names=ds
@@ -37,9 +37,9 @@ mybatis.mapper-locations=classpath:/mapper/**/*.xml
 # 开发: 3主3从, 主:46.11:36379,46.11:36381,45.12:36381, 从:45.12:36379->45.12:36381,45.13:36379->46.11:36381,45.13:36381->46.11:36379
 spring.redis.cluster.max-redirects=3
 spring.redis.cluster.nodes=${spring.redis.cluster.nodes}
-spring.redis.lettuce.pool.max-active=10
-spring.redis.lettuce.pool.max-idle=10
-spring.redis.lettuce.pool.min-idle=10
+spring.redis.lettuce.pool.max-active=50
+spring.redis.lettuce.pool.max-idle=50
+spring.redis.lettuce.pool.min-idle=50
 
 # dubbo
 dubbo.application.name=spring.boot.starter

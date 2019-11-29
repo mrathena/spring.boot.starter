@@ -4,6 +4,7 @@ import javax.validation.Constraint;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import javax.validation.Payload;
+import javax.validation.constraints.NotBlank;
 import java.lang.annotation.*;
 import java.util.Arrays;
 
@@ -14,6 +15,7 @@ import java.util.Arrays;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
 @Constraint(validatedBy = InStringArray.Validator.class)
+@NotBlank
 public @interface InStringArray {
 
 	String message() default "值必须为'members'之一";

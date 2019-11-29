@@ -7,7 +7,7 @@
 			<!--如下面<logger name="com.mrathena.dao.mapper" level="debug"/>配置后,通过logger和class打印出[manager.queryById(1L);]的内容如下-->
 			<!--logger:com.mrathena.dao.mapper.customer.CustomerMapper.selectByPrimaryKey-->
 			<!--class:org.apache.ibatis.logging.jdbc.BaseJdbcLogger-->
-			<Pattern>[%date{yyyyMMdd.HHmmss.SSS}][%-4level][%class{1}.%method:%line][%X{TRACE}] %message%n</Pattern>
+			<Pattern>[%date{yyyyMMdd.HHmmss.SSS}][%-4level][%thread][%class{1}.%method:%line][%X{CLASS}][%X{METHOD}][%X{TRACE}] %message%n</Pattern>
 		</encoder>
 	</appender>
 
