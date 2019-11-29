@@ -36,8 +36,8 @@ public class IntegrationHandleAspect {
 		} catch (Throwable throwable) {
 			long interval = System.currentTimeMillis() - begin;
 			String message = ExceptionHandler.getStackTraceStr(throwable);
-			log.info("[{}ms][EXCEPTION][NONE] REMOTE:REQUEST:{} REMOTE:EXCEPTION:{}", interval, request, message);
-			log.error("[{}ms][EXCEPTION][NONE] REMOTE:REQUEST:{} REMOTE:EXCEPTION:", interval, request, throwable);
+			log.info("[{}ms][EXCEPTION][NONE] REMOTE:REQUEST:{} REMOTE:RESPONSE:{}", interval, request, message);
+			log.error("[{}ms][EXCEPTION][NONE] REMOTE:REQUEST:{} REMOTE:RESPONSE:", interval, request, throwable);
 			throw throwable;
 		}
 	}
