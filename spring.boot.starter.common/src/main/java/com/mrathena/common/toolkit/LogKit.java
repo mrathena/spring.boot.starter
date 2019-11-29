@@ -1,5 +1,6 @@
 package com.mrathena.common.toolkit;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.MDC;
 
 /**
@@ -23,6 +24,11 @@ public final class LogKit {
 
 	public static void setMethodName(String methodName) {
 		MDC.put(METHOD, methodName);
+	}
+
+	public static String getTraceNo() {
+		String traceNo = MDC.get(TRACE);
+		return StringUtils.isBlank(traceNo) ? IdKit.getUuid() : traceNo;
 	}
 
 }

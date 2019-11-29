@@ -25,7 +25,6 @@ public final class AspectKit {
 
 		public static Logger getLogger(ProceedingJoinPoint point) {
 			Class<?> clazz = point.getTarget().getClass();
-			Logger logger;
 			try {
 				Field log = clazz.getDeclaredField("log");
 				log.setAccessible(true);
