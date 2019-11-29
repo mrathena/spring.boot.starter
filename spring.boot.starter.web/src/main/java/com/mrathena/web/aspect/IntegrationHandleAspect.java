@@ -35,9 +35,10 @@ public class IntegrationHandleAspect {
 			return response;
 		} catch (Throwable throwable) {
 			long interval = System.currentTimeMillis() - begin;
+			String status = getExceptionTradeStatus(throwable);
 			String message = ExceptionHandler.getStackTraceStr(throwable);
-			log.info("[{}ms][EXCEPTION][NONE] REMOTE:REQUEST:{} REMOTE:RESPONSE:{}", interval, request, message);
-			log.error("[{}ms][EXCEPTION][NONE] REMOTE:REQUEST:{} REMOTE:RESPONSE:", interval, request, throwable);
+			log.info("[{}ms][EXCEPTION][{}] REMOTE:REQUEST:{} REMOTE:RESPONSE:{}", interval, status, request, message);
+			log.error("[{}ms][EXCEPTION][{}] REMOTE:REQUEST:{} REMOTE:RESPONSE:", interval, status, request, throwable);
 			throw throwable;
 		}
 	}
@@ -53,7 +54,16 @@ public class IntegrationHandleAspect {
 			BasicResponse response = (BasicResponse) object;
 			return response.isSuccess() ? Constant.SUCCESS : response.getErrorCode() + Constant.COLON + response.getErrorMsg();
 		}
-		return "UNKNOWN";
+		return Constant.UNKNOWN;
+	}
+
+	private String getExceptionTradeStatus(Throwable throwable) {
+		if (ExceptionHandler.isDubboUnavailableException(throwable)) {
+			return "NOPROVIDER";
+		} else if (ExceptionHandler.isDubboTimeoutException(throwable)) {
+			return "TIMEOUT";
+		}
+		return Constant.UNKNOWN;
 	}
 
 }

@@ -60,7 +60,7 @@ public class ServiceHandleAspect {
 		code = StringUtils.isBlank(code) ? Constant.EMPTY : code;
 		message = StringUtils.isBlank(message) ? Constant.EMPTY : message;
 		String codeMessage = code + Constant.COLON + message;
-		return Constant.COLON.equals(codeMessage) ? Constant.NONE : codeMessage;
+		return Constant.COLON.equals(codeMessage) ? Constant.UNKNOWN : codeMessage;
 	}
 
 }
