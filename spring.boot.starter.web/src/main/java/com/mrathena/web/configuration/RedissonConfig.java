@@ -27,7 +27,8 @@ public class RedissonConfig {
 			redisClusterNodeArray[i] = "redis://".concat(redisClusterNodeArray[i]);
 		}
 		Config config = new Config();
-		config.useClusterServers().addNodeAddress(redisClusterNodeArray);
+		// 需要配置集群节点扫描间隔,默认是5秒,可以配个一小时一次
+		config.useClusterServers().addNodeAddress(redisClusterNodeArray).setScanInterval(1000 * 60 * 60);
 		return Redisson.create(config);
 	}
 

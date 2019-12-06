@@ -28,6 +28,19 @@ public class RedisTest extends BaseTest {
 	private Redis redis;
 
 	@Test
+	public void testCacheNodesAndCalculateSlot() {
+		// 测试集群模式下, RedisTemplate 是否会缓存 nodes and slot? 执行操作时, 直接计算 slot 位置, 直接连接对应 node, 而不是集群内跳转
+		redisTemplate.hasKey("key");
+		redisTemplate.hasKey("key");
+		redisTemplate.hasKey("key");
+		redisTemplate.hasKey("key");
+		redisTemplate.hasKey("key");
+		redisTemplate.hasKey("key");
+		redisTemplate.hasKey("key");
+		redisTemplate.hasKey("key");
+	}
+
+	@Test
 	public void test() {
 		stringRedisTemplate.opsForValue().set("key", "value", 10L, TimeUnit.SECONDS);
 		System.out.println(stringRedisTemplate.opsForValue().get("key"));

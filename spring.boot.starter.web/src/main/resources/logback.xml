@@ -14,7 +14,7 @@
 	<!--打印SQL-->
 	<logger name="com.mrathena.dao.mapper" level="debug"/>
 
-	<root level="info">
+	<root level="debug">
 		<appender-ref ref="console"/>
 	</root>
 
