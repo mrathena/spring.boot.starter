@@ -7,7 +7,6 @@ import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.RedisSerializer;
@@ -55,11 +54,6 @@ public class RedisConfig {
 		return RedisCacheManager.builder(lettuceConnectionFactory)
 				.cacheDefaults(config)
 				.build();
-	}
-
-	@Bean
-	public ValueOperations<String, Object> valueOperations(RedisTemplate<String, Object> redisTemplate) {
-		return redisTemplate.opsForValue();
 	}
 
 }
