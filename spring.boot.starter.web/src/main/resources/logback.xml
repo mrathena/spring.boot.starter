@@ -12,9 +12,10 @@
 	</appender>
 
 	<!--打印SQL-->
+	<!--设置com.mrathena.dao.mapper包下日志打印级别为debug,代码里面所有大于等于debug级别日志的都会被打出来-->
 	<logger name="com.mrathena.dao.mapper" level="debug"/>
 
-	<root level="debug">
+	<root level="info">
 		<appender-ref ref="console"/>
 	</root>
 

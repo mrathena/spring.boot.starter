@@ -1,16 +1,19 @@
 package com.mrathena.test;
 
-import com.mrathena.common.constant.RedisConstant;
 import com.mrathena.biz.toolkit.Redis;
+import com.mrathena.common.constant.RedisConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.redisson.api.RLock;
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.serializer.RedisSerializer;
 
 import javax.annotation.Resource;
 import java.time.Duration;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -26,6 +29,26 @@ public class RedisTest extends BaseTest {
 
 	@Resource
 	private Redis redis;
+
+	@Test
+	public void testExecute() {
+		Object object = redisTemplate.execute((RedisCallback<Object>) connection -> {
+			RedisSerializer<?> valueSerializer = redisTemplate.getValueSerializer();
+			return valueSerializer.deserialize(connection.get("key".getBytes()));
+		});
+		System.out.println(object);
+	}
+
+	@Test
+	public void testExecutePipeline() {
+		List<Object> objects = redisTemplate.executePipelined((RedisCallback<Object>) connection -> {
+			connection.get("key".getBytes());
+			connection.get("key".getBytes());
+			connection.get("key".getBytes());
+			return null;
+		});
+		System.out.println(objects);
+	}
 
 	@Test
 	public void testCacheNodesAndCalculateSlot() {
