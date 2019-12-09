@@ -28,8 +28,28 @@
 		</filter>
 	</appender>
 
+	<appender name="warn" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>/data/appLogs/spring.boot.starter.warn.log</File>
+		<encoder>
+			<Pattern>${logback.appender.encoder.pattern}</Pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>/data/appLogs/spring.boot.starter.warn.%d{yyyyMMdd}.%i.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+			<TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>512MB</maxFileSize>
+			</TimeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>WARN</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+	</appender>
+
 	<appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<File>/data/appLogs/spring.boot.starter-error.log</File>
+		<File>/data/appLogs/spring.boot.starter.error.log</File>
 		<encoder>
 			<Pattern>${logback.appender.encoder.pattern}</Pattern>
 			<charset>UTF-8</charset>
