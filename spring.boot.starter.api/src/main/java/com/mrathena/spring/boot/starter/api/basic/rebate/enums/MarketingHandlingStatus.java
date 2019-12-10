@@ -1,4 +1,4 @@
-package com.mrathena.spring.boot.starter.api.basic.ability.rebate.enums;
+package com.mrathena.spring.boot.starter.api.basic.rebate.enums;
 
 /**
  * @author mrathena on 2019/11/22 11:04

@@ -1,7 +1,7 @@
-package com.mrathena.spring.boot.starter.api.basic.ability.rebate;
+package com.mrathena.spring.boot.starter.api.basic.rebate;
 
 import com.mrathena.common.entity.Response;
-import com.mrathena.spring.boot.starter.api.basic.ability.rebate.entity.*;
+import com.mrathena.spring.boot.starter.api.basic.rebate.entity.*;
 
 /**
  * @author mrathena on 2019/11/22 10:01

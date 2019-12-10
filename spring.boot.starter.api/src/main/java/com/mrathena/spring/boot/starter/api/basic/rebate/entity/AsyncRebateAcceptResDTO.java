@@ -1,4 +1,4 @@
-package com.mrathena.spring.boot.starter.api.basic.ability.rebate.entity;
+package com.mrathena.spring.boot.starter.api.basic.rebate.entity;
 
 import lombok.Getter;
 import lombok.Setter;
