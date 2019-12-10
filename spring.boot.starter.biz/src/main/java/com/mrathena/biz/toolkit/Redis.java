@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 public class Redis {
 
 	@Resource
-	private RedisTemplate<String, Object> redisTemplate;
+	private RedisTemplate<String, Object> clusterRedisTemplate;
 	@Resource
 	private RedissonClient redissonClient;
 
@@ -32,7 +32,7 @@ public class Redis {
 	 * hasKey
 	 */
 	public Boolean hasKey(String key) {
-		return redisTemplate.hasKey(key);
+		return clusterRedisTemplate.hasKey(key);
 	}
 
 	/**
@@ -41,7 +41,7 @@ public class Redis {
 	 * @param milliseconds 过期时间(毫秒)
 	 */
 	public void set(String key, Object value, long milliseconds) {
-		redisTemplate.opsForValue().set(key, value, milliseconds, TimeUnit.MILLISECONDS);
+		clusterRedisTemplate.opsForValue().set(key, value, milliseconds, TimeUnit.MILLISECONDS);
 	}
 
 	/**
@@ -50,7 +50,7 @@ public class Redis {
 	 * @param duration 持续时间, Duration.ofMinutes(1); Duration.ofDays(15);
 	 */
 	public void set(String key, Object value, Duration duration) {
-		redisTemplate.opsForValue().set(key, value, duration);
+		clusterRedisTemplate.opsForValue().set(key, value, duration);
 	}
 
 	/**
@@ -63,14 +63,14 @@ public class Redis {
 		if (expireAt.equals(now) || expireAt.isBefore(now)) {
 			throw new ServiceException(ExceptionCodeEnum.EXCEPTION.getMessage(), "redis在set的时候传入的过期时间点不在当前时间点之后");
 		}
-		redisTemplate.opsForValue().set(key, value, Duration.between(now, expireAt).abs());
+		clusterRedisTemplate.opsForValue().set(key, value, Duration.between(now, expireAt).abs());
 	}
 
 	/**
 	 * del
 	 */
 	public void del(String key) {
-		redisTemplate.delete(key);
+		clusterRedisTemplate.delete(key);
 	}
 
 	/**
@@ -79,35 +79,35 @@ public class Redis {
 	 * List<String> values = (List<String>) redis.get("key");
 	 */
 	public Object get(String key) {
-		return redisTemplate.opsForValue().get(key);
+		return clusterRedisTemplate.opsForValue().get(key);
 	}
 
 	/**
 	 * get, 返回值直接转换成String
 	 */
 	public String getString(String key) {
-		return (String) redisTemplate.opsForValue().get(key);
+		return (String) clusterRedisTemplate.opsForValue().get(key);
 	}
 
 	/**
 	 * pttl, 获取key的剩余过期时间(毫秒)
 	 */
 	public Long pttl(String key) {
-		return redisTemplate.getExpire(key, TimeUnit.MILLISECONDS);
+		return clusterRedisTemplate.getExpire(key, TimeUnit.MILLISECONDS);
 	}
 
 	/**
 	 * increment
 	 */
 	public Long increment(String key) {
-		return redisTemplate.opsForValue().increment(key);
+		return clusterRedisTemplate.opsForValue().increment(key);
 	}
 
 	/**
 	 * decrement
 	 */
 	public Long decrement(String key) {
-		return redisTemplate.opsForValue().decrement(key);
+		return clusterRedisTemplate.opsForValue().decrement(key);
 	}
 
 	/**
