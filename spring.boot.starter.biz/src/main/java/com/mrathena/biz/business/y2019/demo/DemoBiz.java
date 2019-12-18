@@ -35,7 +35,7 @@ public class DemoBiz {
 		return demoManager.create(demoDO);
 	}
 
-	@Cacheable(cacheNames = "FOREVER", key = "'test2'")
+	@Cacheable(cacheNames = "ONE_MINUTE", key = "'test'")
 	public QueryDemoResDTO queryDemo(QueryDemoReqDTO request) {
 		DemoDO demoDO = demoManager.queryDemoById(request.getId());
 		if (ObjectUtils.isEmpty(demoDO)) {

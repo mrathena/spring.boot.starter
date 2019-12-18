@@ -75,6 +75,8 @@ public class CacheConfig {
 				.cacheDefaults(oneDayRedisCacheConfiguration)
 				.withInitialCacheConfigurations(cacheConfigurationMap)
 				.transactionAware()
+				// 不允许添加除上述定义之外的缓存名称
+				.disableCreateOnMissingCache()
 				.build();
 		log.info("Cache:redisClusterCacheManager:初始化完成");
 		return redisCacheManager;
