@@ -12,6 +12,7 @@ import com.mrathena.spring.boot.starter.api.business.y2019.demo.QueryDemoReqDTO;
 import com.mrathena.spring.boot.starter.api.business.y2019.demo.QueryDemoResDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -34,6 +35,7 @@ public class DemoBiz {
 		return demoManager.create(demoDO);
 	}
 
+	@Cacheable(cacheNames = "FOREVER", key = "'test2'")
 	public QueryDemoResDTO queryDemo(QueryDemoReqDTO request) {
 		DemoDO demoDO = demoManager.queryDemoById(request.getId());
 		if (ObjectUtils.isEmpty(demoDO)) {

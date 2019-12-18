@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisClusterConfiguration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisPassword;
 import org.springframework.data.redis.connection.RedisSentinelConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
@@ -100,6 +101,7 @@ public class RedisConfig {
 		// RedisClusterConfiguration
 		Set<String> clusterHostPortSet = Arrays.stream(redisClusterNodes.split(Constant.COMMA)).collect(Collectors.toSet());
 		RedisClusterConfiguration redisClusterConfiguration = new RedisClusterConfiguration(clusterHostPortSet);
+		redisClusterConfiguration.setPassword(RedisPassword.of("Hhsrv587.."));// TODO 记得删掉
 		// LettuceConnectionFactory
 		LettuceConnectionFactory lettuceConnectionFactory = new LettuceConnectionFactory(redisClusterConfiguration, lettuceClientConfiguration);
 		lettuceConnectionFactory.afterPropertiesSet();

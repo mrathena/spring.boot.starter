@@ -1,10 +1,6 @@
 package com.mrathena.message.kafka.v3.marketing;
 
-import com.mrathena.common.toolkit.IdKit;
-import com.mrathena.common.toolkit.LogKit;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 /**
@@ -14,11 +10,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class MarketingProjectRebateResult {
 
-	@KafkaListener(topics = "marketing_project_rebate_result",
-			containerFactory = "v3KafkaListenerContainerFactory")
-	public void tenantKafkaCustomer(ConsumerRecord<String, String> record) {
-		LogKit.setTraceNo(IdKit.getUuid());
-		log.info("KAFKA:CONSUMER:MESSAGE:{}", record.value());
-	}
+//	@KafkaListener(topics = "marketing_project_rebate_result",
+//			containerFactory = "v3KafkaListenerContainerFactory")
+//	public void tenantKafkaCustomer(ConsumerRecord<String, String> record) {
+//		LogKit.setTraceNo(IdKit.getUuid());
+//		log.info("KAFKA:CONSUMER:MESSAGE:{}", record.value());
+//	}
 
 }

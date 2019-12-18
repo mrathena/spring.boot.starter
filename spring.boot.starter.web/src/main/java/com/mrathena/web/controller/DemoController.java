@@ -30,7 +30,7 @@ public class DemoController {
 	@Resource
 	private JdbcTemplate jdbcTemplate;
 
-	@Resource
+	@Resource(name = "sentinelRedisTemplate")
 	private RedisTemplate<String, Object> redisTemplate;
 
 	@Resource
@@ -96,11 +96,12 @@ public class DemoController {
 	public Object serviceQuery() {
 		Map<String, Object> map = new LinkedHashMap<>();
 		QueryDemoReqDTO request = new QueryDemoReqDTO();
-		request.setId(1L);
+		request.setTraceNo(IdKit.getSerialNo());
+		request.setId(37L);
 		map.put("queryDemo", demoService.queryDemo(request));
-		request.setPageSize(10);
-		request.setPageNo(1);
-		map.put("queryDemoWithPage", demoService.queryDemoWithPage(request));
+//		request.setPageSize(10);
+//		request.setPageNo(1);
+//		map.put("queryDemoWithPage", demoService.queryDemoWithPage(request));
 		return map;
 	}
 

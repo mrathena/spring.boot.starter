@@ -28,7 +28,7 @@ public class KafkaTask {
 		message.setUniqueNo(IdKit.getSerialNo());
 		message.setMarketCfgId("marketCfgId").setMerchantNo("merchantNo").setOutTxnType("outTxnType");
 		message.setTxnChannel("txnChannel").setTxnAmount(1L).setProductNo("18234089811").setRequestAt(new Date());
-		kafka.sendGroup("redbag_product_grab_coupon_request", message);
+//		kafka.sendGroup("redbag_product_grab_coupon_request", message);
 	}
 
 }
