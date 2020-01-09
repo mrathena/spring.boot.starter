@@ -51,9 +51,10 @@ public class RedisConfig {
 	public LettuceClientConfiguration lettuceClientConfiguration() {
 		// GenericObjectPoolConfig
 		GenericObjectPoolConfig genericObjectPoolConfig = new GenericObjectPoolConfig();
-		genericObjectPoolConfig.setMaxTotal(100);
-		genericObjectPoolConfig.setMaxIdle(100);
-		genericObjectPoolConfig.setMinIdle(100);
+		// TODO 这些值不知道该写多少
+		genericObjectPoolConfig.setMaxTotal(10);
+		genericObjectPoolConfig.setMaxIdle(10);
+		genericObjectPoolConfig.setMinIdle(10);
 		genericObjectPoolConfig.setTestOnCreate(true);
 		genericObjectPoolConfig.setTestOnBorrow(false);
 		genericObjectPoolConfig.setTestOnReturn(false);

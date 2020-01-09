@@ -37,6 +37,10 @@ public class Redis {
 
 	/**
 	 * set
+	 * spring-data-redis:1.8.1:JedisClusterConnection#pSetEx, 该方法内会判断毫秒值不能大于Integer.MAX_VALUE, TimeUnit.MILLISECONDS会尝试走这个方法,走不通会走下面的方法
+	 * spring-data-redis:1.8.1:JedisClusterConnection#setEx, 该方法内会判断秒值不能大于Integer.MAX_VALUE, TimeUnit.SECONDS会走这个方法
+	 * 既然不管是秒还是毫秒都会被判断不得大于, 所以直接使用秒就好了, 能容纳更大的时段
+	 * 当前使用spring-data-redis:2.2.1:没有这种问题,不需要特别处理
 	 *
 	 * @param milliseconds 过期时间(毫秒)
 	 */

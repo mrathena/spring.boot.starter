@@ -7,14 +7,12 @@ import org.junit.Test;
 import org.redisson.api.RLock;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
 import javax.annotation.Resource;
 import java.time.Duration;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author mrathena on 2019-10-16 23:11
@@ -22,13 +20,23 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class RedisTest extends BaseTest {
 
-	@Resource
+	@Resource(name = "clusterRedisTemplate")
 	private RedisTemplate<String, Object> redisTemplate;
-	@Resource
-	private StringRedisTemplate stringRedisTemplate;
 
 	@Resource
 	private Redis redis;
+
+	@Test
+	public void testSetMethod() {
+		// clusterRedisTemplate.opsForValue().set(key, value, milliseconds, TimeUnit.MILLISECONDS);
+		// milliseconds 超过Integer.MAX的时候会报错 ...
+		redis.set("key", "value", 2147483647L);
+		System.out.println(redis.pttl("key"));
+		redis.set("key", "value", 2147483648L);
+		System.out.println(redis.pttl("key"));
+		redis.set("key", "value", 214748364800000000L);
+		System.out.println(redis.pttl("key"));
+	}
 
 	@Test
 	public void testExecute() {
@@ -61,19 +69,6 @@ public class RedisTest extends BaseTest {
 		redisTemplate.hasKey("key");
 		redisTemplate.hasKey("key");
 		redisTemplate.hasKey("key");
-	}
-
-	@Test
-	public void test() {
-		stringRedisTemplate.opsForValue().set("key", "value", 10L, TimeUnit.SECONDS);
-		System.out.println(stringRedisTemplate.opsForValue().get("key"));
-		redisTemplate.opsForValue().set("key", "value", 10L, TimeUnit.SECONDS);
-		System.out.println(redisTemplate.opsForValue().get("key"));
-		System.out.println(stringRedisTemplate.opsForValue().get("key"));
-		redisTemplate.opsForValue().set("key", 1, 10L, TimeUnit.SECONDS);
-		System.out.println(redisTemplate.opsForValue().get("key"));
-		redisTemplate.opsForValue().increment("key");
-		System.out.println(stringRedisTemplate.opsForValue().get("key"));
 	}
 
 	@Test
