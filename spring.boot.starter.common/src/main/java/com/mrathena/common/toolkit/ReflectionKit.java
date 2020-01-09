@@ -86,13 +86,51 @@ public final class ReflectionKit {
 	public static Object invoke(Object object, String methodName, Object... parameters) {
 		Class<?> clazz = object.getClass();
 		try {
-			Class<?>[] parameterTypes = new Class[parameters.length];
-			for (int i = 0; i < parameters.length; i++) {
-				parameterTypes[i] = parameters.getClass();
+			Method method;
+			if (parameters != null && parameters.length != 0) {
+				Class<?>[] parameterTypes = new Class[parameters.length];
+				for (int i = 0; i < parameters.length; i++) {
+					parameterTypes[i] = parameters.getClass();
+				}
+				method = clazz.getMethod(methodName, parameterTypes);
+			} else {
+				method = clazz.getMethod(methodName);
 			}
-			Method method = clazz.getMethod(methodName, parameterTypes);
 			method.setAccessible(true);
 			return method.invoke(object, parameters);
+		} catch (Throwable throwable) {
+			throw new ServiceException(throwable);
+		}
+	}
+
+	/**
+	 * 创建新对象
+	 *
+	 * @param object     目标对象
+	 * @param parameters 构造函数参数
+	 * @return .
+	 */
+	public static Object newInstance(Object object, Object... parameters) {
+		Class<?> clazz = object.getClass();
+		try {
+
+			if (parameters != null && parameters.length != 0) {
+				Class<?>[] parameterTypes = new Class[parameters.length];
+				for (int i = 0; i < parameters.length; i++) {
+					parameterTypes[i] = parameters.getClass();
+				}
+				Constructor<?> constructor = clazz.getDeclaredConstructor(parameterTypes);
+				constructor.setAccessible(true);
+				return constructor.newInstance(parameters);
+			} else {
+				try {
+					return clazz.newInstance();
+				} catch (Throwable throwable) {
+					Constructor<?> constructor = clazz.getDeclaredConstructor();
+					constructor.setAccessible(true);
+					return constructor.newInstance();
+				}
+			}
 		} catch (Throwable throwable) {
 			throw new ServiceException(throwable);
 		}
