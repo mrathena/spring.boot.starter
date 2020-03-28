@@ -1,6 +1,6 @@
 package com.mrathena.spring.boot.starter.api;
 
-import com.mrathena.spring.boot.starter.toolkit.verify.Verifiable;
+import com.mrathena.api.verify.Verifiable;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

@@ -23,18 +23,18 @@ public class DemoServiceImpl implements DemoService {
 
 	@Override
 	public Response<Boolean> createDemo(CreateDemoReqDTO request) {
-		return new Response<>(demoBiz.createDemo(request));
+		return new Response.Builder<>(demoBiz.createDemo(request)).build();
 	}
 
 	@Override
 	public Response<QueryDemoResDTO> queryDemo(QueryDemoReqDTO request) {
-		return new Response<>(demoBiz.queryDemo(request));
+		return new Response.Builder<>(demoBiz.queryDemo(request)).build();
 	}
 
 	@Override
 	public Response<BasePageResDTO<DemoDTO>> queryDemoWithPage(QueryDemoReqDTO request) {
 		try {
-			return new Response<>(demoBiz.queryDemoWithPage(request));
+			return new Response.Builder<>(demoBiz.queryDemoWithPage(request)).build();
 		} catch (IllegalAccessException e) {
 			// 这种不得不处理的异常, 用RuntimeException, 因为ServiceException默认是当作正常的阻断
 			throw new RuntimeException(e);

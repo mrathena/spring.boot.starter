@@ -9,7 +9,6 @@
 	<name>spring.boot.starter</name>
 	<description>Demo project for Spring Boot</description>
 	<modules>
-		<module>spring.boot.starter.common</module>
 		<module>spring.boot.starter.dao</module>
 		<module>spring.boot.starter.remote</module>
 		<module>spring.boot.starter.api</module>

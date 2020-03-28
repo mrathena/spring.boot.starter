@@ -1,7 +1,6 @@
 package com.mrathena.web.controller;
 
 import com.mrathena.common.toolkit.IdKit;
-import com.mrathena.remote.base.ProvinceCityServiceRemote;
 import com.mrathena.spring.boot.starter.api.business.y2019.demo.CreateDemoReqDTO;
 import com.mrathena.spring.boot.starter.api.business.y2019.demo.DemoParentDTO;
 import com.mrathena.spring.boot.starter.api.business.y2019.demo.DemoService;
@@ -32,9 +31,6 @@ public class DemoController {
 
 	@Resource(name = "sentinelRedisTemplate")
 	private RedisTemplate<String, Object> redisTemplate;
-
-	@Resource
-	private ProvinceCityServiceRemote provinceCityServiceRemote;
 
 	@Resource
 	private DemoService demoService;
@@ -80,7 +76,6 @@ public class DemoController {
 	public Object serviceCreate() {
 		CreateDemoReqDTO request = new CreateDemoReqDTO();
 		request.setTraceNo(IdKit.getUuid());
-		request.setChannel("APP");
 		request.setChannel2("APP");
 		request.setDemo(IdKit.getSerialNo());
 		request.setToken("token");
@@ -114,22 +109,5 @@ public class DemoController {
 		redisTemplate.opsForValue().set(key, value, 1000 * 10, TimeUnit.MILLISECONDS);
 		return "SUCCESS";
 	}
-
-	/**
-	 * 测试 dubbo consumer
-	 */
-	@RequestMapping("dubbo/consumer/province")
-	public Object province() {
-		return provinceCityServiceRemote.queryProvinceList();
-	}
-
-	/**
-	 * 测试 dubbo consumer
-	 */
-	@RequestMapping("dubbo/consumer/city/{provinceCode}")
-	public Object province(@PathVariable String provinceCode) {
-		return provinceCityServiceRemote.queryCityListByProvinceCode(provinceCode);
-	}
-
 
 }

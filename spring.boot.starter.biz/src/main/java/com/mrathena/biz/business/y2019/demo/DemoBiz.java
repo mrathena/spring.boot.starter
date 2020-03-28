@@ -2,7 +2,6 @@ package com.mrathena.biz.business.y2019.demo;
 
 import com.github.pagehelper.PageInfo;
 import com.mrathena.common.exception.ServiceException;
-import com.mrathena.common.toolkit.ParameterKit;
 import com.mrathena.dao.entity.y2019.demo.DemoDO;
 import com.mrathena.dao.manager.y2019.demo.DemoManager;
 import com.mrathena.spring.boot.starter.api.BasePageResDTO;
@@ -16,6 +15,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 
 /**
  * @author mrathena on 2019/11/7 15:49
@@ -47,7 +47,7 @@ public class DemoBiz {
 	}
 
 	public BasePageResDTO<DemoDTO> queryDemoWithPage(QueryDemoReqDTO request) throws IllegalAccessException {
-		PageInfo<DemoDO> page = demoManager.queryDemoListByMapWithPage(ParameterKit.beanToMap(request), request.getPageSize(), request.getPageNo());
+		PageInfo<DemoDO> page = demoManager.queryDemoListByMapWithPage(new HashMap<>(8), request.getPageSize(), request.getPageNo());
 		return new BasePageResDTO<>(page.getTotal(), demoConverter.to(page.getList()));
 	}
 

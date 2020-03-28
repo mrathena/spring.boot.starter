@@ -1,6 +1,6 @@
 package com.mrathena.biz.toolkit;
 
-import com.mrathena.common.exception.ExceptionCodeEnum;
+import com.mrathena.common.exception.ExceptionEnum;
 import com.mrathena.common.exception.ServiceException;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
@@ -37,15 +37,9 @@ public class Redis {
 
 	/**
 	 * set
-	 * spring-data-redis:1.8.1:JedisClusterConnection#pSetEx, 该方法内会判断毫秒值不能大于Integer.MAX_VALUE, TimeUnit.MILLISECONDS会尝试走这个方法,走不通会走下面的方法
-	 * spring-data-redis:1.8.1:JedisClusterConnection#setEx, 该方法内会判断秒值不能大于Integer.MAX_VALUE, TimeUnit.SECONDS会走这个方法
-	 * 既然不管是秒还是毫秒都会被判断不得大于, 所以直接使用秒就好了, 能容纳更大的时段
-	 * 当前使用spring-data-redis:2.2.1:没有这种问题,不需要特别处理
-	 *
-	 * @param milliseconds 过期时间(毫秒)
 	 */
-	public void set(String key, Object value, long milliseconds) {
-		clusterRedisTemplate.opsForValue().set(key, value, milliseconds, TimeUnit.MILLISECONDS);
+	public void set(String key, Object value, long timeout, TimeUnit timeUnit) {
+		clusterRedisTemplate.opsForValue().set(key, value, timeout, timeUnit);
 	}
 
 	/**
@@ -65,7 +59,7 @@ public class Redis {
 	public void set(String key, Object value, LocalDateTime expireAt) {
 		LocalDateTime now = LocalDateTime.now();
 		if (expireAt.equals(now) || expireAt.isBefore(now)) {
-			throw new ServiceException(ExceptionCodeEnum.EXCEPTION.getMessage(), "redis在set的时候传入的过期时间点不在当前时间点之后");
+			throw new ServiceException(ExceptionEnum.EXCEPTION.getInfo(), "redis在set的时候传入的过期时间点不在当前时间点之后");
 		}
 		clusterRedisTemplate.opsForValue().set(key, value, Duration.between(now, expireAt).abs());
 	}
@@ -91,13 +85,6 @@ public class Redis {
 	 */
 	public String getString(String key) {
 		return (String) clusterRedisTemplate.opsForValue().get(key);
-	}
-
-	/**
-	 * pttl, 获取key的剩余过期时间(毫秒)
-	 */
-	public Long pttl(String key) {
-		return clusterRedisTemplate.getExpire(key, TimeUnit.MILLISECONDS);
 	}
 
 	/**
