@@ -1,7 +1,6 @@
 package com.mrathena.remote.customer;
 
 import com.mrathena.common.entity.Response;
-import com.mrathena.common.exception.NormalBlockingException;
 import com.mrathena.common.exception.RemoteServiceException;
 import com.mrathena.common.exception.ServiceException;
 import com.mrathena.remote.demo.CustomerDto;
@@ -26,9 +25,6 @@ public class CustomerFacade {
 			CustomerQueryReqDto request = new CustomerQueryReqDto();
 			request.setMobile(mobile);
 			Response<CustomerDto> response = integration.queryCustomer(request);
-			if (!response.isSuccess()) {
-				throw new NormalBlockingException("NO_REGISTER", "非注册用户", "查询用户的时候发现用户还没有注册");
-			}
 			return response.getResult();
 		} catch (ServiceException e) {
 			throw e;
