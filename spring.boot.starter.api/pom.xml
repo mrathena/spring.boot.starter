@@ -10,10 +10,10 @@
 	</parent>
 	<artifactId>spring.boot.starter.api</artifactId>
 	<dependencies>
-		<!--module-->
 		<dependency>
 			<groupId>com.mrathena</groupId>
-			<artifactId>spring.boot.starter.common</artifactId>
+			<artifactId>framework</artifactId>
+			<version>1.0.0</version>
 		</dependency>
 		<!--validator-->
 		<dependency>

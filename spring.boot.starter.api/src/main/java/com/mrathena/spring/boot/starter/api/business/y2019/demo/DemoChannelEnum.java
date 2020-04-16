@@ -2,6 +2,7 @@ package com.mrathena.spring.boot.starter.api.business.y2019.demo;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -19,10 +20,10 @@ public enum DemoChannelEnum {
 	APP, H5;
 
 	public static boolean isValid(String channel) {
-		if (null == channel || channel.isEmpty()) {
+		if (StringUtils.isEmpty(channel)) {
 			return false;
 		}
-		return Arrays.stream(DemoChannelEnum.values()).map(item -> item.name().toUpperCase()).collect(Collectors.toSet()).contains(channel.toUpperCase());
+		return Arrays.stream(DemoChannelEnum.values()).map(Enum::name).collect(Collectors.toSet()).contains(channel);
 	}
 
 }

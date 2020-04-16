@@ -28,7 +28,8 @@ public class RedissonConfig {
 		}
 		Config config = new Config();
 		// 需要配置集群节点扫描间隔,默认是5秒,可以配个一小时一次
-		config.useClusterServers().addNodeAddress(redisClusterNodeArray).setScanInterval(1000 * 60 * 60).setPassword("Hhsrv587..");// TODO 记得删掉
+//		config.useClusterServers().addNodeAddress(redisClusterNodeArray).setScanInterval(1000 * 60 * 60).setPassword("Hhsrv587..");// TODO 记得删掉
+		config.useClusterServers().addNodeAddress(redisClusterNodeArray).setScanInterval(1000 * 60 * 60);
 		return Redisson.create(config);
 	}
 

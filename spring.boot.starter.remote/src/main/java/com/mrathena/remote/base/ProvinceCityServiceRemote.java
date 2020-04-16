@@ -26,12 +26,9 @@ public class ProvinceCityServiceRemote {
 	public List<QueryProvinceResponse> queryProvinceList() {
 		try {
 			BasicResponse<List<QueryProvinceResponse>> response = integration.queryProvinceList(new BasicRequest());
-			if (null == response) {
-				throw new RemoteServiceException("系统异常", "远程服务无响应");
-			}
 			List<QueryProvinceResponse> result = response.getResult();
 			if (CollectionUtils.isEmpty(result)) {
-				throw new RemoteServiceException("系统异常", "远程服务无数据");
+				throw new RemoteServiceException("远程服务无数据");
 			}
 			return result;
 		} catch (Exception e) {
@@ -44,12 +41,9 @@ public class ProvinceCityServiceRemote {
 			QueryCityRequest request = new QueryCityRequest();
 			request.setProviceCode(provinceCode);
 			BasicResponse<List<QueryCityResponse>> response = integration.queryCityListByProvinceCode(request);
-			if (null == response) {
-				throw new RemoteServiceException("系统异常", "远程服务无响应");
-			}
 			List<QueryCityResponse> result = response.getResult();
 			if (CollectionUtils.isEmpty(result)) {
-				throw new RemoteServiceException("系统异常", "远程服务无数据");
+				throw new RemoteServiceException("远程服务无数据");
 			}
 			return result;
 		} catch (Exception e) {

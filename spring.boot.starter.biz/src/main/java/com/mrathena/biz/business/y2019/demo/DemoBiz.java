@@ -1,8 +1,7 @@
 package com.mrathena.biz.business.y2019.demo;
 
 import com.github.pagehelper.PageInfo;
-import com.mrathena.common.exception.ServiceException;
-import com.mrathena.common.toolkit.ParameterKit;
+import com.mrathena.common.exception.BusinessException;
 import com.mrathena.dao.entity.y2019.demo.DemoDO;
 import com.mrathena.dao.manager.y2019.demo.DemoManager;
 import com.mrathena.spring.boot.starter.api.BasePageResDTO;
@@ -30,8 +29,10 @@ public class DemoBiz {
 	private DemoConverter demoConverter;
 
 	public boolean createDemo(CreateDemoReqDTO request) {
+		log.info("this is the method createDemo");
 		DemoDO demoDO = new DemoDO();
 		demoDO.setDemo(request.getDemo());
+		log.info("do object has created successful");
 		return demoManager.create(demoDO);
 	}
 
@@ -39,7 +40,7 @@ public class DemoBiz {
 	public QueryDemoResDTO queryDemo(QueryDemoReqDTO request) {
 		DemoDO demoDO = demoManager.queryDemoById(request.getId());
 		if (ObjectUtils.isEmpty(demoDO)) {
-			throw new ServiceException("Demo不存在", "没有查到数据");
+			throw new BusinessException("Demo不存在", "没有查到数据");
 		}
 		QueryDemoResDTO result = new QueryDemoResDTO();
 		result.setDemo(demoDO.getDemo());
@@ -47,7 +48,7 @@ public class DemoBiz {
 	}
 
 	public BasePageResDTO<DemoDTO> queryDemoWithPage(QueryDemoReqDTO request) throws IllegalAccessException {
-		PageInfo<DemoDO> page = demoManager.queryDemoListByMapWithPage(ParameterKit.beanToMap(request), request.getPageSize(), request.getPageNo());
+		PageInfo<DemoDO> page = demoManager.queryDemoListByMapWithPage(null, request.getPageSize(), request.getPageNo());
 		return new BasePageResDTO<>(page.getTotal(), demoConverter.to(page.getList()));
 	}
 
