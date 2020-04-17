@@ -10,16 +10,15 @@
 	</parent>
 	<artifactId>spring.boot.starter.api</artifactId>
 	<dependencies>
+		<!--module-->
 		<dependency>
 			<groupId>com.mrathena</groupId>
-			<artifactId>framework</artifactId>
-			<version>1.0.0</version>
+			<artifactId>spring.boot.starter.common</artifactId>
 		</dependency>
 		<!--validator-->
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>6.0.18.Final</version>
 		</dependency>
 	</dependencies>
 </project>

@@ -1,9 +1,9 @@
 package com.mrathena.spring.boot.starter.api.business.y2019.demo;
 
-import com.mrathena.api.verify.annotation.Enumeration;
-import com.mrathena.api.verify.annotation.Mobile;
-import com.mrathena.api.verify.annotation.Token;
-import com.mrathena.spring.boot.starter.api.BaseReqDTO;
+import com.mrathena.spring.boot.starter.api.business.BaseReqDTO;
+import com.mrathena.spring.boot.starter.api.verify.annotation.Enumeration;
+import com.mrathena.spring.boot.starter.api.verify.annotation.Mobile;
+import com.mrathena.spring.boot.starter.api.verify.annotation.Token;
 import lombok.*;
 
 import javax.validation.Valid;

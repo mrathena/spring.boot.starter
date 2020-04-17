@@ -1,10 +1,10 @@
 package com.mrathena.remote.customer;
 
-import com.mrathena.common.entity.Response;
+import cn.com.bestpay.Response;
+import com.bestpay.cif.product.bizparammodel.CustomerResultDto;
+import com.bestpay.cif.product.bizparammodel.account.AccountInfoDto;
+import com.bestpay.cif.product.facade.CustomerProdFacade;
 import com.mrathena.common.toolkit.LogKit;
-import com.mrathena.remote.demo.CustomerDto;
-import com.mrathena.remote.demo.CustomerQueryReqDto;
-import com.mrathena.remote.demo.CustomerService;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.stereotype.Component;
 
@@ -14,11 +14,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class CustomerIntegration {
 
-	@Reference(timeout = 1000, check = false)
-	private CustomerService customerService;
+	@Reference(timeout = 1000)
+	private CustomerProdFacade service;
 
-	public Response<CustomerDto> queryCustomer(CustomerQueryReqDto request) {
-		return customerService.queryCustomer(request, LogKit.getTraceNo());
+	public Response<CustomerResultDto> queryCustomerInfoAndGrade(AccountInfoDto request) {
+		return service.findCustomerInfoAndGrade(request, LogKit.getTraceNo());
 	}
 
 }

@@ -1,6 +1,6 @@
 package com.mrathena.spring.boot.starter.api.business.y2019.demo;
 
-import com.mrathena.spring.boot.starter.api.BaseReqDTO;
+import com.mrathena.spring.boot.starter.api.business.BaseReqDTO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

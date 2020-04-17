@@ -17,6 +17,8 @@ import java.util.Date;
 @Accessors(chain = true)
 public class BaseDO implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+
 	private Long id;
 	private Date createdAt;
 	private String createdBy;

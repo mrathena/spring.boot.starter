@@ -4,7 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.mrathena.common.exception.BusinessException;
 import com.mrathena.dao.entity.y2019.demo.DemoDO;
 import com.mrathena.dao.manager.y2019.demo.DemoManager;
-import com.mrathena.spring.boot.starter.api.BasePageResDTO;
+import com.mrathena.spring.boot.starter.api.business.BasePageResDTO;
 import com.mrathena.spring.boot.starter.api.business.y2019.demo.CreateDemoReqDTO;
 import com.mrathena.spring.boot.starter.api.business.y2019.demo.DemoDTO;
 import com.mrathena.spring.boot.starter.api.business.y2019.demo.QueryDemoReqDTO;

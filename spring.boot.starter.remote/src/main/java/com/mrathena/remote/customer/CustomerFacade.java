@@ -1,10 +1,11 @@
 package com.mrathena.remote.customer;
 
-import com.mrathena.common.entity.Response;
+import cn.com.bestpay.Response;
+import com.bestpay.cif.product.bizparammodel.CustomerResultDto;
+import com.bestpay.cif.product.bizparammodel.account.AccountInfoDto;
+import com.bestpay.cif.product.enummodel.KeyType;
+import com.mrathena.common.constant.Constant;
 import com.mrathena.common.exception.RemoteServiceException;
-import com.mrathena.common.exception.ServiceException;
-import com.mrathena.remote.demo.CustomerDto;
-import com.mrathena.remote.demo.CustomerQueryReqDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -20,16 +21,25 @@ public class CustomerFacade {
 	@Resource
 	private CustomerIntegration integration;
 
-	public CustomerDto queryCustomer(String mobile) {
+	private static final String CUSTOMER_NOT_EXIST_CODE = "404010";
+
+	public CustomerResultDto queryCustomer(String mobile) {
 		try {
-			CustomerQueryReqDto request = new CustomerQueryReqDto();
-			request.setMobile(mobile);
-			Response<CustomerDto> response = integration.queryCustomer(request);
+			AccountInfoDto request = new AccountInfoDto();
+			request.setQueryKeyValue(mobile);
+			request.setQueryKeyType(KeyType.PRODUCT.getCode());
+			Response<CustomerResultDto> response = integration.queryCustomerInfoAndGrade(request);
+			if (!response.isSuccess()) {
+				// 404010 : 亲，用户不存在，请重新输入或注册新账号
+				if (CUSTOMER_NOT_EXIST_CODE.equals(response.getErrorCode())) {
+					return null;
+				}
+				String message = response.getErrorCode() + Constant.COLON + response.getErrorMsg();
+				throw new RemoteServiceException(message);
+			}
 			return response.getResult();
-		} catch (ServiceException e) {
-			throw e;
-		} catch (Throwable cause) {
-			throw new RemoteServiceException(cause);
+		} catch (Throwable throwable) {
+			throw new RemoteServiceException(throwable);
 		}
 	}
 

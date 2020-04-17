@@ -1,7 +1,7 @@
 package com.mrathena.spring.boot.starter.api.business.y2019.demo;
 
 import com.mrathena.common.entity.Response;
-import com.mrathena.spring.boot.starter.api.BasePageResDTO;
+import com.mrathena.spring.boot.starter.api.business.BasePageResDTO;
 
 /**
  * @author mrathena on 2019/10/17 21:39

@@ -10,10 +10,10 @@
 	</parent>
 	<artifactId>spring.boot.starter.dao</artifactId>
 	<dependencies>
+		<!--module-->
 		<dependency>
 			<groupId>com.mrathena</groupId>
-			<artifactId>framework</artifactId>
-			<version>1.0.0</version>
+			<artifactId>spring.boot.starter.common</artifactId>
 		</dependency>
 		<!--database-->
 		<dependency>
@@ -28,17 +28,11 @@
 			<groupId>org.apache.shardingsphere</groupId>
 			<artifactId>sharding-jdbc-spring-boot-starter</artifactId>
 			<version>4.0.1</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.apache.commons</groupId>
-					<artifactId>commons-collections4</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.github.pagehelper</groupId>
 			<artifactId>pagehelper-spring-boot-starter</artifactId>
-			<version>1.2.12</version>
+			<version>1.2.13</version>
 		</dependency>
 		<dependency>
 			<groupId>org.mybatis.generator</groupId>

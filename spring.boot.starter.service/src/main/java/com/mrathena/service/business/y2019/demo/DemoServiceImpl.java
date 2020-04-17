@@ -2,7 +2,7 @@ package com.mrathena.service.business.y2019.demo;
 
 import com.mrathena.biz.business.y2019.demo.DemoBiz;
 import com.mrathena.common.entity.Response;
-import com.mrathena.spring.boot.starter.api.BasePageResDTO;
+import com.mrathena.spring.boot.starter.api.business.BasePageResDTO;
 import com.mrathena.spring.boot.starter.api.business.y2019.demo.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.Service;
