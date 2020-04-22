@@ -1,7 +1,6 @@
 package com.mrathena.test;
 
 import com.mrathena.biz.toolkit.Redis;
-import com.mrathena.common.constant.RedisConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.redisson.api.RLock;
@@ -11,7 +10,6 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 
 import javax.annotation.Resource;
 import java.time.Duration;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,14 +26,13 @@ public class RedisTest extends BaseTest {
 
 	@Test
 	public void testSetMethod() {
-		// clusterRedisTemplate.opsForValue().set(key, value, milliseconds, TimeUnit.MILLISECONDS);
-		// milliseconds 超过Integer.MAX的时候会报错 ...
-		redis.set("key", "value", 2147483647L);
-		System.out.println(redis.pttl("key"));
-		redis.set("key", "value", 2147483648L);
-		System.out.println(redis.pttl("key"));
-		redis.set("key", "value", 214748364800000000L);
-		System.out.println(redis.pttl("key"));
+//		redis.set("test", 1L, Duration.ofMinutes(1));
+//		System.out.println(redis.getString("test"));
+		System.out.println(redis.get("test", Long.class));
+		System.out.println(redis.get("test", long.class));
+		redis.set("test", "value", Duration.ofMinutes(1));
+		System.out.println(redis.getString("test"));
+		System.out.println(redis.get("test", String.class));
 	}
 
 	@Test
@@ -93,19 +90,19 @@ public class RedisTest extends BaseTest {
 	public void testSet(String key) {
 		System.out.println("testSet");
 		redis.set(key, "this is a test for set operation", Duration.ofHours(1));
-		System.out.println(redis.get(key));
-		System.out.println(redis.get(key).getClass());
+//		System.out.println(redis.get(key));
+//		System.out.println(redis.get(key).getClass());
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		redis.set(key, new Date(), RedisConstant.HOUR_IN_MILLISECONDS);
+//		redis.set(key, new Date(), RedisConstant.HOUR_IN_MILLISECONDS);
 		System.out.println(redis.pttl(key));
-		System.out.println(redis.get(key));
-		System.out.println(redis.get(key).getClass());
-		Date date = (Date) redis.get(key);
-		System.out.println(date);
+//		System.out.println(redis.get(key));
+//		System.out.println(redis.get(key).getClass());
+//		Date date = (Date) redis.get(key);
+//		System.out.println(date);
 	}
 
 	public void testIncrDecr(String key) {

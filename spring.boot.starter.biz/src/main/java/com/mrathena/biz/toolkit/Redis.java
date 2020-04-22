@@ -37,15 +37,10 @@ public class Redis {
 
 	/**
 	 * set
-	 * spring-data-redis:1.8.1:JedisClusterConnection#pSetEx, 该方法内会判断毫秒值不能大于Integer.MAX_VALUE, TimeUnit.MILLISECONDS会尝试走这个方法,走不通会走下面的方法
-	 * spring-data-redis:1.8.1:JedisClusterConnection#setEx, 该方法内会判断秒值不能大于Integer.MAX_VALUE, TimeUnit.SECONDS会走这个方法
-	 * 既然不管是秒还是毫秒都会被判断不得大于, 所以直接使用秒就好了, 能容纳更大的时段
 	 * 当前使用spring-data-redis:2.2.1:没有这种问题,不需要特别处理
-	 *
-	 * @param milliseconds 过期时间(毫秒)
 	 */
-	public void set(String key, Object value, long milliseconds) {
-		clusterRedisTemplate.opsForValue().set(key, value, milliseconds, TimeUnit.MILLISECONDS);
+	public void set(String key, Object value, long timeout, TimeUnit unit) {
+		clusterRedisTemplate.opsForValue().set(key, value, timeout, unit);
 	}
 
 	/**
@@ -79,11 +74,19 @@ public class Redis {
 
 	/**
 	 * get, 结果直接强转就可以了
+	 * 存Long取Long会报错,Integer不能转成Long,这里做特殊处理
+	 *
 	 * String value = (String) redis.get("key");
 	 * List<String> values = (List<String>) redis.get("key");
 	 */
-	public Object get(String key) {
-		return clusterRedisTemplate.opsForValue().get(key);
+	@SuppressWarnings("unchecked")
+	public <T> T get(String key, Class<T> clazz) {
+		Object object = clusterRedisTemplate.opsForValue().get(key);
+		if ((clazz == Long.class || clazz == long.class) && object instanceof Integer) {
+			Integer integerObject = (Integer) object;
+			return (T) Long.valueOf(integerObject.longValue());
+		}
+		return (T) object;
 	}
 
 	/**
