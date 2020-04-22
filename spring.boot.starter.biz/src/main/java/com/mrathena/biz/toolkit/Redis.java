@@ -73,8 +73,11 @@ public class Redis {
 	}
 
 	/**
-	 * get, 结果直接强转就可以了
-	 * 存Long取Long会报错,Integer不能转成Long,这里做特殊处理
+	 * get
+	 *
+	 * 通过Json转换后,基本数据类型会被反序列化为默认的类型(Integer和Float),
+	 * 存Byte,Short,Long取出来是Integer,存Double取出来是Float,可能还有其他的,
+	 * 需要做特殊处理(我甚至怀疑使用JdkSerializationRedisSerializer会更好)
 	 *
 	 * String value = (String) redis.get("key");
 	 * List<String> values = (List<String>) redis.get("key");
@@ -85,8 +88,21 @@ public class Redis {
 		if ((clazz == Long.class || clazz == long.class) && object instanceof Integer) {
 			Integer integerObject = (Integer) object;
 			return (T) Long.valueOf(integerObject.longValue());
+		} else if ((clazz == Short.class || clazz == short.class) && object instanceof Integer) {
+			Integer integerObject = (Integer) object;
+			return (T) Short.valueOf(integerObject.shortValue());
+		} else if ((clazz == Byte.class || clazz == byte.class) && object instanceof Integer) {
+			Integer integerObject = (Integer) object;
+			return (T) Byte.valueOf(integerObject.byteValue());
+		} else if ((clazz == Float.class || clazz == float.class) && object instanceof Double) {
+			Double doubleObject = (Double) object;
+			return (T) Float.valueOf(doubleObject.floatValue());
+		} else if ((clazz == Character.class || clazz == char.class) && object instanceof String) {
+			String StringObject = (String) object;
+			return (T) Character.valueOf(StringObject.charAt(0));
+		} else {
+			return (T) object;
 		}
-		return (T) object;
 	}
 
 	/**

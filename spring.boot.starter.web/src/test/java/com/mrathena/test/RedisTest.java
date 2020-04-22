@@ -26,13 +26,25 @@ public class RedisTest extends BaseTest {
 
 	@Test
 	public void testSetMethod() {
-//		redis.set("test", 1L, Duration.ofMinutes(1));
-//		System.out.println(redis.getString("test"));
-		System.out.println(redis.get("test", Long.class));
-		System.out.println(redis.get("test", long.class));
-		redis.set("test", "value", Duration.ofMinutes(1));
-		System.out.println(redis.getString("test"));
-		System.out.println(redis.get("test", String.class));
+		String key = "test";
+		redis.set(key, 1.0D, Duration.ofMinutes(1));
+		Double doubleValue = redis.get(key, Double.class);
+		System.out.println(doubleValue);
+		Float floatValue = redis.get(key, Float.class);
+		System.out.println(floatValue);
+
+		redis.set(key, 'a', Duration.ofMinutes(1));
+		Character character = redis.get(key, Character.class);
+		System.out.println(character);
+
+		long value = 1L + Integer.MAX_VALUE;
+		redis.set(key, value, Duration.ofMinutes(1));
+		Long longValue = redis.get(key, Long.class);
+		System.out.println(longValue);
+
+		redis.set(key, true, Duration.ofMinutes(1));
+		Boolean booleanValue = redis.get(key, Boolean.class);
+		System.out.println(booleanValue);
 	}
 
 	@Test
