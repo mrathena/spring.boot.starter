@@ -5,6 +5,7 @@ import com.mrathena.common.entity.Response;
 import com.mrathena.spring.boot.starter.api.business.BasePageResDTO;
 import com.mrathena.spring.boot.starter.api.business.y2019.demo.*;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.dubbo.config.annotation.Method;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.stereotype.Component;
 
@@ -16,8 +17,8 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 @Service(
-		executes = 2
-//		methods = @Method(name = "demo", executes = 1)
+		executes = 2,
+		methods = @Method(name = "demo", executes = 1)
 )
 @Component
 public class DemoServiceImpl implements DemoService {
