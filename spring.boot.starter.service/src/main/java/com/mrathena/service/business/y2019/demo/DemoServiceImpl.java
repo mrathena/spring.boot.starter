@@ -9,12 +9,16 @@ import org.apache.dubbo.config.annotation.Service;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author mrathena on 2019/11/7 18:00
  */
 @Slf4j
-@Service
+@Service(
+		executes = 2
+//		methods = @Method(name = "demo", executes = 1)
+)
 @Component
 public class DemoServiceImpl implements DemoService {
 
@@ -39,5 +43,15 @@ public class DemoServiceImpl implements DemoService {
 			// 这种不得不处理的异常, 用RuntimeException, 因为ServiceException默认是当作正常的阻断
 			throw new RuntimeException(e);
 		}
+	}
+
+	@Override
+	public Response<String> demo() {
+		try {
+			TimeUnit.SECONDS.sleep(10L);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		return new Response.Builder<>("success").build();
 	}
 }

@@ -32,4 +32,7 @@ public interface DemoService {
 	 */
 	Response<BasePageResDTO<DemoDTO>> queryDemoWithPage(QueryDemoReqDTO request);
 
+
+	Response<String> demo();
+
 }
