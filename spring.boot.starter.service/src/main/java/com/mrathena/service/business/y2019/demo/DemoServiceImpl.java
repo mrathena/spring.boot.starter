@@ -27,18 +27,18 @@ public class DemoServiceImpl implements DemoService {
 
 	@Override
 	public Response<Boolean> createDemo(CreateDemoReqDTO request) {
-		return new Response.Builder<>(demoBiz.createDemo(request)).build();
+		return new Response<>(demoBiz.createDemo(request));
 	}
 
 	@Override
 	public Response<QueryDemoResDTO> queryDemo(QueryDemoReqDTO request) {
-		return new Response.Builder<>(demoBiz.queryDemo(request)).build();
+		return new Response<>(demoBiz.queryDemo(request));
 	}
 
 	@Override
 	public Response<BasePageResDTO<DemoDTO>> queryDemoWithPage(QueryDemoReqDTO request) {
 		try {
-			return new Response.Builder<>(demoBiz.queryDemoWithPage(request)).build();
+			return new Response<>(demoBiz.queryDemoWithPage(request));
 		} catch (IllegalAccessException e) {
 			// 这种不得不处理的异常, 用RuntimeException, 因为ServiceException默认是当作正常的阻断
 			throw new RuntimeException(e);
@@ -48,10 +48,10 @@ public class DemoServiceImpl implements DemoService {
 	@Override
 	public Response<String> demo() {
 		try {
-			TimeUnit.SECONDS.sleep(10L);
+			TimeUnit.SECONDS.sleep(3L);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		return new Response.Builder<>("success").build();
+		return new Response<>("success");
 	}
 }

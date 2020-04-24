@@ -65,17 +65,17 @@ public final class ExceptionHandler {
 	 */
 	public static <T> Response<T> getResponseFromThrowable(Throwable cause) {
 		if (cause instanceof IllegalArgumentException) {
-			return new Response.Builder<T>(ExceptionEnum.ILLEGAL_ARGUMENT.name(), cause.getMessage()).build();
+			return new Response<>(ExceptionEnum.ILLEGAL_ARGUMENT.name(), cause.getMessage());
 		} else if (cause instanceof ServiceException) {
 			ServiceException exception = (ServiceException) cause;
-			return new Response.Builder<T>(exception.getCode(), exception.getInfo()).build();
+			return new Response<>(exception.getCode(), exception.getInfo());
 		} else if (cause instanceof BusinessException) {
 			BusinessException exception = (BusinessException) cause;
-			return new Response.Builder<T>(exception.getCode(), exception.getInfo()).build();
+			return new Response<>(exception.getCode(), exception.getInfo());
 		} else if (cause instanceof Exception) {
-			return new Response.Builder<T>(ExceptionEnum.EXCEPTION).build();
+			return new Response<>(ExceptionEnum.EXCEPTION);
 		} else {
-			return new Response.Builder<T>(ExceptionEnum.ERROR).build();
+			return new Response<>(ExceptionEnum.ERROR);
 		}
 	}
 
