@@ -36,7 +36,7 @@ public class ServiceException extends RuntimeException {
 			this.code = ErrorCodeEnum.ERROR.name();
 			this.info = ErrorCodeEnum.ERROR.getInfo();
 		}
-		this.description = ExceptionHandler.getStackTraceStr(this);
+		this.description = ThrowableHandler.getStackTraceStr(this);
 	}
 
 	public ServiceException(ErrorCodeEnumInterface exception, String description) {

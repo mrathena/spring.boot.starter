@@ -16,17 +16,17 @@ public final class RemoteServiceException extends ServiceException {
 			this.info = exception.getInfo();
 			this.description = exception.getDescription();
 		} else {
-			if (ExceptionHandler.isDubboUnavailableException(cause)) {
+			if (ThrowableHandler.isDubboUnavailableException(cause)) {
 				this.code = ErrorCodeEnum.REMOTE_SERVICE_UNAVAILABLE.name();
 				this.info = ErrorCodeEnum.REMOTE_SERVICE_UNAVAILABLE.getInfo();
-			} else if (ExceptionHandler.isDubboTimeoutException(cause)) {
+			} else if (ThrowableHandler.isDubboTimeoutException(cause)) {
 				this.code = ErrorCodeEnum.REMOTE_SERVICE_INVOKE_TIMEOUT.name();
 				this.info = ErrorCodeEnum.REMOTE_SERVICE_INVOKE_TIMEOUT.getInfo();
 			} else {
 				this.code = ErrorCodeEnum.REMOTE_SERVICE_INVOKE_FAILURE.name();
 				this.info = ErrorCodeEnum.REMOTE_SERVICE_INVOKE_FAILURE.getInfo();
 			}
-			this.description = ExceptionHandler.getStackTraceStr(this);
+			this.description = ThrowableHandler.getStackTraceStr(this);
 		}
 	}
 

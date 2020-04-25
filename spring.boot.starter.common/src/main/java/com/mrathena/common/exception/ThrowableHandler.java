@@ -10,9 +10,9 @@ import org.apache.dubbo.rpc.RpcException;
  * @author com.mrathena on 2019/5/27 10:47
  */
 @Slf4j
-public final class ExceptionHandler {
+public final class ThrowableHandler {
 
-	private ExceptionHandler() {}
+	private ThrowableHandler() {}
 
 	/**
 	 * 获取异常的堆栈信息

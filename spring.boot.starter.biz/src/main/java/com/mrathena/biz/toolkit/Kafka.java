@@ -1,7 +1,7 @@
 package com.mrathena.biz.toolkit;
 
 import com.google.gson.Gson;
-import com.mrathena.common.exception.ExceptionHandler;
+import com.mrathena.common.exception.ThrowableHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -69,7 +69,7 @@ public class Kafka {
 
 		@Override
 		public void onError(String topic, Integer partition, String key, String value, Exception exception) {
-			String description = ExceptionHandler.getStackTraceStr(exception);
+			String description = ThrowableHandler.getStackTraceStr(exception);
 			log.info("KAFKA:PRODUCER:SEND:ERROR topic:{} partition:{} key:{} value:{} exception:{}",
 					topic, partition, key, value, description);
 			log.error("KAFKA:PRODUCER:SEND:ERROR topic:{} partition:{} key:{} value:{} exception:",
