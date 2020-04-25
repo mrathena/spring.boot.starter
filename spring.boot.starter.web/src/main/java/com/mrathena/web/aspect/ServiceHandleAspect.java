@@ -2,7 +2,7 @@ package com.mrathena.web.aspect;
 
 import com.mrathena.common.constant.Constant;
 import com.mrathena.common.entity.Response;
-import com.mrathena.common.exception.ExceptionHandler;
+import com.mrathena.common.exception.ThrowableHandler;
 import com.mrathena.web.aspect.toolkit.AspectKit;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -41,11 +41,11 @@ public class ServiceHandleAspect {
 			AspectKit.removeLogClassNameAndMethodName();
 			return response;
 		} catch (Throwable cause) {
-			Response response = ExceptionHandler.getResponseFromThrowable(cause);
+			Response response = ThrowableHandler.getResponseFromThrowable(cause);
 			long interval = System.currentTimeMillis() - begin;
-			String invokeStatus = ExceptionHandler.isNormalBlockingException(cause) ? Constant.SUCCESS : Constant.EXCEPTION;
+			String invokeStatus = ThrowableHandler.isNormalBlockingException(cause) ? Constant.SUCCESS : Constant.EXCEPTION;
 			String tradeStatus = getTradeStatus(response);
-			String message = ExceptionHandler.getClassInfoDescriptionIfPresent(cause);
+			String message = ThrowableHandler.getClassInfoDescriptionIfPresent(cause);
 			AspectKit.setLogClassNameAndMethodName(point);
 			log.info("[{}ms][{}][{}] PARAMETER:{} EXCEPTION:{}", interval, invokeStatus, tradeStatus, request, message);
 			log.error("[{}ms][{}][{}] PARAMETER:{} EXCEPTION:", interval, invokeStatus, tradeStatus, request, cause);

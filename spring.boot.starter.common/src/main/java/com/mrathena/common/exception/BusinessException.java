@@ -35,7 +35,7 @@ public class BusinessException extends RuntimeException {
 	}
 
 	public BusinessException(String description) {
-		this(ErrorCodeEnum.EXCEPTION.name(), description);
+		this(ErrorCodeEnum.EXCEPTION.getInfo(), description);
 	}
 
 	public BusinessException(ErrorCodeEnumInterface exception, String info, String description) {
