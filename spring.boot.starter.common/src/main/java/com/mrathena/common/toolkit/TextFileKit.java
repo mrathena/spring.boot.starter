@@ -179,7 +179,7 @@ public final class TextFileKit {
 	                                         Handler<T> handler) {
 		try {
 			if (batchSize <= 0) {
-				throw new IllegalArgumentException("batchSize must greater than 0");
+				throw new ServiceException("batchSize must greater than 0");
 			}
 			List<T> list = new LinkedList<>();
 			try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
