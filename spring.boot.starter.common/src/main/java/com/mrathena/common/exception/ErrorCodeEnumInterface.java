@@ -3,7 +3,7 @@ package com.mrathena.common.exception;
 /**
  * @author com.mrathena on 2019/10/17 15:27
  */
-public interface ExceptionEnumInterface {
+public interface ErrorCodeEnumInterface {
 
 	/**
 	 * 异常码

@@ -1,6 +1,6 @@
 package com.mrathena.biz.toolkit;
 
-import com.mrathena.common.exception.ExceptionEnum;
+import com.mrathena.common.exception.ErrorCodeEnum;
 import com.mrathena.common.exception.ServiceException;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
@@ -60,7 +60,7 @@ public class Redis {
 	public void set(String key, Object value, LocalDateTime expireAt) {
 		LocalDateTime now = LocalDateTime.now();
 		if (expireAt.equals(now) || expireAt.isBefore(now)) {
-			throw new ServiceException(ExceptionEnum.DATA_EXCEPTION, "redis在set的时候传入的过期时间点不在当前时间点之后");
+			throw new ServiceException(ErrorCodeEnum.DATA_EXCEPTION, "redis在set的时候传入的过期时间点不在当前时间点之后");
 		}
 		clusterRedisTemplate.opsForValue().set(key, value, Duration.between(now, expireAt).abs());
 	}

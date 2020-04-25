@@ -31,18 +31,18 @@ public class BusinessException extends RuntimeException {
 	}
 
 	public BusinessException(String info, String description) {
-		this(ExceptionEnum.EXCEPTION.name(), info, description);
+		this(ErrorCodeEnum.EXCEPTION.name(), info, description);
 	}
 
 	public BusinessException(String description) {
-		this(ExceptionEnum.EXCEPTION.name(), description);
+		this(ErrorCodeEnum.EXCEPTION.name(), description);
 	}
 
-	public BusinessException(ExceptionEnumInterface exception, String info, String description) {
+	public BusinessException(ErrorCodeEnumInterface exception, String info, String description) {
 		this(exception.name(), info, description);
 	}
 
-	public BusinessException(ExceptionEnumInterface exception, String description) {
+	public BusinessException(ErrorCodeEnumInterface exception, String description) {
 		this(exception.name(), exception.getInfo(), description);
 	}
 

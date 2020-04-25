@@ -1,6 +1,6 @@
 package com.mrathena.common.toolkit;
 
-import com.mrathena.common.exception.ExceptionEnum;
+import com.mrathena.common.exception.ErrorCodeEnum;
 import com.mrathena.common.exception.ServiceException;
 
 import java.time.*;
@@ -88,10 +88,10 @@ public final class DateTimeKit {
 
 	public static boolean isLocalDateTimeDurationOverlap(LocalDateTime start, LocalDateTime stop, LocalDateTime anotherStart, LocalDateTime anotherStop) {
 		if (start == null || stop == null || anotherStart == null || anotherStop == null) {
-			throw new ServiceException(ExceptionEnum.DATA_EXCEPTION, "四个LocalDateTime必须都不为null");
+			throw new ServiceException(ErrorCodeEnum.DATA_EXCEPTION, "四个LocalDateTime必须都不为null");
 		}
 		if (start.isAfter(stop) || anotherStart.isAfter(anotherStop)) {
-			throw new ServiceException(ExceptionEnum.DATA_EXCEPTION, "两组结束时间必须晚于同组开始时间");
+			throw new ServiceException(ErrorCodeEnum.DATA_EXCEPTION, "两组结束时间必须晚于同组开始时间");
 		}
 		LocalDateTime minDateTime = start.isBefore(anotherStart) ? start : anotherStart;
 		LocalDateTime maxDateTime = stop.isBefore(anotherStop) ? anotherStop : stop;
@@ -112,10 +112,10 @@ public final class DateTimeKit {
 
 	public static boolean isDataDurationOverlap(Date start, Date stop, Date anotherStart, Date anotherStop) {
 		if (start == null || stop == null || anotherStart == null || anotherStop == null) {
-			throw new ServiceException(ExceptionEnum.DATA_EXCEPTION, "四个LocalDateTime必须都不为null");
+			throw new ServiceException(ErrorCodeEnum.DATA_EXCEPTION, "四个LocalDateTime必须都不为null");
 		}
 		if (start.after(stop) || anotherStart.after(anotherStop)) {
-			throw new ServiceException(ExceptionEnum.DATA_EXCEPTION, "两组结束时间必须晚于同组开始时间");
+			throw new ServiceException(ErrorCodeEnum.DATA_EXCEPTION, "两组结束时间必须晚于同组开始时间");
 		}
 		Date minDate = start.before(anotherStart) ? start : anotherStart;
 		Date maxDate = stop.before(anotherStop) ? anotherStop : stop;

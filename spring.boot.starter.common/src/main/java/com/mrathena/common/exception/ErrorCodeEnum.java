@@ -8,7 +8,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum ExceptionEnum implements ExceptionEnumInterface {
+public enum ErrorCodeEnum implements ErrorCodeEnumInterface {
 
 	/**
 	 * 常规错误码
@@ -26,6 +26,6 @@ public enum ExceptionEnum implements ExceptionEnumInterface {
 	/**
 	 * 给用户看的内容
 	 */
-	private String info;
+	private final String info;
 
 }

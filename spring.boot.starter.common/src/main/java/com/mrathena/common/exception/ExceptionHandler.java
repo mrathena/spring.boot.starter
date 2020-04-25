@@ -65,7 +65,7 @@ public final class ExceptionHandler {
 	 */
 	public static <T> Response<T> getResponseFromThrowable(Throwable cause) {
 		if (cause instanceof IllegalArgumentException) {
-			return new Response<>(ExceptionEnum.ILLEGAL_ARGUMENT.name(), cause.getMessage());
+			return new Response<>(ErrorCodeEnum.ILLEGAL_ARGUMENT.name(), cause.getMessage());
 		} else if (cause instanceof ServiceException) {
 			ServiceException exception = (ServiceException) cause;
 			return new Response<>(exception.getCode(), exception.getInfo());
@@ -73,9 +73,9 @@ public final class ExceptionHandler {
 			BusinessException exception = (BusinessException) cause;
 			return new Response<>(exception.getCode(), exception.getInfo());
 		} else if (cause instanceof Exception) {
-			return new Response<>(ExceptionEnum.EXCEPTION);
+			return new Response<>(ErrorCodeEnum.EXCEPTION);
 		} else {
-			return new Response<>(ExceptionEnum.ERROR);
+			return new Response<>(ErrorCodeEnum.ERROR);
 		}
 	}
 
