@@ -1,20 +1,17 @@
 package com.mrathena.spring.boot.starter.api.verify.annotation;
 
-/**
- * @author com.mrathena
- */
-
 import javax.validation.Constraint;
 import javax.validation.Payload;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.NotBlank;
 import java.lang.annotation.*;
 
 @Documented
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = {})
-@Pattern(regexp = "^1\\d{10}$")
-public @interface Mobile {
+@NotBlank
+@javax.validation.constraints.Email(regexp = "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$")
+public @interface Email {
 
 	String message() default "";
 

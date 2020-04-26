@@ -30,16 +30,16 @@ public class ServiceException extends RuntimeException {
 			this.code = exception.getCode();
 			this.info = exception.getInfo();
 		} else if (cause instanceof Exception) {
-			this.code = ErrorCodeEnum.EXCEPTION.name();
-			this.info = ErrorCodeEnum.EXCEPTION.getInfo();
+			this.code = ServiceErrorCodeEnum.EXCEPTION.name();
+			this.info = ServiceErrorCodeEnum.EXCEPTION.getInfo();
 		} else {
-			this.code = ErrorCodeEnum.ERROR.name();
-			this.info = ErrorCodeEnum.ERROR.getInfo();
+			this.code = ServiceErrorCodeEnum.ERROR.name();
+			this.info = ServiceErrorCodeEnum.ERROR.getInfo();
 		}
 		this.description = ThrowableHandler.getStackTraceStr(this);
 	}
 
-	public ServiceException(ErrorCodeEnumInterface exception, String description) {
+	public ServiceException(ServiceErrorCodeEnumInterface exception, String description) {
 		super(description);
 		this.code = exception.name();
 		this.info = exception.getInfo();
@@ -47,7 +47,7 @@ public class ServiceException extends RuntimeException {
 	}
 
 	public ServiceException(String description) {
-		this(ErrorCodeEnum.EXCEPTION, description);
+		this(ServiceErrorCodeEnum.EXCEPTION, description);
 	}
 
 }

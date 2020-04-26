@@ -2,7 +2,7 @@ package com.mrathena.web.aspect;
 
 import com.mrathena.common.constant.Constant;
 import com.mrathena.common.entity.Response;
-import com.mrathena.common.exception.ErrorCodeEnum;
+import com.mrathena.common.exception.ServiceErrorCodeEnum;
 import com.mrathena.common.exception.ThrowableHandler;
 import com.mrathena.web.aspect.toolkit.AspectKit;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -64,11 +64,11 @@ public class IntegrationHandleAspect {
 	 */
 	private String getExceptionCause(Throwable throwable) {
 		if (ThrowableHandler.isDubboUnavailableException(throwable)) {
-			return ErrorCodeEnum.REMOTE_SERVICE_UNAVAILABLE.name();
+			return ServiceErrorCodeEnum.REMOTE_SERVICE_UNAVAILABLE.name();
 		} else if (ThrowableHandler.isDubboTimeoutException(throwable)) {
-			return ErrorCodeEnum.REMOTE_SERVICE_INVOKE_TIMEOUT.name();
+			return ServiceErrorCodeEnum.REMOTE_SERVICE_INVOKE_TIMEOUT.name();
 		}
-		return ErrorCodeEnum.REMOTE_SERVICE_INVOKE_FAILURE.name();
+		return ServiceErrorCodeEnum.REMOTE_SERVICE_INVOKE_FAILURE.name();
 	}
 
 }

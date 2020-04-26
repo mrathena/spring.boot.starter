@@ -33,7 +33,7 @@
 				targetProject="${target.java.path}" type="XMLMAPPER">
 		</javaClientGenerator>
 
-		<table tableName="t_customer"
+		<table tableName="customer"
 			   domainObjectName="CustomerDO"
 			   mapperName="CustomerMapper"
 			   sqlProviderName="CustomerMapper"

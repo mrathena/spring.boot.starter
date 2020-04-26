@@ -36,27 +36,31 @@ public final class ThrowableHandler {
 	}
 
 	/**
-	 * 获取根源异常的类名和信息和描述
+	 * 获取根源异常的类名和信息和描述, 长度有可能会很长
+	 *
+	 * IllegalArgumentException: 返回 IllegalArgumentException:message
+	 * ServiceException: 如果是自己抛的, 返回 ServiceException:info:description, 如果是抓的, 返回 堆栈跟踪
+	 * BusinessException: 一定是自己抛的, 返回 BusinessException:info:description
+	 * 其他错误或异常: rootCause.getClass().getSimpleName():message
 	 */
 	public static String getClassInfoDescriptionIfPresent(Throwable cause) {
 		Throwable rootCause = getRootCauseStackTrace(cause);
 		if (rootCause instanceof IllegalArgumentException) {
-			String info = rootCause.getClass().getName();
-			return info + Constant.BLANK + Constant.COLON + Constant.BLANK + cause.getMessage();
+			String info = rootCause.getClass().getSimpleName();
+			return info + Constant.COLON + cause.getMessage();
 		} else if (rootCause instanceof ServiceException) {
 			ServiceException exception = (ServiceException) rootCause;
-			String info = rootCause.getClass().getName();
-			info += Constant.BLANK + Constant.COLON + Constant.BLANK + exception.getInfo();
-			info += Constant.BLANK + Constant.COLON + Constant.BLANK + exception.getDescription();
-			return info + System.lineSeparator() + getStackTraceStr(cause);
+			String info = rootCause.getClass().getSimpleName();
+			info += Constant.COLON + exception.getInfo();
+			return info + Constant.COLON + exception.getDescription();
 		} else if (rootCause instanceof BusinessException) {
 			BusinessException exception = (BusinessException) rootCause;
-			String info = rootCause.getClass().getName();
-			info += Constant.BLANK + Constant.COLON + Constant.BLANK + exception.getInfo();
-			info += Constant.BLANK + Constant.COLON + Constant.BLANK + exception.getDescription();
-			return info + System.lineSeparator() + getStackTraceStr(cause);
+			String info = rootCause.getClass().getSimpleName();
+			info += Constant.COLON + exception.getInfo();
+			return info + Constant.COLON + exception.getDescription();
 		} else {
-			return getStackTraceStr(cause);
+			String info = rootCause.getClass().getSimpleName();
+			return info + Constant.COLON + cause.getMessage();
 		}
 	}
 
@@ -65,7 +69,7 @@ public final class ThrowableHandler {
 	 */
 	public static <T> Response<T> getResponseFromThrowable(Throwable cause) {
 		if (cause instanceof IllegalArgumentException) {
-			return new Response<>(ErrorCodeEnum.ILLEGAL_ARGUMENT.name(), cause.getMessage());
+			return new Response<>(BusinessErrorCodeEnum.ILLEGAL_ARGUMENT.name(), cause.getMessage());
 		} else if (cause instanceof ServiceException) {
 			ServiceException exception = (ServiceException) cause;
 			return new Response<>(exception.getCode(), exception.getInfo());
@@ -73,9 +77,9 @@ public final class ThrowableHandler {
 			BusinessException exception = (BusinessException) cause;
 			return new Response<>(exception.getCode(), exception.getInfo());
 		} else if (cause instanceof Exception) {
-			return new Response<>(ErrorCodeEnum.EXCEPTION);
+			return new Response<>(ServiceErrorCodeEnum.EXCEPTION);
 		} else {
-			return new Response<>(ErrorCodeEnum.ERROR);
+			return new Response<>(ServiceErrorCodeEnum.ERROR);
 		}
 	}
 

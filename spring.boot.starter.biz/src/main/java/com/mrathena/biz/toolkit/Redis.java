@@ -1,6 +1,5 @@
 package com.mrathena.biz.toolkit;
 
-import com.mrathena.common.exception.ErrorCodeEnum;
 import com.mrathena.common.exception.ServiceException;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
@@ -37,7 +36,6 @@ public class Redis {
 
 	/**
 	 * set
-	 * 当前使用spring-data-redis:2.2.1:没有这种问题,不需要特别处理
 	 */
 	public void set(String key, Object value, long timeout, TimeUnit unit) {
 		clusterRedisTemplate.opsForValue().set(key, value, timeout, unit);
@@ -60,7 +58,7 @@ public class Redis {
 	public void set(String key, Object value, LocalDateTime expireAt) {
 		LocalDateTime now = LocalDateTime.now();
 		if (expireAt.equals(now) || expireAt.isBefore(now)) {
-			throw new ServiceException(ErrorCodeEnum.DATA_EXCEPTION, "redis在set的时候传入的过期时间点不在当前时间点之后");
+			throw new ServiceException("redis在set的时候传入的过期时间点不在当前时间点之后");
 		}
 		clusterRedisTemplate.opsForValue().set(key, value, Duration.between(now, expireAt).abs());
 	}
@@ -121,6 +119,8 @@ public class Redis {
 
 	/**
 	 * increment
+	 *
+	 * 需自行控制timeout
 	 */
 	public Long increment(String key) {
 		return clusterRedisTemplate.opsForValue().increment(key);
@@ -128,6 +128,8 @@ public class Redis {
 
 	/**
 	 * decrement
+	 *
+	 * 需自行控制timeout
 	 */
 	public Long decrement(String key) {
 		return clusterRedisTemplate.opsForValue().decrement(key);

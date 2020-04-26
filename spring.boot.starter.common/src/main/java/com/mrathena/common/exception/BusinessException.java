@@ -23,26 +23,18 @@ public class BusinessException extends RuntimeException {
 	 */
 	protected String description;
 
-	public BusinessException(String code, String info, String description) {
+	private BusinessException(String code, String info, String description) {
 		super(description);
 		this.code = code;
 		this.info = info;
 		this.description = description;
 	}
 
-	public BusinessException(String info, String description) {
-		this(ErrorCodeEnum.EXCEPTION.name(), info, description);
-	}
-
-	public BusinessException(String description) {
-		this(ErrorCodeEnum.EXCEPTION.getInfo(), description);
-	}
-
-	public BusinessException(ErrorCodeEnumInterface exception, String info, String description) {
+	public BusinessException(BusinessErrorCodeEnumInterface exception, String info, String description) {
 		this(exception.name(), info, description);
 	}
 
-	public BusinessException(ErrorCodeEnumInterface exception, String description) {
+	public BusinessException(BusinessErrorCodeEnumInterface exception, String description) {
 		this(exception.name(), exception.getInfo(), description);
 	}
 

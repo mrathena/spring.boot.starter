@@ -1,6 +1,6 @@
 package com.mrathena.common.entity;
 
-import com.mrathena.common.exception.ErrorCodeEnumInterface;
+import com.mrathena.common.exception.ServiceErrorCodeEnumInterface;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -36,7 +36,7 @@ public class Response<T> implements Serializable {
 		this.message = message;
 	}
 
-	public Response(ErrorCodeEnumInterface exception) {
+	public Response(ServiceErrorCodeEnumInterface exception) {
 		this.success = false;
 		this.code = exception.name();
 		this.message = exception.getInfo();

@@ -4,6 +4,7 @@ import com.mrathena.common.toolkit.IdKit;
 import com.mrathena.common.toolkit.LogKit;
 import com.mrathena.spring.boot.starter.api.business.BaseReqDTO;
 import com.mrathena.spring.boot.starter.api.verify.Verifiable;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.slf4j.Logger;
@@ -11,13 +12,16 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 /**
  * @author mrathena on 2020-03-29 02:26
  */
+@Slf4j
 public final class AspectKit {
 
 	private AspectKit() {}
@@ -66,11 +70,34 @@ public final class AspectKit {
 		if (ArrayUtils.isEmpty(args)) {
 			return null;
 		}
-		StringJoiner joiner = new StringJoiner(", ");
-		for (Object arg : args) {
-			joiner.add(arg.toString());
+		return Arrays.stream(args).map(AspectKit::getAllFieldNameAndValueStr).collect(Collectors.joining(";"));
+	}
+
+	private static String getAllFieldNameAndValueStr(Object object) {
+		Class<?> clazz = object.getClass();
+		String simpleTypeName = clazz.getTypeName().substring(clazz.getTypeName().lastIndexOf(".")).replace(".", "");
+		Map<String, Object> fieldMap = new HashMap<>();
+		try {
+			//获取本身和父级对象
+			for (; clazz != Object.class; clazz = clazz.getSuperclass()) {
+				//获取所有字段
+				Field[] fields = clazz.getDeclaredFields();
+				for (Field field : fields) {
+					field.setAccessible(true);
+					String fieldName = field.getName();
+					if ("serialVersionUID".equals(fieldName)) {
+						continue;
+					}
+					if (null == fieldMap.get(field.getName())) {
+						fieldMap.put(fieldName, field.get(object));
+					}
+				}
+			}
+			String collect = fieldMap.entrySet().stream().filter(entry -> entry.getValue() != null).map(entry -> entry.getKey() + "=" + entry.getValue()).collect(Collectors.joining(","));
+			return simpleTypeName + "(" + collect + ")";
+		} catch (Throwable cause) {
+			return null;
 		}
-		return joiner.toString();
 	}
 
 	public static String getResponseStr(Object response) {

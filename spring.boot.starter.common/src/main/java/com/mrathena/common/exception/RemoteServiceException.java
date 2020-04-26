@@ -17,20 +17,20 @@ public final class RemoteServiceException extends ServiceException {
 			this.description = exception.getDescription();
 		} else {
 			if (ThrowableHandler.isDubboUnavailableException(cause)) {
-				this.code = ErrorCodeEnum.REMOTE_SERVICE_UNAVAILABLE.name();
-				this.info = ErrorCodeEnum.REMOTE_SERVICE_UNAVAILABLE.getInfo();
+				this.code = ServiceErrorCodeEnum.REMOTE_SERVICE_UNAVAILABLE.name();
+				this.info = ServiceErrorCodeEnum.REMOTE_SERVICE_UNAVAILABLE.getInfo();
 			} else if (ThrowableHandler.isDubboTimeoutException(cause)) {
-				this.code = ErrorCodeEnum.REMOTE_SERVICE_INVOKE_TIMEOUT.name();
-				this.info = ErrorCodeEnum.REMOTE_SERVICE_INVOKE_TIMEOUT.getInfo();
+				this.code = ServiceErrorCodeEnum.REMOTE_SERVICE_INVOKE_TIMEOUT.name();
+				this.info = ServiceErrorCodeEnum.REMOTE_SERVICE_INVOKE_TIMEOUT.getInfo();
 			} else {
-				this.code = ErrorCodeEnum.REMOTE_SERVICE_INVOKE_FAILURE.name();
-				this.info = ErrorCodeEnum.REMOTE_SERVICE_INVOKE_FAILURE.getInfo();
+				this.code = ServiceErrorCodeEnum.REMOTE_SERVICE_INVOKE_FAILURE.name();
+				this.info = ServiceErrorCodeEnum.REMOTE_SERVICE_INVOKE_FAILURE.getInfo();
 			}
 			this.description = ThrowableHandler.getStackTraceStr(this);
 		}
 	}
 
-	public RemoteServiceException(ErrorCodeEnumInterface exception, String description) {
+	public RemoteServiceException(ServiceErrorCodeEnumInterface exception, String description) {
 		super(description);
 		this.code = exception.name();
 		this.info = exception.getInfo();
@@ -38,7 +38,7 @@ public final class RemoteServiceException extends ServiceException {
 	}
 
 	public RemoteServiceException(String description) {
-		this(ErrorCodeEnum.EXCEPTION, description);
+		this(ServiceErrorCodeEnum.EXCEPTION, description);
 	}
 
 }
