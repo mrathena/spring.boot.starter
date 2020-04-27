@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author com.mrathena on 2020-03-29 02:37
@@ -16,7 +17,7 @@ public class VerifyKit {
 
 	private VerifyKit() {}
 
-	private static Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+	private static final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
 	public static <T> void validate(T request) {
 		// 验证结果
@@ -36,12 +37,8 @@ public class VerifyKit {
 				}
 			}
 			if (!map.isEmpty()) {
-				StringBuilder sb = new StringBuilder();
-				for (Map.Entry<String, Set<String>> entry : map.entrySet()) {
-					Set<String> set = entry.getValue();
-					sb.append(entry.getKey()).append(":").append(String.join("&", set)).append("; ");
-				}
-				throw new IllegalArgumentException(sb.toString());
+				String collect = map.entrySet().stream().map(entry -> entry.getKey() + ":" + String.join("&", entry.getValue())).collect(Collectors.joining(";"));
+				throw new IllegalArgumentException(collect);
 			}
 		}
 	}

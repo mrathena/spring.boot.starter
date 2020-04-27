@@ -25,10 +25,10 @@ public class ServiceHandleAspect {
 		Logger log = AspectKit.getLogger(point);
 		String request = AspectKit.getRequestStr(point);
 		try {
-			AspectKit.checkRequest(point);
 			AspectKit.setLogClassNameAndMethodName(point);
 			log.info("[PARAMETER:{}]", request);
 			AspectKit.removeLogClassNameAndMethodName();
+			AspectKit.checkRequest(point);
 			Object response = point.proceed();
 			long interval = System.currentTimeMillis() - begin;
 			AspectKit.setLogClassNameAndMethodName(point);
@@ -43,7 +43,7 @@ public class ServiceHandleAspect {
 			AspectKit.setLogClassNameAndMethodName(point);
 			log.info("[{}ms][{}][REQUEST:{}][RESPONSE:{}][EXCEPTION:{}]", interval, status, request, AspectKit.getResponseStr(response), message);
 			if (!ThrowableHandler.isNormalBlockingException(cause)) {
-				log.error("[{}ms][{}][REQUEST:{}][RESPONSE:{}][EXCEPTION:{}]", interval, status, request, AspectKit.getResponseStr(response), message);
+				log.error("[{}ms][{}][REQUEST:{}][RESPONSE:{}][EXCEPTION:", interval, status, request, AspectKit.getResponseStr(response), cause);
 			}
 			AspectKit.removeLogClassNameAndMethodName();
 			return response;

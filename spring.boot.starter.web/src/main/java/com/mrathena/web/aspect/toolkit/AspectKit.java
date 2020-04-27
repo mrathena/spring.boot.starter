@@ -66,14 +66,21 @@ public final class AspectKit {
 	}
 
 	public static String getRequestStr(ProceedingJoinPoint point) {
-		Object[] args = point.getArgs();
-		if (ArrayUtils.isEmpty(args)) {
-			return null;
+		try {
+			Object[] args = point.getArgs();
+			if (ArrayUtils.isEmpty(args)) {
+				return null;
+			}
+			return Arrays.stream(args).map(AspectKit::getAllFieldNameAndValueStr).collect(Collectors.joining(";"));
+		} catch (Throwable cause) {
+			return "UNKNOWN";
 		}
-		return Arrays.stream(args).map(AspectKit::getAllFieldNameAndValueStr).collect(Collectors.joining(";"));
 	}
 
 	private static String getAllFieldNameAndValueStr(Object object) {
+		if (null == object) {
+			return "null";
+		}
 		Class<?> clazz = object.getClass();
 		String simpleTypeName = clazz.getTypeName().substring(clazz.getTypeName().lastIndexOf(".")).replace(".", "");
 		Map<String, Object> fieldMap = new HashMap<>();

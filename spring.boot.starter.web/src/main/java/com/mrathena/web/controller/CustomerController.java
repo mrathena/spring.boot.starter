@@ -34,7 +34,6 @@ public class CustomerController {
 		request.setPassword(IdKit.getUuid());
 		request.setMobile(mobile);
 		request.setEmail(email);
-		customerService.create(null);
 		return customerService.create(request);
 	}
 

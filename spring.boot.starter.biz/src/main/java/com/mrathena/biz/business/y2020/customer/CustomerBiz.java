@@ -22,7 +22,6 @@ public class CustomerBiz {
 	private CustomerManager customerManager;
 
 	public boolean create(CreateCustomerReqDTO request) {
-		log.info("{}", request);
 		if (request.getMobile().equals("18234089810")) {
 			throw new BusinessException(BusinessErrorCodeEnum.LOCK_CONFLICT, "demo business exception");
 		}
