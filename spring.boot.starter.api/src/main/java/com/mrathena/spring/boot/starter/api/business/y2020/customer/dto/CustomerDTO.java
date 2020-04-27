@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Getter
 @Setter
-@ToString
+@ToString(callSuper = true)
 public class CustomerDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
