@@ -27,12 +27,12 @@ public class ServiceHandleAspect {
 		try {
 			AspectKit.checkRequest(point);
 			AspectKit.setLogClassNameAndMethodName(point);
-			log.info("REQUEST:{}", request);
+			log.info("[PARAMETER:{}]", request);
 			AspectKit.removeLogClassNameAndMethodName();
 			Object response = point.proceed();
 			long interval = System.currentTimeMillis() - begin;
 			AspectKit.setLogClassNameAndMethodName(point);
-			log.info("[{}ms][SUCCESS][PARAMETER:{}][RESPONSE:{}]", interval, request, AspectKit.getResponseStr(response));
+			log.info("[{}ms][SUCCESS][REQUEST:{}][RESPONSE:{}]", interval, request, AspectKit.getResponseStr(response));
 			AspectKit.removeLogClassNameAndMethodName();
 			return response;
 		} catch (Throwable cause) {
@@ -41,9 +41,9 @@ public class ServiceHandleAspect {
 			String status = ThrowableHandler.isNormalBlockingException(cause) ? Constant.SUCCESS : Constant.EXCEPTION;
 			String message = ThrowableHandler.getClassInfoDescriptionIfPresent(cause);
 			AspectKit.setLogClassNameAndMethodName(point);
-			log.info("[{}ms][{}][PARAMETER:{}][RESPONSE:{}][EXCEPTION:{}]", interval, status, request, AspectKit.getResponseStr(response), message);
+			log.info("[{}ms][{}][REQUEST:{}][RESPONSE:{}][EXCEPTION:{}]", interval, status, request, AspectKit.getResponseStr(response), message);
 			if (!ThrowableHandler.isNormalBlockingException(cause)) {
-				log.error("[{}ms][{}][PARAMETER:{}][RESPONSE:{}][EXCEPTION:{}]", interval, status, request, AspectKit.getResponseStr(response), message);
+				log.error("[{}ms][{}][REQUEST:{}][RESPONSE:{}][EXCEPTION:{}]", interval, status, request, AspectKit.getResponseStr(response), message);
 			}
 			AspectKit.removeLogClassNameAndMethodName();
 			return response;
