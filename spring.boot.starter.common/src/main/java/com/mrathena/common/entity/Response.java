@@ -17,6 +17,8 @@ import java.io.Serializable;
 @Accessors(chain = true)
 public class Response<T> implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * 是否调用成功(是否远程服务执行成功/是否远程服务没有报错)
 	 */

@@ -1,9 +1,12 @@
 package com.mrathena.biz.business.y2020.customer;
 
+import com.mrathena.biz.business.y2020.customer.converter.CustomerConverter;
 import com.mrathena.common.exception.BusinessErrorCodeEnum;
 import com.mrathena.common.exception.BusinessException;
 import com.mrathena.common.exception.ServiceErrorCodeEnum;
 import com.mrathena.common.exception.ServiceException;
+import com.mrathena.common.toolkit.IdKit;
+import com.mrathena.dao.entity.y2020.customer.CustomerDO;
 import com.mrathena.dao.manager.y2020.customer.CustomerManager;
 import com.mrathena.spring.boot.starter.api.business.y2020.customer.dto.CreateCustomerReqDTO;
 import com.mrathena.spring.boot.starter.api.business.y2020.customer.dto.CustomerDTO;
@@ -20,6 +23,8 @@ public class CustomerBiz {
 
 	@Resource
 	private CustomerManager customerManager;
+	@Resource
+	private CustomerConverter customerConverter;
 
 	public boolean create(CreateCustomerReqDTO request) {
 		if (request.getMobile().equals("18234089810")) {
@@ -38,16 +43,24 @@ public class CustomerBiz {
 				throw new ServiceException(cause);
 			}
 		}
-		return false;
+		CustomerDO customer = new CustomerDO();
+		customer.setCustomerNo(IdKit.getSerialNo());
+		customer.setNickname(request.getNickname());
+		customer.setUsername(request.getUsername());
+		customer.setPassword(request.getPassword());
+		customer.setMobile(request.getMobile());
+		customer.setEmail(request.getEmail());
+		return customerManager.createCustomer(customer);
 	}
 
 	public CustomerDTO queryCustomer(QueryCustomerReqDTO request) {
-
-		return null;
+		return customerConverter.to(customerManager.queryCustomerByCustomerNo(request.getCustomerNo()));
 	}
 
 	public List<CustomerDTO> queryAllCustomer() {
-		return null;
+		List<CustomerDO> customerDoList = customerManager.queryAllCustomerList();
+		log.info("{}", customerDoList);
+		return customerConverter.to(customerDoList);
 	}
 
 }

@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -109,16 +108,28 @@ public final class AspectKit {
 
 	public static String getResponseStr(Object response) {
 		try {
-			Method method = response.getClass().getMethod("getResult");
-			method.setAccessible(true);
-			Object result = method.invoke(response);
-			if (result instanceof Collection || result instanceof Map) {
-				return "no print";
-			} else {
-				return response.toString();
+			Class<?> clazz = response.getClass();
+			String simpleClassName = clazz.getSimpleName();
+			Field[] fields = clazz.getDeclaredFields();
+			Map<String, Object> fieldMap = new HashMap<>();
+			for (Field field : fields) {
+				field.setAccessible(true);
+				String fieldName = field.getName();
+				Object fieldValue = field.get(response);
+				if ("serialVersionUID".equals(fieldName) || null == fieldValue) {
+					continue;
+				}
+				if ("result".equals(fieldName)) {
+					if ((fieldValue instanceof Collection) || fieldValue instanceof Map) {
+						fieldValue = "Collection or Map";
+					}
+				}
+				fieldMap.put(fieldName, fieldValue);
 			}
-		} catch (Exception e) {
-			return response.toString();
+			String collect = fieldMap.entrySet().stream().map(entry -> entry.getKey() + "=" + entry.getValue()).collect(Collectors.joining(","));
+			return simpleClassName + "(" + collect + ")";
+		} catch (Throwable cause) {
+			return "UNKNOWN";
 		}
 	}
 
