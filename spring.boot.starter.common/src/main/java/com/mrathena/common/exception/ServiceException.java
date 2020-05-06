@@ -29,14 +29,16 @@ public class ServiceException extends RuntimeException {
 			ServiceException exception = (ServiceException) cause;
 			this.code = exception.getCode();
 			this.info = exception.getInfo();
+			this.description = exception.getDescription();
 		} else if (cause instanceof Exception) {
 			this.code = ServiceErrorCodeEnum.EXCEPTION.name();
 			this.info = ServiceErrorCodeEnum.EXCEPTION.getInfo();
+			this.description = ThrowableHandler.getStackTraceStr(this);
 		} else {
 			this.code = ServiceErrorCodeEnum.ERROR.name();
 			this.info = ServiceErrorCodeEnum.ERROR.getInfo();
+			this.description = ThrowableHandler.getStackTraceStr(this);
 		}
-		this.description = ThrowableHandler.getStackTraceStr(this);
 	}
 
 	public ServiceException(ServiceErrorCodeEnumInterface exception, String description) {
