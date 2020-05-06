@@ -1,7 +1,5 @@
 package com.mrathena.web.aspect;
 
-import com.mrathena.common.constant.Constant;
-import com.mrathena.common.entity.Response;
 import com.mrathena.common.exception.ServiceErrorCodeEnum;
 import com.mrathena.common.exception.ThrowableHandler;
 import com.mrathena.web.aspect.toolkit.AspectKit;
@@ -25,13 +23,12 @@ public class IntegrationHandleAspect {
 		String request = AspectKit.getRequestStr(point);
 		try {
 			AspectKit.setLogClassNameAndMethodName(point);
-			log.info("REMOTE:REQUEST:{}", request);
+			log.info("[REMOTE:REQUEST:{}]", request);
 			AspectKit.removeLogClassNameAndMethodName();
 			Object response = point.proceed();
 			long interval = System.currentTimeMillis() - begin;
-			String status = getTradeStatus(response);
 			AspectKit.setLogClassNameAndMethodName(point);
-			log.info("[{}ms][SUCCESS][{}] REMOTE:PARAMETER:{} REMOTE:RESPONSE:{}", interval, status, request, AspectKit.getResponseStr(response));
+			log.info("[{}ms][SUCCESS][REMOTE:PARAMETER:{}][REMOTE:RESPONSE:{}]", interval, request, AspectKit.getResponseStr(response));
 			AspectKit.removeLogClassNameAndMethodName();
 			return response;
 		} catch (Throwable cause) {
@@ -39,33 +36,20 @@ public class IntegrationHandleAspect {
 			String status = getExceptionCause(cause);
 			String message = ThrowableHandler.getStackTraceStr(cause);
 			AspectKit.setLogClassNameAndMethodName(point);
-			log.info("[{}ms][EXCEPTION][{}] REMOTE:PARAMETER:{} REMOTE:EXCEPTION:{}", interval, status, request, message);
-			log.error("[{}ms][EXCEPTION][{}] REMOTE:PARAMETER:{} REMOTE:EXCEPTION:", interval, status, request, cause);
+			log.info("[{}ms][{}][REMOTE:PARAMETER:{}][REMOTE:EXCEPTION:{}]", interval, status, request, message);
+			log.error("[{}ms][{}][REMOTE:PARAMETER:{}][REMOTE:EXCEPTION:", interval, status, request, cause);
 			AspectKit.removeLogClassNameAndMethodName();
 			throw cause;
 		}
 	}
 
 	/**
-	 * 获取交易状态
-	 *
-	 * 有其他类型的返回值的话, 要添加在这里
-	 */
-	private String getTradeStatus(Object object) {
-		if (object instanceof Response) {
-			Response<?> response = (Response<?>) object;
-			return response.isSuccess() ? Constant.SUCCESS : response.getCode() + Constant.COLON + response.getMessage();
-		}
-		return Constant.UNKNOWN;
-	}
-
-	/**
 	 * 获取异常原因
 	 */
-	private String getExceptionCause(Throwable throwable) {
-		if (ThrowableHandler.isDubboUnavailableException(throwable)) {
+	private String getExceptionCause(Throwable cause) {
+		if (ThrowableHandler.isDubboUnavailableException(cause)) {
 			return ServiceErrorCodeEnum.REMOTE_SERVICE_UNAVAILABLE.name();
-		} else if (ThrowableHandler.isDubboTimeoutException(throwable)) {
+		} else if (ThrowableHandler.isDubboTimeoutException(cause)) {
 			return ServiceErrorCodeEnum.REMOTE_SERVICE_INVOKE_TIMEOUT.name();
 		}
 		return ServiceErrorCodeEnum.REMOTE_SERVICE_INVOKE_FAILURE.name();
