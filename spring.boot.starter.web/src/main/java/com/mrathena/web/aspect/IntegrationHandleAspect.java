@@ -53,7 +53,7 @@ public class IntegrationHandleAspect {
 	 */
 	private String getTradeStatus(Object object) {
 		if (object instanceof Response) {
-			Response response = (Response) object;
+			Response<?> response = (Response<?>) object;
 			return response.isSuccess() ? Constant.SUCCESS : response.getCode() + Constant.COLON + response.getMessage();
 		}
 		return Constant.UNKNOWN;
