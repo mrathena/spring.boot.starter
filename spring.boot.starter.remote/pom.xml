@@ -37,28 +37,28 @@
 			<version>2.7.6</version>
 		</dependency>
 		<!--dubbo consumer-->
-		<dependency>
-			<groupId>com.bestpay.cif</groupId>
-			<artifactId>product-service-api</artifactId>
-			<version>3.38.0</version>
-			<exclusions>
-				<exclusion>
-					<groupId>${project.groupId}</groupId>
-					<artifactId>core-service-api</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.projectlombok</groupId>
-					<artifactId>lombok</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.google.guava</groupId>
-					<artifactId>guava</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.hibernate</groupId>
-					<artifactId>hibernate-validator</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>com.bestpay.cif</groupId>-->
+<!--			<artifactId>product-service-api</artifactId>-->
+<!--			<version>3.38.0</version>-->
+<!--			<exclusions>-->
+<!--				<exclusion>-->
+<!--					<groupId>${project.groupId}</groupId>-->
+<!--					<artifactId>core-service-api</artifactId>-->
+<!--				</exclusion>-->
+<!--				<exclusion>-->
+<!--					<groupId>org.projectlombok</groupId>-->
+<!--					<artifactId>lombok</artifactId>-->
+<!--				</exclusion>-->
+<!--				<exclusion>-->
+<!--					<groupId>com.google.guava</groupId>-->
+<!--					<artifactId>guava</artifactId>-->
+<!--				</exclusion>-->
+<!--				<exclusion>-->
+<!--					<groupId>org.hibernate</groupId>-->
+<!--					<artifactId>hibernate-validator</artifactId>-->
+<!--				</exclusion>-->
+<!--			</exclusions>-->
+<!--		</dependency>-->
 	</dependencies>
 </project>
