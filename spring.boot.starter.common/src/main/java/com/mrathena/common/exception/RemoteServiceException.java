@@ -38,7 +38,7 @@ public final class RemoteServiceException extends ServiceException {
 	}
 
 	public RemoteServiceException(String description) {
-		this(ServiceErrorCodeEnum.EXCEPTION, description);
+		this(ServiceErrorCodeEnum.REMOTE_SERVICE_INVOKE_FAILURE, description);
 	}
 
 }
