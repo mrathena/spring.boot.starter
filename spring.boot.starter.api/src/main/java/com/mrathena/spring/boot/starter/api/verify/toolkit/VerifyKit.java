@@ -1,5 +1,8 @@
 package com.mrathena.spring.boot.starter.api.verify.toolkit;
 
+import com.mrathena.common.exception.BusinessErrorCodeEnum;
+import com.mrathena.common.exception.BusinessException;
+
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -38,7 +41,7 @@ public class VerifyKit {
 			}
 			if (!map.isEmpty()) {
 				String collect = map.entrySet().stream().map(entry -> entry.getKey() + ":" + String.join("&", entry.getValue())).collect(Collectors.joining(";"));
-				throw new IllegalArgumentException(collect);
+				throw new BusinessException(BusinessErrorCodeEnum.ILLEGAL_ARGUMENT, collect, "非法参数");
 			}
 		}
 	}

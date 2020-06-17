@@ -45,10 +45,7 @@ public final class ThrowableHandler {
 	 */
 	public static String getClassInfoDescriptionIfPresent(Throwable cause) {
 		Throwable rootCause = getRootCauseStackTrace(cause);
-		if (rootCause instanceof IllegalArgumentException) {
-			String info = rootCause.getClass().getSimpleName();
-			return info + Constant.COLON + cause.getMessage();
-		} else if (rootCause instanceof ServiceException) {
+		if (rootCause instanceof ServiceException) {
 			ServiceException exception = (ServiceException) rootCause;
 			String info = rootCause.getClass().getSimpleName();
 			info += Constant.COLON + exception.getInfo();
@@ -68,9 +65,7 @@ public final class ThrowableHandler {
 	 * 统一处理异常
 	 */
 	public static <T> Response<T> getResponseFromThrowable(Throwable cause) {
-		if (cause instanceof IllegalArgumentException) {
-			return new Response<>(BusinessErrorCodeEnum.ILLEGAL_ARGUMENT.name(), cause.getMessage());
-		} else if (cause instanceof ServiceException) {
+		if (cause instanceof ServiceException) {
 			ServiceException exception = (ServiceException) cause;
 			return new Response<>(exception.getCode(), exception.getInfo());
 		} else if (cause instanceof BusinessException) {
@@ -84,10 +79,10 @@ public final class ThrowableHandler {
 	}
 
 	/**
-	 * 是否为常规阻断异常
+	 * 是否为常规阻断异常(可忽略异常)
 	 */
-	public static boolean isNormalBlockingException(Throwable cause) {
-		return cause instanceof IllegalArgumentException || cause instanceof BusinessException;
+	public static boolean isNegligibleException(Throwable cause) {
+		return cause instanceof BusinessException;
 	}
 
 	/**

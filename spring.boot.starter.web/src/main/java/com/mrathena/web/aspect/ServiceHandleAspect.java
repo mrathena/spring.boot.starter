@@ -38,11 +38,11 @@ public class ServiceHandleAspect {
 		} catch (Throwable cause) {
 			Response<?> response = ThrowableHandler.getResponseFromThrowable(cause);
 			long interval = System.currentTimeMillis() - begin;
-			String status = ThrowableHandler.isNormalBlockingException(cause) ? Constant.SUCCESS : Constant.EXCEPTION;
+			String status = ThrowableHandler.isNegligibleException(cause) ? Constant.SUCCESS : Constant.EXCEPTION;
 			String message = ThrowableHandler.getClassInfoDescriptionIfPresent(cause);
 			AspectKit.setLogClassNameAndMethodName(point);
 			log.info("[{}ms][{}][REQUEST:{}][RESPONSE:{}][EXCEPTION:{}]", interval, status, request, AspectKit.getResponseStr(response), message);
-			if (!ThrowableHandler.isNormalBlockingException(cause)) {
+			if (!ThrowableHandler.isNegligibleException(cause)) {
 				log.error("[{}ms][{}][REQUEST:{}][RESPONSE:{}][EXCEPTION:", interval, status, request, AspectKit.getResponseStr(response), cause);
 			}
 			AspectKit.removeLogClassNameAndMethodName();
