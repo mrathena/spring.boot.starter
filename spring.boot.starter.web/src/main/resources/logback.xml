@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
+	<!-- 如果是单纯的使用Main方法的run,则不适合异步日志,因为主线程结束了,日志可能还没有打出来 -->
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
 			<!--logger和class是不一样的,logger打印的是<logger>标签的完整name???,class打印的是日志所在的类名,logger和class打印的内容有时一样有时不一样-->
@@ -9,14 +10,9 @@
 			<Pattern>[%date{yyyyMMdd.HHmmss.SSS}][%-5level][%X{TRACE}][%thread][%class{1}.%method:%line][%X{POSITION}] %message%n</Pattern>
 		</encoder>
 	</appender>
-	<appender name="asyncConsole" class="ch.qos.logback.classic.AsyncAppender">
-		<discardingThreshold>0</discardingThreshold>
-		<queueSize>1024</queueSize>
-		<appender-ref ref="console"/>
-	</appender>
 	<logger name="com.mrathena.dao.mapper" level="debug"/>
 	<logger name="org.springframework.kafka" level="info"/>
 	<root level="debug">
-		<appender-ref ref="asyncConsole"/>
+		<appender-ref ref="console"/>
 	</root>
 </configuration>
