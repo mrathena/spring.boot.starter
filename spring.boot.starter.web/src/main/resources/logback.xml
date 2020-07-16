@@ -12,7 +12,7 @@
     <appender name="normal" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${path}/${application}.log</file>
         <encoder>
-            <Pattern>[%date{yyyyMMdd.HHmmss.SSS}][%-5level][%X{TRACE}][%thread][%class{1}.%method:%line][%X{POSITION}] %message%n</Pattern>
+            <Pattern>[%date][%-5level][%X{TRACE}][%thread][%class{1}.%method:%line][%X{POSITION}] %message%n</Pattern>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${path}/${application}.%d{yyyyMMdd}.%i.log</fileNamePattern>
@@ -35,7 +35,7 @@
     <appender name="warn" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${path}/${application}.warn.log</file>
         <encoder>
-            <Pattern>[%date{yyyyMMdd.HHmmss.SSS}][%-5level][%X{TRACE}][%thread][%class{1}.%method:%line][%X{POSITION}] %message%n</Pattern>
+            <Pattern>[%date][%-5level][%X{TRACE}][%thread][%class{1}.%method:%line][%X{POSITION}] %message%n</Pattern>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${path}/${application}.warn.%d{yyyyMMdd}.%i.log</fileNamePattern>
@@ -53,7 +53,7 @@
     <appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${path}/${application}.error.log</file>
         <encoder>
-            <Pattern>[%date{yyyyMMdd.HHmmss.SSS}][%-5level][%X{TRACE}][%thread][%class{1}.%method:%line][%X{POSITION}] %message%n</Pattern>
+            <Pattern>[%date][%-5level][%X{TRACE}][%thread][%class{1}.%method:%line][%X{POSITION}] %message%n</Pattern>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${path}/${application}.error.%d{yyyyMMdd}.%i.log</fileNamePattern>
@@ -77,9 +77,13 @@
     </appender>
     <appender name="async.warn" class="ch.qos.logback.classic.AsyncAppender">
         <appender-ref ref="warn"/>
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>1024</queueSize>
     </appender>
     <appender name="async.error" class="ch.qos.logback.classic.AsyncAppender">
         <appender-ref ref="error"/>
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>1024</queueSize>
     </appender>
     <logger name="com.mrathena.dao.mapper" level="debug"/>
     <logger name="org.springframework.kafka" level="info"/>
@@ -87,7 +91,7 @@
     <root level="info">
 <!--        <appender-ref ref="console"/>-->
         <appender-ref ref="async.normal"/>
-        <appender-ref ref="async.warn"/>
+        <appender-ref ref="warn"/>
         <appender-ref ref="async.error"/>
     </root>
 </configuration>

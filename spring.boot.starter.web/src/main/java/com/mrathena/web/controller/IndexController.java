@@ -21,10 +21,14 @@ public class IndexController {
 		indexService.log();
 	}
 
-
 	@GetMapping("async")
 	public void async() {
 		indexService.async();
+	}
+
+	@GetMapping("sync")
+	public void sync() {
+		indexService.sync();
 	}
 
 }

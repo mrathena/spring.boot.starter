@@ -33,13 +33,33 @@ public class IndexServiceImpl implements IndexService {
 				int index = i;
 				taskExecutor.execute(() -> {
 					try {
-						log.info("this is a logback async test, {}", index);
+						log.error("this is a logback async test, {}", index);
 					} finally {
 						countDownLatch.countDown();
 					}
 				});
 			}
-			countDownLatch.await(1, TimeUnit.MINUTES);
+			countDownLatch.await(1, TimeUnit.HOURS);
+		} catch (Throwable cause) {
+			log.error("", cause);
+		}
+	}
+
+	@Override
+	public void sync() {
+		try {
+			CountDownLatch countDownLatch = new CountDownLatch(1000000);
+			for (int i = 0; i < 1000000; i++) {
+				int index = i;
+				taskExecutor.execute(() -> {
+					try {
+						log.warn("this is a logback sync test, {}", index);
+					} finally {
+						countDownLatch.countDown();
+					}
+				});
+			}
+			countDownLatch.await(1, TimeUnit.HOURS);
 		} catch (Throwable cause) {
 			log.error("", cause);
 		}

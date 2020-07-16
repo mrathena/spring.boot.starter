@@ -5,4 +5,7 @@ public interface IndexService {
 	void log();
 
 	void async();
+
+	void sync();
+
 }
