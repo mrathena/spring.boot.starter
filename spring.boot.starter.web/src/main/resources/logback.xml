@@ -4,11 +4,11 @@
     <property name="path" value="/logs"/>
     <property name="application" value="spring.boot.starter"/>
     <!-- 除了开发,都要把这个appender去掉 -->
-<!--    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">-->
-<!--        <encoder>-->
-<!--            <Pattern>[%date{yyyyMMdd.HHmmss.SSS}][%-5level][%X{TRACE}][%thread][%class{1}.%method:%line][%X{POSITION}] %message%n</Pattern>-->
-<!--        </encoder>-->
-<!--    </appender>-->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <Pattern>[%date{yyyyMMdd.HHmmss.SSS}][%-5level][%X{TRACE}][%thread][%class{1}.%method:%line][%X{POSITION}] %message%n</Pattern>
+        </encoder>
+    </appender>
     <appender name="normal" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${path}/${application}.log</file>
         <encoder>
@@ -89,9 +89,9 @@
     <logger name="org.springframework.kafka" level="info"/>
     <!--可以通过修改该参数来决定是否打印debug日志-->
     <root level="info">
-<!--        <appender-ref ref="console"/>-->
+        <appender-ref ref="console"/>
         <appender-ref ref="async.normal"/>
-        <appender-ref ref="warn"/>
+        <appender-ref ref="async.warn"/>
         <appender-ref ref="async.error"/>
     </root>
 </configuration>
