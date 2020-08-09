@@ -48,11 +48,13 @@ public final class ThrowableHandler {
 		if (rootCause instanceof ServiceException) {
 			ServiceException exception = (ServiceException) rootCause;
 			String info = rootCause.getClass().getSimpleName();
+			info += Constant.COLON + exception.getCode();
 			info += Constant.COLON + exception.getInfo();
 			return info + Constant.COLON + exception.getDescription();
 		} else if (rootCause instanceof BusinessException) {
 			BusinessException exception = (BusinessException) rootCause;
 			String info = rootCause.getClass().getSimpleName();
+			info += Constant.COLON + exception.getCode();
 			info += Constant.COLON + exception.getInfo();
 			return info + Constant.COLON + exception.getDescription();
 		} else {
