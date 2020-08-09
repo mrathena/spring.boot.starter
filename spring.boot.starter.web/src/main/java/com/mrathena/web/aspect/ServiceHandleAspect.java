@@ -41,7 +41,7 @@ public class ServiceHandleAspect {
 			String message = ThrowableHandler.getClassInfoDescriptionIfPresent(cause);
 			AspectKit.setLogClassNameAndMethodName(point);
 			log.info("[{}][{}][REQUEST:{}][RESPONSE:{}][THROWABLE:{}]", interval, status, request, AspectKit.getResponseStr(response), message);
-			if (!ThrowableHandler.isBusinessException(cause)) {
+			if (!ThrowableHandler.isNegligibleException(cause)) {
 				log.error("[{}][{}][REQUEST:{}][RESPONSE:{}][THROWABLE:{}]", interval, status, request, AspectKit.getResponseStr(response), message, cause);
 			}
 			AspectKit.removeLogClassNameAndMethodName();

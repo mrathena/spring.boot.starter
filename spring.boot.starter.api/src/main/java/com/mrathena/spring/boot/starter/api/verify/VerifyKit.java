@@ -1,6 +1,8 @@
 package com.mrathena.spring.boot.starter.api.verify;
 
 import com.mrathena.common.constant.Constant;
+import com.mrathena.common.exception.BusinessErrorCodeEnum;
+import com.mrathena.common.exception.BusinessException;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
