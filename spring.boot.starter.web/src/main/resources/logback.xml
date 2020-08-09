@@ -1,23 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration scan="true" scanPeriod="60 seconds" debug="false">
-
-	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
-		<encoder>
-			<!--logger和class是不一样的,logger打印的是<logger>标签的完整name???,class打印的是日志所在的类名,logger和class打印的内容有时一样有时不一样-->
-			<!--如下面<logger name="com.mrathena.dao.mapper" level="debug"/>配置后,通过logger和class打印出[manager.queryById(1L);]的内容如下-->
-			<!--logger:com.mrathena.dao.mapper.customer.CustomerMapper.selectByPrimaryKey-->
-			<!--class:org.apache.ibatis.logging.jdbc.BaseJdbcLogger-->
-			<Pattern>[%date{yyyyMMdd.HHmmss.SSS}][%-5level][%X{TRACE}][%thread][%class{1}.%method:%line][%X{POSITION}] %message%n</Pattern>
-		</encoder>
-	</appender>
-
-	<!--打印SQL-->
-	<!--设置com.mrathena.dao.mapper包下日志打印级别为debug,代码里面所有大于等于debug级别日志的都会被打出来-->
-	<logger name="com.mrathena.dao.mapper" level="debug"/>
-	<logger name="org.springframework.kafka" level="info"/>
-
-	<root level="info">
-		<appender-ref ref="console"/>
-	</root>
-
+<!--默认情况下，每隔一分钟扫描一次-->
+<configuration scan="true" debug="false">
+    <property name="path" value="/logs"/>
+    <property name="application" value="spring.boot.starter"/>
+    <!-- 除了开发,都要把这个appender去掉 -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <Pattern>[%date{yyyyMMdd.HHmmss.SSS}][%-5level][%X{TRACE}][%thread][%class{1}.%method:%line][%X{POSITION}] %message%n</Pattern>
+        </encoder>
+    </appender>
+    <appender name="normal" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${path}/${application}.log</file>
+        <encoder>
+            <Pattern>[%date][%-5level][%X{TRACE}][%thread][%class{1}.%method:%line][%X{POSITION}] %message%n</Pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${path}/${application}.%d{yyyyMMdd}.%i.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>1024MB</maxFileSize>
+            </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>NEUTRAL</onMismatch>
+        </filter>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+    <appender name="warn" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${path}/${application}.warn.log</file>
+        <encoder>
+            <Pattern>[%date][%-5level][%X{TRACE}][%thread][%class{1}.%method:%line][%X{POSITION}] %message%n</Pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${path}/${application}.warn.%d{yyyyMMdd}.%i.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>1024MB</maxFileSize>
+            </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+    <appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${path}/${application}.error.log</file>
+        <encoder>
+            <Pattern>[%date][%-5level][%X{TRACE}][%thread][%class{1}.%method:%line][%X{POSITION}] %message%n</Pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${path}/${application}.error.%d{yyyyMMdd}.%i.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>1024MB</maxFileSize>
+            </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+    <appender name="async.normal" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="normal"/>
+        <!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+        <discardingThreshold>0</discardingThreshold>
+        <!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+        <queueSize>1024</queueSize>
+    </appender>
+    <appender name="async.warn" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="warn"/>
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>1024</queueSize>
+    </appender>
+    <appender name="async.error" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="error"/>
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>1024</queueSize>
+    </appender>
+    <logger name="com.mrathena.dao.mapper" level="debug"/>
+    <logger name="org.springframework.kafka" level="info"/>
+    <!--可以通过修改该参数来决定是否打印debug日志-->
+    <root level="info">
+        <appender-ref ref="console"/>
+        <appender-ref ref="async.normal"/>
+        <appender-ref ref="async.warn"/>
+        <appender-ref ref="async.error"/>
+    </root>
 </configuration>

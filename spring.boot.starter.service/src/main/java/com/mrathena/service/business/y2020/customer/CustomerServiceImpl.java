@@ -7,7 +7,7 @@ import com.mrathena.spring.boot.starter.api.business.y2020.customer.dto.CreateCu
 import com.mrathena.spring.boot.starter.api.business.y2020.customer.dto.CustomerDTO;
 import com.mrathena.spring.boot.starter.api.business.y2020.customer.dto.QueryCustomerReqDTO;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
+import org.apache.dubbo.config.annotation.Service;
 
 import javax.annotation.Resource;
 import java.util.List;

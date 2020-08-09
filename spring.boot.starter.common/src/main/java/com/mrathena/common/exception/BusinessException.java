@@ -1,5 +1,6 @@
 package com.mrathena.common.exception;
 
+import com.mrathena.common.constant.Constant;
 import lombok.Getter;
 
 /**
@@ -36,6 +37,10 @@ public class BusinessException extends RuntimeException {
 
 	public BusinessException(BusinessErrorCodeEnumInterface exception, String description) {
 		this(exception.name(), exception.getInfo(), description);
+	}
+
+	public BusinessException(BusinessErrorCodeEnumInterface exception) {
+		this(exception.name(), exception.getInfo(), exception.name() + Constant.COLON + exception.getInfo());
 	}
 
 }

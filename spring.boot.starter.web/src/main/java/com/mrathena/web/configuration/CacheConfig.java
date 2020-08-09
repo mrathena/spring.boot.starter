@@ -34,8 +34,9 @@ public class CacheConfig {
 		RedisCacheConfiguration commonRedisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
 				.disableKeyPrefix()
 				.serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(keySerializer))
-				.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(valueSerializer))
-				.disableCachingNullValues();
+				.serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(valueSerializer));
+				// 不缓存null值(有时候需要缓存,交给使用者来决定)
+				// .disableCachingNullValues();
 		// CacheConfigurationsMap
 		Map<String, RedisCacheConfiguration> cacheConfigurationMap = new HashMap<>(8);
 		cacheConfigurationMap.put(CacheNameEnum.ONE_MINUTE.name(), commonRedisCacheConfiguration.entryTtl(Duration.ofMinutes(1)));
@@ -56,6 +57,7 @@ public class CacheConfig {
 		// RedisCacheManager
 		RedisCacheManager redisCacheManager = RedisCacheManager.builder(clusterLettuceConnectionFactory)
 				.withInitialCacheConfigurations(cacheConfigurationMap)
+				// 将缓存的操作纳入到事务管理中,即回滚事务会同步回滚缓存(我猜的)
 				.transactionAware()
 				// 不允许添加除上述定义之外的缓存名称
 				.disableCreateOnMissingCache()

@@ -11,10 +11,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -24,6 +24,10 @@ import java.util.stream.Collectors;
 public final class AspectKit {
 
 	private AspectKit() {}
+
+	private static final List<Class<?>> CLASS_LIST = Arrays.asList(Byte.class, Short.class, Integer.class, Long.class, Float.class, Double.class, Boolean.class, Character.class,
+			byte.class, short.class, int.class, long.class, float.class, double.class, boolean.class, char.class,
+			String.class, Date.class, LocalDateTime.class, LocalDate.class, LocalTime.class);
 
 	public static Logger getLogger(ProceedingJoinPoint point) {
 		Class<?> clazz = point.getTarget().getClass();
@@ -82,6 +86,9 @@ public final class AspectKit {
 			return "null";
 		}
 		Class<?> clazz = object.getClass();
+		if (CLASS_LIST.contains(clazz)) {
+			return String.valueOf(object);
+		}
 		String simpleTypeName = clazz.getTypeName().substring(clazz.getTypeName().lastIndexOf(".")).replace(".", "");
 		Map<String, Object> fieldMap = new HashMap<>();
 		try {
@@ -107,16 +114,19 @@ public final class AspectKit {
 		}
 	}
 
-	public static String getResponseStr(Object response) {
+	public static String getResponseStr(Object object) {
 		try {
-			Class<?> clazz = response.getClass();
+			Class<?> clazz = object.getClass();
+			if (CLASS_LIST.contains(clazz)) {
+				return String.valueOf(object);
+			}
 			String simpleClassName = clazz.getSimpleName();
 			Field[] fields = clazz.getDeclaredFields();
 			Map<String, Object> fieldMap = new HashMap<>();
 			for (Field field : fields) {
 				field.setAccessible(true);
 				String fieldName = field.getName();
-				Object fieldValue = field.get(response);
+				Object fieldValue = field.get(object);
 				if ("serialVersionUID".equals(fieldName) || null == fieldValue) {
 					continue;
 				}
