@@ -1,6 +1,5 @@
 package com.mrathena.web.aspect;
 
-import com.mrathena.common.constant.Constant;
 import com.mrathena.common.entity.Response;
 import com.mrathena.common.exception.ThrowableHandler;
 import com.mrathena.web.aspect.toolkit.AspectKit;
@@ -26,24 +25,24 @@ public class ServiceHandleAspect {
 		String request = AspectKit.getRequestStr(point);
 		try {
 			AspectKit.setLogClassNameAndMethodName(point);
-			log.info("[PARAMETER:{}]", request);
+			log.info("[REQUEST:{}]", request);
 			AspectKit.removeLogClassNameAndMethodName();
 			AspectKit.checkRequest(point);
 			Object response = point.proceed();
 			long interval = System.currentTimeMillis() - begin;
 			AspectKit.setLogClassNameAndMethodName(point);
-			log.info("[{}ms][SUCCESS][REQUEST:{}][RESPONSE:{}]", interval, request, AspectKit.getResponseStr(response));
+			log.info("[{}][SUCCESS][REQUEST:{}][RESPONSE:{}]", interval, request, AspectKit.getResponseStr(response));
 			AspectKit.removeLogClassNameAndMethodName();
 			return response;
 		} catch (Throwable cause) {
 			Response<?> response = ThrowableHandler.getResponseFromThrowable(cause);
 			long interval = System.currentTimeMillis() - begin;
-			String status = ThrowableHandler.isNormalBlockingException(cause) ? Constant.SUCCESS : Constant.EXCEPTION;
+			String status = ThrowableHandler.getFinalThrowableStatus(cause);
 			String message = ThrowableHandler.getClassInfoDescriptionIfPresent(cause);
 			AspectKit.setLogClassNameAndMethodName(point);
-			log.info("[{}ms][{}][REQUEST:{}][RESPONSE:{}][EXCEPTION:{}]", interval, status, request, AspectKit.getResponseStr(response), message);
-			if (!ThrowableHandler.isNormalBlockingException(cause)) {
-				log.error("[{}ms][{}][REQUEST:{}][RESPONSE:{}][EXCEPTION:", interval, status, request, AspectKit.getResponseStr(response), cause);
+			log.info("[{}][{}][REQUEST:{}][RESPONSE:{}][THROWABLE:{}]", interval, status, request, AspectKit.getResponseStr(response), message);
+			if (!ThrowableHandler.isBusinessException(cause)) {
+				log.error("[{}][{}][REQUEST:{}][RESPONSE:{}][THROWABLE:{}]", interval, status, request, AspectKit.getResponseStr(response), message, cause);
 			}
 			AspectKit.removeLogClassNameAndMethodName();
 			return response;

@@ -86,8 +86,21 @@ public final class ThrowableHandler {
 	/**
 	 * 是否为常规阻断异常
 	 */
-	public static boolean isNormalBlockingException(Throwable cause) {
-		return cause instanceof IllegalArgumentException || cause instanceof BusinessException;
+	public static boolean isBusinessException(Throwable cause) {
+		return cause instanceof BusinessException;
+	}
+
+	/**
+	 * 获取Throwable最终状态
+	 */
+	public static String getFinalThrowableStatus(Throwable cause) {
+		if (cause instanceof BusinessException) {
+			return Constant.SUCCESS;
+		} else if (cause instanceof Exception) {
+			return Constant.EXCEPTION;
+		} else {
+			return Constant.ERROR;
+		}
 	}
 
 	/**

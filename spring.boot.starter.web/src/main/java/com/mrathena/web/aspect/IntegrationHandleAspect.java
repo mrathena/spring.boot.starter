@@ -28,7 +28,7 @@ public class IntegrationHandleAspect {
 			Object response = point.proceed();
 			long interval = System.currentTimeMillis() - begin;
 			AspectKit.setLogClassNameAndMethodName(point);
-			log.info("[{}ms][SUCCESS][REMOTE:PARAMETER:{}][REMOTE:RESPONSE:{}]", interval, request, AspectKit.getResponseStr(response));
+			log.info("[{}ms][SUCCESS][REMOTE:REQUEST:{}][REMOTE:RESPONSE:{}]", interval, request, AspectKit.getResponseStr(response));
 			AspectKit.removeLogClassNameAndMethodName();
 			return response;
 		} catch (Throwable cause) {
@@ -36,8 +36,8 @@ public class IntegrationHandleAspect {
 			String status = getExceptionCause(cause);
 			String message = ThrowableHandler.getStackTraceStr(cause);
 			AspectKit.setLogClassNameAndMethodName(point);
-			log.info("[{}ms][{}][REMOTE:PARAMETER:{}][REMOTE:EXCEPTION:{}]", interval, status, request, message);
-			log.error("[{}ms][{}][REMOTE:PARAMETER:{}][REMOTE:EXCEPTION:", interval, status, request, cause);
+			log.info("[{}][{}][REMOTE:REQUEST:{}][REMOTE:THROWABLE:{}]", interval, status, request, message);
+			log.error("[{}][{}][REMOTE:REQUEST:{}][REMOTE:THROWABLE:{}]", interval, status, request, message, cause);
 			AspectKit.removeLogClassNameAndMethodName();
 			throw cause;
 		}

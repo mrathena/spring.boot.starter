@@ -50,6 +50,7 @@ public final class AspectKit {
 		for (Object arg : point.getArgs()) {
 			if (arg instanceof BaseReqDTO) {
 				LogKit.setTraceNo(((BaseReqDTO) arg).getTraceNo());
+				return;
 			}
 		}
 		LogKit.setTraceNo(IdKit.getUuid());

@@ -1,4 +1,8 @@
-package com.mrathena.spring.boot.starter.api.verify.toolkit;
+package com.mrathena.spring.boot.starter.api.verify;
+
+import com.mrathena.common.constant.Constant;
+import com.mrathena.common.exception.BusinessErrorCodeEnum;
+import com.mrathena.common.exception.BusinessException;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -26,7 +30,7 @@ public class VerifyKit {
 			// 整理验证结果
 			Map<String, Set<String>> map = new HashMap<>(8);
 			for (ConstraintViolation<T> cv : constraintViolationSet) {
-				String key = cv.getPropertyPath().toString() + ":" + cv.getInvalidValue();
+				String key = cv.getPropertyPath().toString() + Constant.COLON + cv.getInvalidValue();
 				Set<String> set = map.get(key);
 				if (null == set) {
 					Set<String> newSet = new HashSet<>(4);
@@ -37,8 +41,8 @@ public class VerifyKit {
 				}
 			}
 			if (!map.isEmpty()) {
-				String collect = map.entrySet().stream().map(entry -> entry.getKey() + ":" + String.join("&", entry.getValue())).collect(Collectors.joining(";"));
-				throw new IllegalArgumentException(collect);
+				String collect = map.entrySet().stream().map(entry -> entry.getKey() + Constant.COLON + String.join(Constant.AND, entry.getValue())).collect(Collectors.joining(Constant.SEMICOLON));
+				throw new BusinessException(BusinessErrorCodeEnum.ILLEGAL_ARGUMENT, collect);
 			}
 		}
 	}

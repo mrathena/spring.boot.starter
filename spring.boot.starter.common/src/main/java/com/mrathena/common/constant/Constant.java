@@ -36,5 +36,6 @@ public class Constant {
 	public static final String FAILURE = "FAILURE";
 	public static final String PENDING = "PENDING";
 	public static final String EXCEPTION = "EXCEPTION";
+	public static final String ERROR = "ERROR";
 
 }

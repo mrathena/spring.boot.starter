@@ -1,7 +1,5 @@
 package com.mrathena.spring.boot.starter.api.verify;
 
-import com.mrathena.spring.boot.starter.api.verify.toolkit.VerifyKit;
-
 /**
  * @author com.mrathena on 2020-03-29 02:38
  */
