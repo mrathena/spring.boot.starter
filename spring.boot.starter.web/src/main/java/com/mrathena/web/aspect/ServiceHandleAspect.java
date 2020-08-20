@@ -22,7 +22,7 @@ public class ServiceHandleAspect {
 		long begin = System.currentTimeMillis();
 		AspectKit.setLogTraceNo(point);
 		Logger log = AspectKit.getLogger(point);
-		String request = AspectKit.getRequestStr(point);
+		Object request = AspectKit.getRequest(point);
 		try {
 			AspectKit.setLogClassNameAndMethodName(point);
 			log.info("[REQUEST:{}]", request);
@@ -31,7 +31,7 @@ public class ServiceHandleAspect {
 			Object response = point.proceed();
 			long interval = System.currentTimeMillis() - begin;
 			AspectKit.setLogClassNameAndMethodName(point);
-			log.info("[{}][SUCCESS][REQUEST:{}][RESPONSE:{}]", interval, request, AspectKit.getResponseStr(response));
+			log.info("[{}][SUCCESS][REQUEST:{}][RESPONSE:{}]", interval, request, AspectKit.getResponse(response));
 			AspectKit.removeLogClassNameAndMethodName();
 			return response;
 		} catch (Throwable cause) {
@@ -40,9 +40,9 @@ public class ServiceHandleAspect {
 			String status = ThrowableHandler.getFinalThrowableStatus(cause);
 			String message = ThrowableHandler.getClassInfoDescriptionIfPresent(cause);
 			AspectKit.setLogClassNameAndMethodName(point);
-			log.info("[{}][{}][REQUEST:{}][RESPONSE:{}][THROWABLE:{}]", interval, status, request, AspectKit.getResponseStr(response), message);
+			log.info("[{}][{}][REQUEST:{}][RESPONSE:{}][THROWABLE:{}]", interval, status, request, AspectKit.getResponse(response), message);
 			if (!ThrowableHandler.isNegligibleException(cause)) {
-				log.error("[{}][{}][REQUEST:{}][RESPONSE:{}][THROWABLE:{}]", interval, status, request, AspectKit.getResponseStr(response), message, cause);
+				log.error("[{}][{}][REQUEST:{}][RESPONSE:{}][THROWABLE:{}]", interval, status, request, AspectKit.getResponse(response), message, cause);
 			}
 			AspectKit.removeLogClassNameAndMethodName();
 			return response;

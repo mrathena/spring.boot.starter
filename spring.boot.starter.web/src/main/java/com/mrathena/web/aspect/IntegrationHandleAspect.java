@@ -20,7 +20,7 @@ public class IntegrationHandleAspect {
 	public Object around(ProceedingJoinPoint point) throws Throwable {
 		long begin = System.currentTimeMillis();
 		Logger log = AspectKit.getLogger(point);
-		String request = AspectKit.getRequestStr(point);
+		Object request = AspectKit.getRequest(point);
 		try {
 			AspectKit.setLogClassNameAndMethodName(point);
 			log.info("[REMOTE:REQUEST:{}]", request);
@@ -28,7 +28,7 @@ public class IntegrationHandleAspect {
 			Object response = point.proceed();
 			long interval = System.currentTimeMillis() - begin;
 			AspectKit.setLogClassNameAndMethodName(point);
-			log.info("[{}ms][SUCCESS][REMOTE:REQUEST:{}][REMOTE:RESPONSE:{}]", interval, request, AspectKit.getResponseStr(response));
+			log.info("[{}ms][SUCCESS][REMOTE:REQUEST:{}][REMOTE:RESPONSE:{}]", interval, request, AspectKit.getResponse(response));
 			AspectKit.removeLogClassNameAndMethodName();
 			return response;
 		} catch (Throwable cause) {
